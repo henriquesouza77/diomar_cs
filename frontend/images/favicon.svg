@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DIOMAR_CS IMÓVEIS">
+  <defs>
+    <linearGradient id="favGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#0F1F4D"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fundo arredondado -->
+  <rect x="0" y="0" width="64" height="64" rx="14" ry="14" fill="url(#favGradient)"/>
+
+  <!-- Letra D estilizada -->
+  <text x="32" y="44"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="40"
+        font-weight="700"
+        fill="#FFFFFF"
+        letter-spacing="-1">
+    D
+  </text>
+
+  <!-- Detalhe inferior (barra de destaque) -->
+  <rect x="14" y="52" width="36" height="3" rx="1.5" fill="#93C5FD" opacity="0.9"/>
+</svg>

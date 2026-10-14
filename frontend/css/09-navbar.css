@@ -1,0 +1,964 @@
+/* ==========================================================================
+   NAVBAR — Header fixo com glassmorphism, links animados e drawer mobile
+   ========================================================================== */
+
+/* ==========================================================================
+   NAVBAR CONTAINER
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-navbar);
+  height: var(--altura-navbar);
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid transparent;
+  transition:
+    height var(--dur-media) var(--ease-suave),
+    background-color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave),
+    box-shadow var(--dur-media) var(--ease-suave);
+}
+
+/* Fallback: se o navegador não suportar backdrop-filter */
+@supports not (backdrop-filter: blur(20px)) {
+  .navbar {
+    background-color: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* Estado scroll — compacta e ganha sombra */
+.navbar.is-scrolled {
+  height: var(--altura-navbar-sm);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom-color: var(--cor-borda-suave);
+  box-shadow: 0 4px 20px rgba(11, 31, 77, 0.06);
+}
+
+/* ==========================================================================
+   ESTADO TRANSPARENTE (sobre hero)
+   ========================================================================== */
+.navbar.is-transparent {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.navbar.is-transparent .navbar__link,
+.navbar.is-transparent .navbar__logo-name {
+  color: var(--branco);
+}
+
+.navbar.is-transparent .navbar__link:hover,
+.navbar.is-transparent .navbar__link.is-active {
+  color: var(--branco);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.navbar.is-transparent .navbar__logo-tagline {
+  color: var(--ouro-300);
+}
+
+.navbar.is-transparent .navbar__icon-btn {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar.is-transparent .navbar__icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--branco);
+}
+
+.navbar.is-transparent .navbar__user-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--branco);
+}
+
+.navbar.is-transparent .navbar__user-btn:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+.navbar.is-transparent .navbar__user-name {
+  color: var(--branco);
+}
+
+.navbar.is-transparent .navbar__user-btn svg {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar.is-transparent .navbar__desktop-only.btn-ghost {
+  color: var(--branco);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.navbar.is-transparent .navbar__desktop-only.btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--branco);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar.is-transparent .navbar__toggle {
+  color: var(--branco);
+}
+
+.navbar.is-transparent .navbar__toggle:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Estado scroll + transparente — volta ao normal */
+.navbar.is-transparent.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: var(--cor-borda-suave);
+  box-shadow: 0 4px 20px rgba(11, 31, 77, 0.06);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__link,
+.navbar.is-transparent.is-scrolled .navbar__logo-name {
+  color: var(--cor-texto);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__link:hover,
+.navbar.is-transparent.is-scrolled .navbar__link.is-active {
+  color: var(--cor-primaria);
+  background-color: var(--cor-primaria-tint);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__logo-tagline {
+  color: var(--cor-acento);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__icon-btn {
+  color: var(--cor-texto-suave);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__user-btn {
+  background-color: var(--cinza-100);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__user-name {
+  color: var(--cor-texto);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__user-btn svg {
+  color: var(--cor-texto-muted);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__desktop-only.btn-ghost {
+  color: var(--cor-texto-suave);
+  border-color: var(--cor-borda);
+}
+
+.navbar.is-transparent.is-scrolled .navbar__toggle {
+  color: var(--cor-texto);
+}
+
+/* ==========================================================================
+   INNER — Container interno
+   ========================================================================== */
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--esp-8);
+  height: 100%;
+}
+
+/* ==========================================================================
+   LOGO
+   ========================================================================== */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: transform var(--dur-rapida) var(--ease-spring);
+}
+
+.navbar__logo:hover {
+  transform: scale(1.02);
+}
+
+.navbar__logo-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  background-color: var(--azul-900);
+  background-image: var(--grad-luxo);
+  color: var(--branco);
+  border-radius: var(--raio-md);
+  font-family: var(--fonte-display);
+  font-weight: var(--peso-bold);
+  font-size: var(--fs-xl);
+  letter-spacing: var(--ls-tight);
+  box-shadow: var(--sombra-azul);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.navbar__logo-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.navbar__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  min-width: 0;
+}
+
+.navbar__logo-name {
+  font-family: var(--fonte-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-bold);
+  letter-spacing: var(--ls-tight);
+  color: var(--cor-texto);
+  transition: color var(--dur-media) var(--ease-suave);
+  white-space: nowrap;
+}
+
+.navbar__logo-tagline {
+  font-size: var(--fs-2xs);
+  font-weight: var(--peso-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--cor-acento);
+  margin-top: 2px;
+  transition: color var(--dur-media) var(--ease-suave);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   MENU PRINCIPAL
+   ========================================================================== */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar__item {
+  position: relative;
+}
+
+.navbar__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: 0.6rem 1rem;
+  font-family: var(--fonte-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  border-radius: var(--raio-full);
+  transition:
+    color var(--dur-rapida) var(--ease-suave),
+    background-color var(--dur-rapida) var(--ease-suave);
+  white-space: nowrap;
+}
+
+/* Underline animado dourado */
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 2px;
+  background-color: var(--cor-acento);
+  border-radius: var(--raio-full);
+  transform: translateX(-50%);
+  transition: width var(--dur-media) var(--ease-spring);
+}
+
+.navbar__link:hover,
+.navbar__link.is-active {
+  color: var(--cor-primaria);
+  background-color: var(--cor-primaria-tint);
+}
+
+.navbar__link:hover::after,
+.navbar__link.is-active::after {
+  width: 20px;
+}
+
+/* Ícone de dropdown */
+.navbar__link .dropdown-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--dur-rapida) var(--ease-suave);
+  flex-shrink: 0;
+}
+
+.navbar__item.is-open .navbar__link .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   SUBMENU / DROPDOWN (menus da navbar)
+   ========================================================================== */
+.navbar__submenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  min-width: 240px;
+  padding: var(--esp-3);
+  background-color: var(--branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-xl);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-8px);
+  transition:
+    opacity var(--dur-media) var(--ease-suave),
+    visibility var(--dur-media),
+    transform var(--dur-media) var(--ease-spring);
+  z-index: var(--z-dropdown);
+}
+
+.navbar__submenu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--branco);
+  border-top: 1px solid var(--cor-borda-suave);
+  border-left: 1px solid var(--cor-borda-suave);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.navbar__item.is-open .navbar__submenu,
+.navbar__item:hover .navbar__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.navbar__submenu-link {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: 0.65rem 0.85rem;
+  font-size: var(--fs-sm);
+  color: var(--cor-texto-suave);
+  border-radius: var(--raio-sm);
+  transition: all var(--dur-rapida) var(--ease-suave);
+  text-decoration: none;
+}
+
+.navbar__submenu-link:hover {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+  transform: translateX(4px);
+}
+
+.navbar__submenu-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--cor-acento);
+}
+
+/* ==========================================================================
+   AÇÕES À DIREITA
+   ========================================================================== */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  flex-shrink: 0;
+}
+
+/* Botão de ícone (favoritos, notificações) */
+.navbar__icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--cor-texto-suave);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--raio-full);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--dur-rapida) var(--ease-suave);
+  flex-shrink: 0;
+}
+
+.navbar__icon-btn:hover {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+.navbar__icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Badge numérico sobre o ícone */
+.navbar__icon-btn .badge-count {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-family: var(--fonte-mono);
+  font-size: 0.65rem;
+  font-weight: var(--peso-bold);
+  line-height: 1;
+  color: var(--branco);
+  background-color: var(--erro);
+  border: 2px solid var(--bg-principal);
+  border-radius: var(--raio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Separador vertical entre ações */
+.navbar__divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--cor-borda);
+  margin: 0 var(--esp-2);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   USER DROPDOWN — Menu do usuário logado
+   ========================================================================== */
+.navbar__user {
+  position: relative;
+}
+
+.navbar__user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  background-color: var(--cinza-100);
+  border: none;
+  border-radius: var(--raio-full);
+  cursor: pointer;
+  transition: background-color var(--dur-rapida) var(--ease-suave);
+  font-family: inherit;
+}
+
+.navbar__user-btn:hover {
+  background-color: var(--cor-primaria-tint);
+}
+
+.navbar__user-avatar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-display);
+  font-size: 14px;
+  font-weight: var(--peso-bold);
+  color: var(--branco);
+  background-color: var(--azul-900);
+  background-image: var(--grad-luxo);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.navbar__user-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar__user-btn svg {
+  color: var(--cor-texto-muted);
+  transition: transform var(--dur-rapida) var(--ease-suave);
+  flex-shrink: 0;
+}
+
+.navbar__user.is-open .navbar__user-btn svg {
+  transform: rotate(180deg);
+}
+
+/* Menu dropdown */
+.navbar__user .dropdown__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  padding: var(--esp-2);
+  background-color: var(--branco);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-xl);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity var(--dur-rapida) var(--ease-suave),
+    visibility var(--dur-rapida),
+    transform var(--dur-rapida) var(--ease-spring);
+  z-index: var(--z-dropdown);
+}
+
+.navbar__user.is-open .dropdown__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Itens do dropdown */
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: 0.6rem 0.75rem;
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  border-radius: var(--raio-md);
+  transition: all var(--dur-rapida) var(--ease-suave);
+  border: none;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.dropdown__item:hover {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+}
+
+.dropdown__item.is-danger:hover {
+  background-color: var(--erro-soft);
+  color: var(--erro);
+}
+
+.dropdown__item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.dropdown__divider {
+  height: 1px;
+  background-color: var(--cor-borda-suave);
+  margin: var(--esp-2) 0;
+}
+
+/* ==========================================================================
+   TOGGLE MOBILE (hamburger)
+   ========================================================================== */
+.navbar__toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--raio-full);
+  cursor: pointer;
+  color: var(--cor-texto);
+  transition: background-color var(--dur-rapida) var(--ease-suave);
+  flex-shrink: 0;
+}
+
+.navbar__toggle:hover {
+  background-color: var(--cinza-100);
+}
+
+.navbar__toggle-bar {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: var(--raio-full);
+  transition: background-color var(--dur-rapida) var(--ease-suave);
+}
+
+.navbar__toggle-bar::before,
+.navbar__toggle-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: var(--raio-full);
+  transition: transform var(--dur-media) var(--ease-spring);
+}
+
+.navbar__toggle-bar::before { top: -7px; }
+.navbar__toggle-bar::after  { top: 7px; }
+
+.navbar.is-menu-open .navbar__toggle-bar { background-color: transparent; }
+.navbar.is-menu-open .navbar__toggle-bar::before { transform: translateY(7px) rotate(45deg); }
+.navbar.is-menu-open .navbar__toggle-bar::after  { transform: translateY(-7px) rotate(-45deg); }
+
+/* Cor do toggle quando menu aberto em navbar transparente */
+.navbar.is-transparent.is-menu-open .navbar__toggle {
+  color: var(--cor-texto);
+}
+
+/* ==========================================================================
+   DRAWER MOBILE
+   ========================================================================== */
+.navbar__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85vw, 380px);
+  padding: calc(var(--altura-navbar) + var(--safe-top, 0px) + var(--esp-6)) var(--esp-6) var(--esp-8);
+  background-color: var(--branco);
+  box-shadow: -20px 0 60px rgba(11, 31, 77, 0.15);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
+  transition: transform var(--dur-lenta) var(--ease-expo);
+  z-index: calc(var(--z-navbar) + 2);
+}
+
+.navbar.is-menu-open .navbar__drawer {
+  transform: translateX(0);
+}
+
+.navbar__drawer-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.navbar__drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--esp-4);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto);
+  border-radius: var(--raio-md);
+  text-decoration: none;
+  transition: all var(--dur-rapida) var(--ease-suave);
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.navbar.is-menu-open .navbar__drawer-link {
+  animation: drawer-link-in 0.4s var(--ease-expo) forwards;
+}
+
+.navbar.is-menu-open .navbar__drawer-link:nth-child(1) { animation-delay: 0.10s; }
+.navbar.is-menu-open .navbar__drawer-link:nth-child(2) { animation-delay: 0.15s; }
+.navbar.is-menu-open .navbar__drawer-link:nth-child(3) { animation-delay: 0.20s; }
+.navbar.is-menu-open .navbar__drawer-link:nth-child(4) { animation-delay: 0.25s; }
+.navbar.is-menu-open .navbar__drawer-link:nth-child(5) { animation-delay: 0.30s; }
+.navbar.is-menu-open .navbar__drawer-link:nth-child(6) { animation-delay: 0.35s; }
+
+@keyframes drawer-link-in {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.navbar__drawer-link:hover,
+.navbar__drawer-link.is-active {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+  transform: translateX(4px);
+}
+
+.navbar__drawer-link svg {
+  width: 18px;
+  height: 18px;
+  color: var(--cor-texto-muted);
+  transition: color var(--dur-rapida), transform var(--dur-rapida);
+  flex-shrink: 0;
+}
+
+.navbar__drawer-link:hover svg {
+  color: var(--cor-primaria);
+  transform: translateX(4px);
+}
+
+.navbar__drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  margin-top: var(--esp-8);
+  padding-top: var(--esp-8);
+  border-top: 1px solid var(--cor-borda-suave);
+}
+
+/* ==========================================================================
+   OVERLAY
+   ========================================================================== */
+.navbar__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 31, 77, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-media) var(--ease-suave),
+    visibility var(--dur-media);
+  z-index: calc(var(--z-navbar) + 1);
+}
+
+.navbar.is-menu-open .navbar__overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .navbar__toggle,
+  .navbar__drawer,
+  .navbar__overlay {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .navbar__menu {
+    display: none;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__actions .navbar__desktop-only {
+    display: none;
+  }
+
+  .navbar__inner {
+    gap: var(--esp-4);
+  }
+
+  /* Drawer sobrepõe a navbar */
+  .navbar__drawer {
+    padding-top: calc(var(--altura-navbar-sm) + var(--esp-4));
+  }
+
+  .navbar.is-scrolled .navbar__drawer {
+    padding-top: calc(var(--altura-navbar-sm) + var(--esp-4));
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar__user {
+    display: none;
+  }
+
+  .navbar__logo-icon {
+    width: 42px;
+    height: 42px;
+    font-size: var(--fs-lg);
+  }
+
+  .navbar__logo-name {
+    font-size: var(--fs-md);
+  }
+
+  .navbar__icon-btn {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 479px) {
+  .navbar__logo-icon {
+    width: 38px;
+    height: 38px;
+    font-size: var(--fs-md);
+  }
+
+  .navbar__logo-name {
+    font-size: var(--fs-base);
+  }
+
+  .navbar__logo-tagline {
+    font-size: 9px;
+  }
+
+  .navbar__icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar__actions {
+    gap: var(--esp-1);
+  }
+
+  .navbar__drawer {
+    width: 90vw;
+  }
+}
+
+/* ==========================================================================
+   REDUZIR MOVIMENTO
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__link::after,
+  .navbar__submenu,
+  .navbar__drawer,
+  .navbar__overlay,
+  .navbar__toggle-bar::before,
+  .navbar__toggle-bar::after {
+    transition-duration: 0.01ms !important;
+  }
+
+  .navbar__drawer-link {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+@media print {
+  .navbar {
+    position: static;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    border-bottom: 1px solid #000;
+  }
+
+  .navbar__actions,
+  .navbar__toggle,
+  .navbar__drawer,
+  .navbar__overlay {
+    display: none !important;
+  }
+}
+/* ==========================================================================
+   ÍCONES MOBILE — User + Toggle (VISÍVEIS)
+   ========================================================================== */
+
+/* Esconde por padrão (só aparece em mobile) */
+.navbar__user-icon-mobile {
+  display: none;
+}
+
+/* Mobile: mostra o ícone de usuário */
+@media (max-width: 1023px) {
+  .navbar__user-icon-mobile {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: var(--cor-texto-suave);
+    background-color: transparent;
+    border-radius: var(--raio-full);
+    transition: all var(--dur-rapida) var(--ease-suave);
+  }
+
+  .navbar__user-icon-mobile:hover {
+    background-color: var(--cor-primaria-tint);
+    color: var(--cor-primaria);
+  }
+
+  /* Toggle (hamburger) DEVE aparecer em mobile */
+  .navbar__toggle {
+    display: flex !important;
+  }
+
+  /* Drawer do usuário não aparece em mobile */
+  .navbar__user {
+    display: none !important;
+  }
+
+  /* Botões desktop escondidos */
+  .navbar__actions .navbar__desktop-only {
+    display: none !important;
+  }
+}
+
+/* Desktop: esconde ícone mobile */
+@media (min-width: 1024px) {
+  .navbar__user-icon-mobile {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   HEADER DO DROPDOWN (nome + email)
+   ========================================================================== */
+.dropdown__header {
+  padding: var(--esp-3) var(--esp-4);
+  border-bottom: 1px solid var(--cor-borda-suave);
+  margin-bottom: var(--esp-2);
+}
+
+.dropdown__header strong {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-semibold);
+  color: var(--cor-texto);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown__header small {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--cor-texto-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

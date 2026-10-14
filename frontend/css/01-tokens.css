@@ -1,0 +1,406 @@
+/* ==========================================================================
+   DIOMAR_CS IMÓVEIS — DESIGN TOKENS
+   Fundação visual: cores, tipografia, espaçamento, sombras, movimento
+   Este arquivo NÃO contém estilos — apenas variáveis.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ========================================================================
+     CORES — AZUL INSTITUCIONAL
+     ======================================================================== */
+  --azul-950: #050D24;
+  --azul-900: #0B1F4D;
+  --azul-800: #132C6F;
+  --azul-700: #1E40AF;
+  --azul-600: #2563EB;
+  --azul-500: #3B82F6;
+  --azul-400: #60A5FA;
+  --azul-300: #93C5FD;
+  --azul-200: #BFDBFE;
+  --azul-100: #DBEAFE;
+  --azul-50:  #EFF6FF;
+
+  /* ========================================================================
+     CORES — DOURADO (acento de luxo)
+     ======================================================================== */
+  --ouro-950: #3D2C05;
+  --ouro-900: #6B4E09;
+  --ouro-800: #7A5910;
+  --ouro-700: #8B6914;
+  --ouro-600: #A57C1B;
+  --ouro-500: #B8860B;
+  --ouro-400: #D4A72C;
+  --ouro-300: #E0BC5F;
+  --ouro-200: #EBD491;
+  --ouro-100: #F5EDD3;
+  --ouro-50:  #FAF6E8;
+
+  /* ========================================================================
+     NEUTROS
+     ======================================================================== */
+  --branco:     #FFFFFF;
+  --cinza-50:   #F8FAFC;
+  --cinza-100:  #F1F5F9;
+  --cinza-200:  #E2E8F0;
+  --cinza-300:  #CBD5E1;
+  --cinza-400:  #94A3B8;
+  --cinza-500:  #64748B;
+  --cinza-600:  #475569;
+  --cinza-700:  #334155;
+  --cinza-800:  #1E293B;
+  --cinza-900:  #0F172A;
+  --cinza-950:  #020617;
+  --preto:      #000000;
+
+  /* ========================================================================
+     SEMÂNTICOS
+     ======================================================================== */
+  --sucesso:      #059669;
+  --sucesso-dark: #047857;
+  --sucesso-soft: #D1FAE5;
+  --sucesso-text: #047857;
+
+  --alerta:       #D97706;
+  --alerta-dark:  #B45309;
+  --alerta-soft:  #FEF3C7;
+  --alerta-text:  #92400E;
+
+  --erro:         #DC2626;
+  --erro-dark:    #B91C1C;
+  --erro-soft:    #FEE2E2;
+  --erro-text:    #991B1B;
+
+  --info:         #0891B2;
+  --info-dark:    #0E7490;
+  --info-soft:    #CFFAFE;
+  --info-text:    #155E75;
+
+  /* ========================================================================
+     ALIASES SEMÂNTICOS
+     ======================================================================== */
+  --cor-primaria:        var(--azul-700);
+  --cor-primaria-dark:   var(--azul-900);
+  --cor-primaria-escura: var(--azul-900);
+  --cor-primaria-clara:  var(--azul-500);
+  --cor-primaria-light:  var(--azul-500);
+  --cor-primaria-soft:   var(--azul-100);
+  --cor-primaria-tint:   var(--azul-50);
+
+  --cor-acento:          var(--ouro-500);
+  --cor-acento-dark:     var(--ouro-700);
+  --cor-acento-clara:    var(--ouro-400);
+  --cor-acento-soft:     var(--ouro-100);
+  --cor-acento-tint:     var(--ouro-50);
+
+  --cor-texto:           var(--cinza-900);
+  --cor-texto-suave:     var(--cinza-600);
+  --cor-texto-soft:      var(--cinza-600);
+  --cor-texto-muted:     var(--cinza-400);
+  --cor-texto-invertido: var(--branco);
+
+  --cor-borda:           var(--cinza-200);
+  --cor-borda-suave:     var(--cinza-100);
+  --cor-borda-soft:      var(--cinza-100);
+  --cor-borda-forte:     var(--cinza-300);
+
+  --bg-principal:        var(--branco);
+  --bg-secundario:       var(--cinza-50);
+  --bg-terciario:        var(--cinza-100);
+  --bg-alt:              var(--cinza-100);
+  --bg-escuro:           var(--azul-900);
+  --bg-escuro-alt:       var(--azul-950);
+
+  /* ========================================================================
+     GRADIENTES
+     ======================================================================== */
+  --grad-azul:       linear-gradient(135deg, var(--azul-900) 0%, var(--azul-700) 100%);
+  --grad-azul-claro: linear-gradient(135deg, var(--azul-600) 0%, var(--azul-400) 100%);
+  --grad-azul-soft:  linear-gradient(135deg, var(--azul-700) 0%, var(--azul-500) 100%);
+  --grad-ouro:       linear-gradient(135deg, var(--ouro-600) 0%, var(--ouro-400) 100%);
+  --grad-ouro-claro: linear-gradient(135deg, var(--ouro-500) 0%, var(--ouro-300) 100%);
+  --grad-hero:       linear-gradient(135deg, rgba(11, 31, 77, 0.92) 0%, rgba(19, 44, 111, 0.72) 50%, rgba(30, 64, 175, 0.35) 100%);
+  --grad-overlay:    linear-gradient(180deg, transparent 0%, rgba(11, 31, 77, 0.85) 100%);
+  --grad-glass:      linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  --grad-luxo:       linear-gradient(135deg, var(--azul-900) 0%, var(--azul-700) 45%, var(--ouro-600) 130%);
+
+  /* ========================================================================
+     TIPOGRAFIA
+     ======================================================================== */
+  --fonte-display:  'Fraunces', 'Playfair Display', Georgia, serif;
+  --fonte-serif:    'Playfair Display', Georgia, serif;
+  --fonte-sans:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fonte-primary:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --fonte-mono:     'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  /* Escala modular (1.25 — major third) */
+  --fs-3xs: 0.625rem;   /* 10px */
+  --fs-2xs: 0.6875rem;  /* 11px */
+  --fs-xs:  0.75rem;    /* 12px */
+  --fs-sm:  0.875rem;   /* 14px */
+  --fs-md:  1rem;       /* 16px */
+  --fs-base: 1rem;      /* alias para --fs-md */
+  --fs-lg:  1.125rem;   /* 18px */
+  --fs-xl:  1.25rem;    /* 20px */
+  --fs-2xl: 1.5rem;     /* 24px */
+  --fs-3xl: 1.875rem;   /* 30px */
+  --fs-4xl: 2.25rem;    /* 36px */
+  --fs-5xl: 3rem;       /* 48px */
+  --fs-6xl: 3.75rem;    /* 60px */
+  --fs-7xl: 4.5rem;     /* 72px */
+  --fs-8xl: 6rem;       /* 96px */
+
+  /* Pesos com aliases em inglês */
+  --peso-light:    300;
+  --fw-light:      300;
+  --peso-regular:  400;
+  --fw-regular:    400;
+  --peso-medium:   500;
+  --fw-medium:     500;
+  --peso-semibold: 600;
+  --fw-semibold:   600;
+  --peso-bold:     700;
+  --fw-bold:       700;
+  --peso-black:    900;
+
+  /* Line heights */
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+  --lh-loose:   1.85;
+
+  /* Letter spacing */
+  --ls-tighter: -0.04em;
+  --ls-tight:   -0.02em;
+  --ls-normal:  0em;
+  --ls-wide:    0.05em;
+  --ls-wider:   0.1em;
+  --ls-widest:  0.2em;
+
+  /* ========================================================================
+     ESPAÇAMENTO — escala 4px
+     ======================================================================== */
+  --esp-0:   0;
+  --esp-1:   0.25rem;   /* 4px */
+  --esp-2:   0.5rem;    /* 8px */
+  --esp-3:   0.75rem;   /* 12px */
+  --esp-4:   1rem;      /* 16px */
+  --esp-5:   1.25rem;   /* 20px */
+  --esp-6:   1.5rem;    /* 24px */
+  --esp-8:   2rem;      /* 32px */
+  --esp-10:  2.5rem;    /* 40px */
+  --esp-12:  3rem;      /* 48px */
+  --esp-16:  4rem;      /* 64px */
+  --esp-20:  5rem;      /* 80px */
+  --esp-24:  6rem;      /* 96px */
+  --esp-32:  8rem;      /* 128px */
+  --esp-40:  10rem;     /* 160px */
+  --esp-48:  12rem;     /* 192px */
+  --esp-64:  16rem;     /* 256px */
+
+  /* Aliases em inglês (para compatibilidade) */
+  --space-1:  var(--esp-1);
+  --space-2:  var(--esp-2);
+  --space-3:  var(--esp-3);
+  --space-4:  var(--esp-4);
+  --space-5:  var(--esp-5);
+  --space-6:  var(--esp-6);
+  --space-8:  var(--esp-8);
+  --space-10: var(--esp-10);
+  --space-12: var(--esp-12);
+  --space-16: var(--esp-16);
+  --space-20: var(--esp-20);
+  --space-24: var(--esp-24);
+
+  /* ========================================================================
+     RAIOS
+     ======================================================================== */
+  --raio-2xs:  2px;
+  --raio-xs:   4px;
+  --raio-sm:   6px;
+  --raio-md:   10px;
+  --raio-lg:   14px;
+  --raio-xl:   20px;
+  --raio-2xl:  28px;
+  --raio-3xl:  40px;
+  --raio-4xl:  56px;
+  --raio-full: 9999px;
+
+  /* Aliases em inglês */
+  --radius-xs:   var(--raio-xs);
+  --radius-sm:   var(--raio-sm);
+  --radius-md:   var(--raio-md);
+  --radius-lg:   var(--raio-lg);
+  --radius-xl:   var(--raio-xl);
+  --radius-2xl:  var(--raio-2xl);
+  --radius-3xl:  var(--raio-3xl);
+  --radius-full: var(--raio-full);
+
+  /* ========================================================================
+     SOMBRAS — sistema em camadas
+     ======================================================================== */
+  --sombra-xs:
+    0 1px 2px rgba(11, 31, 77, 0.05);
+
+  --sombra-sm:
+    0 1px 3px rgba(11, 31, 77, 0.06),
+    0 1px 2px rgba(11, 31, 77, 0.04);
+
+  --sombra-md:
+    0 4px 6px rgba(11, 31, 77, 0.04),
+    0 10px 20px rgba(11, 31, 77, 0.06);
+
+  --sombra-lg:
+    0 10px 25px rgba(11, 31, 77, 0.08),
+    0 20px 40px rgba(11, 31, 77, 0.06);
+
+  --sombra-xl:
+    0 20px 40px rgba(11, 31, 77, 0.10),
+    0 30px 60px rgba(11, 31, 77, 0.08);
+
+  --sombra-2xl:
+    0 30px 60px rgba(11, 31, 77, 0.12),
+    0 50px 100px rgba(11, 31, 77, 0.10);
+
+  --sombra-ouro:
+    0 10px 30px rgba(184, 134, 11, 0.22),
+    0 20px 60px rgba(184, 134, 11, 0.12);
+
+  --sombra-azul:
+    0 10px 30px rgba(30, 64, 175, 0.30),
+    0 20px 60px rgba(30, 64, 175, 0.18);
+
+  --sombra-inner:
+    inset 0 1px 2px rgba(11, 31, 77, 0.06);
+
+  --glow-azul:
+    0 0 0 4px rgba(30, 64, 175, 0.15);
+
+  --glow-ouro:
+    0 0 0 4px rgba(184, 134, 11, 0.20);
+
+  /* Aliases em inglês */
+  --shadow-xs:  var(--sombra-xs);
+  --shadow-sm:  var(--sombra-sm);
+  --shadow-md:  var(--sombra-md);
+  --shadow-lg:  var(--sombra-lg);
+  --shadow-xl:  var(--sombra-xl);
+  --shadow-2xl: var(--sombra-2xl);
+
+  /* ========================================================================
+     MOVIMENTO — curvas e durações
+     ======================================================================== */
+  --ease-suave:        cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-suave-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-expo:         cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-circ:         cubic-bezier(0, 0.55, 0.45, 1);
+  --ease-back:         cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --dur-instant: 120ms;
+  --dur-rapida:  250ms;
+  --dur-media:   400ms;
+  --dur-lenta:   600ms;
+  --dur-cinema:  900ms;
+  --dur-epica:   1400ms;
+
+  /* Aliases em inglês */
+  --ease-out:    var(--ease-suave);
+  --ease-in-out: var(--ease-suave-in-out);
+  --duration-fast:   var(--dur-rapida);
+  --duration-base:   var(--dur-media);
+  --duration-slow:   var(--dur-lenta);
+  --duration-slower: var(--dur-cinema);
+
+  /* Transições prontas para reutilizar */
+  --trans-rapida: all var(--dur-rapida) var(--ease-suave);
+  --trans-media:  all var(--dur-media) var(--ease-suave);
+  --trans-lenta:  all var(--dur-lenta) var(--ease-suave);
+
+  /* ========================================================================
+     LAYOUT
+     ======================================================================== */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1440px;
+  --container-max: 1440px;
+  --container-wide: 1440px;
+  --container-pad: clamp(1rem, 4vw, 2rem);
+
+  --altura-navbar:    80px;
+  --altura-navbar-sm: 68px;
+  --largura-sidebar:  280px;
+  --sidebar-width:    var(--largura-sidebar);
+
+  /* Aliases em inglês */
+  --navbar-height: var(--altura-navbar);
+
+  /* ========================================================================
+     Z-INDEX
+     ======================================================================== */
+  --z-fundo:      -1;
+  --z-base:        0;
+  --z-elevado:    10;
+  --z-dropdown:  500;
+  --z-sticky:    100;
+  --z-navbar:   1000;
+  --z-overlay:  1500;
+  --z-modal:    2000;
+  --z-toast:    3000;
+  --z-tooltip:  4000;
+  --z-cursor:   9999;
+  --z-loader:  10000;
+
+  /* ========================================================================
+     ASPECT RATIOS
+     ======================================================================== */
+  --ratio-square: 1 / 1;
+  --ratio-video:  16 / 9;
+  --ratio-photo:  4 / 3;
+  --ratio-portrait: 3 / 4;
+  --ratio-cover:  4 / 5;
+}
+
+/* ==========================================================================
+   TEMA ESCURO — quando .dark for adicionado ao <html>
+   ========================================================================== */
+.dark {
+  color-scheme: dark;
+
+  --bg-principal:  var(--azul-950);
+  --bg-secundario: var(--azul-900);
+  --bg-terciario:  var(--azul-800);
+  --bg-escuro:     var(--azul-900);
+
+  --cor-texto:         var(--cinza-100);
+  --cor-texto-suave:   var(--cinza-300);
+  --cor-texto-soft:    var(--cinza-300);
+  --cor-texto-muted:   var(--cinza-400);
+  --cor-texto-invertido: var(--azul-950);
+
+  --cor-borda:       rgba(255, 255, 255, 0.08);
+  --cor-borda-suave: rgba(255, 255, 255, 0.04);
+  --cor-borda-soft:  rgba(255, 255, 255, 0.04);
+  --cor-borda-forte: rgba(255, 255, 255, 0.16);
+
+  --cor-primaria-tint: rgba(59, 130, 246, 0.12);
+  --cor-primaria-soft: rgba(59, 130, 246, 0.20);
+}
+
+/* ==========================================================================
+   PREFERÊNCIA DO USUÁRIO — Reduzir movimento (respeitado globalmente)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0.01ms;
+    --dur-rapida:  0.01ms;
+    --dur-media:   0.01ms;
+    --dur-lenta:   0.01ms;
+    --dur-cinema:  0.01ms;
+    --dur-epica:   0.01ms;
+  }
+}

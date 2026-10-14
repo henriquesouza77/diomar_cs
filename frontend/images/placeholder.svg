@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Imagem não disponível">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#EFF6FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
+    </linearGradient>
+    <linearGradient id="iconGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#BFDBFE" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <!-- Fundo -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+
+  <!-- Ícone central (casa) -->
+  <g transform="translate(400 260)" fill="none" stroke="url(#iconGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M -80 10 L 0 -60 L 80 10" />
+    <path d="M -60 0 L -60 80 L 60 80 L 60 0" />
+    <rect x="-15" y="35" width="30" height="45" rx="2"/>
+    <circle cx="35" cy="40" r="6" fill="url(#iconGradient)" stroke="none"/>
+  </g>
+
+  <!-- Logo textual -->
+  <text x="400" y="440" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="34" font-weight="700"
+        fill="#1E3A8A" letter-spacing="1">
+    DIOMAR_CS
+  </text>
+  <text x="400" y="472" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="14" font-weight="600" letter-spacing="6"
+        fill="#3B82F6">
+    IMÓVEIS
+  </text>
+
+  <!-- Texto inferior -->
+  <text x="400" y="540" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="16"
+        fill="#64748B">
+    Imagem não disponível
+  </text>
+</svg>

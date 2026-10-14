@@ -1,0 +1,14 @@
+# /diomar-cs/frontend/.htaccess
+Options -Indexes
+
+<IfModule mod_headers.c>
+    # Evita que o site seja embutido em iframes externos
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Bloqueia acesso direto a componentes PHP (devem ser incluídos, não acessados)
+<FilesMatch "^(header|footer|property-card|property-card-skeleton|empty-state|pagination)\.php$">
+    <If "%{REQUEST_URI} !~ m#/admin/#">
+        Require all denied
+    </If>
+</FilesMatch>

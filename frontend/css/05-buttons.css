@@ -1,0 +1,735 @@
+/* ==========================================================================
+   BOTÕES — Sistema completo com variantes, tamanhos, estados e animações
+   ========================================================================== */
+
+/* ==========================================================================
+   BOTÃO BASE
+   ========================================================================== */
+.btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  vertical-align: middle;
+
+  /* Tipografia */
+  font-family: var(--fonte-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-semibold);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  text-transform: none;
+  text-align: center;
+
+  /* Espaçamento */
+  padding: 0.875rem 1.75rem;
+  min-height: 44px;
+
+  /* Aparência */
+  border: 1.5px solid transparent;
+  border-radius: var(--raio-full);
+  background: transparent;
+  color: var(--cor-texto);
+
+  /* Comportamento */
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+
+  /* Transições */
+  transition:
+    transform var(--dur-rapida) var(--ease-suave),
+    background-color var(--dur-rapida) var(--ease-suave),
+    border-color var(--dur-rapida) var(--ease-suave),
+    color var(--dur-rapida) var(--ease-suave),
+    box-shadow var(--dur-media) var(--ease-suave);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 3px;
+}
+
+.btn:disabled,
+.btn.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Ícone dentro do botão */
+.btn svg,
+.btn .btn__icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Conteúdo interno (para loading state preservar tamanho) */
+.btn__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  transition: opacity var(--dur-rapida) var(--ease-suave);
+}
+
+/* ==========================================================================
+   VARIANTE: PRIMARY — Azul royal com shimmer
+   ========================================================================== */
+.btn-primary {
+  background-color: var(--azul-700);
+  background-image: var(--grad-azul);
+  color: var(--branco);
+  box-shadow: var(--sombra-azul);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 70%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.7s var(--ease-expo);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-primary > * {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -10px rgba(30, 64, 175, 0.5);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(150%);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ==========================================================================
+   VARIANTE: SECONDARY — Fundo suave azul
+   ========================================================================== */
+.btn-secondary {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+  border-color: transparent;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--cor-primaria-soft);
+  color: var(--cor-primaria-dark, var(--azul-900));
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-md);
+}
+
+/* ==========================================================================
+   VARIANTE: OUTLINE — Borda sólida com preenchimento no hover
+   ========================================================================== */
+.btn-outline {
+  background-color: transparent;
+  color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+  position: relative;
+  z-index: 0;
+}
+
+.btn-outline::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px; /* cobre a borda */
+  background: var(--grad-azul);
+  border-radius: inherit;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--dur-media) var(--ease-expo);
+  z-index: -1;
+}
+
+.btn-outline:hover:not(:disabled) {
+  color: var(--branco);
+  border-color: var(--cor-primaria);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-azul);
+}
+
+.btn-outline:hover::before {
+  transform: scaleY(1);
+}
+
+/* Outline em fundo escuro (variante clara) */
+.btn-outline-light {
+  background-color: transparent;
+  color: var(--branco);
+  border-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 0;
+}
+
+.btn-outline-light::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  background: var(--branco);
+  border-radius: inherit;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--dur-media) var(--ease-expo);
+  z-index: -1;
+}
+
+.btn-outline-light:hover:not(:disabled) {
+  color: var(--azul-900);
+  border-color: var(--branco);
+  transform: translateY(-2px);
+}
+
+.btn-outline-light:hover::before {
+  transform: scaleY(1);
+}
+
+/* ==========================================================================
+   VARIANTE: GHOST — Sem fundo, hover sutil
+   ========================================================================== */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--cor-texto-suave);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--cinza-100);
+  color: var(--cor-primaria);
+}
+
+/* ==========================================================================
+   VARIANTE: WHITE — Fundo branco
+   ========================================================================== */
+.btn-white {
+  background-color: var(--branco);
+  color: var(--cor-primaria);
+  box-shadow: var(--sombra-lg);
+}
+
+.btn-white:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-xl);
+  color: var(--azul-900);
+}
+
+/* ==========================================================================
+   VARIANTE: GOLD — Dourado premium
+   ========================================================================== */
+.btn-gold {
+  background-color: var(--ouro-500);
+  background-image: var(--grad-ouro);
+  color: var(--branco);
+  box-shadow: var(--sombra-ouro);
+  position: relative;
+}
+
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.7s var(--ease-expo);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-gold > * {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-gold:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -10px rgba(184, 134, 11, 0.55);
+}
+
+.btn-gold:hover::before {
+  transform: translateX(150%);
+}
+
+/* ==========================================================================
+   VARIANTE: DARK — Azul escuro
+   ========================================================================== */
+.btn-dark {
+  background-color: var(--azul-900);
+  color: var(--branco);
+}
+
+.btn-dark:hover:not(:disabled) {
+  background-color: var(--azul-950);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-lg);
+}
+
+/* ==========================================================================
+   VARIANTE: SUCCESS
+   ========================================================================== */
+.btn-success {
+  background-color: var(--sucesso);
+  color: var(--branco);
+  box-shadow: 0 8px 20px -6px rgba(5, 150, 105, 0.4);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--sucesso-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px rgba(5, 150, 105, 0.5);
+}
+
+/* ==========================================================================
+   VARIANTE: DANGER
+   ========================================================================== */
+.btn-danger {
+  background-color: var(--erro);
+  color: var(--branco);
+  box-shadow: 0 8px 20px -6px rgba(220, 38, 38, 0.4);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--erro-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px rgba(220, 38, 38, 0.5);
+}
+
+/* ==========================================================================
+   VARIANTE: WHATSAPP
+   ========================================================================== */
+.btn-whatsapp {
+  background-color: #25D366;
+  color: var(--branco);
+  box-shadow: 0 8px 24px -6px rgba(37, 211, 102, 0.5);
+}
+
+.btn-whatsapp:hover:not(:disabled) {
+  background-color: #1EBE5A;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px rgba(37, 211, 102, 0.6);
+}
+
+/* ==========================================================================
+   VARIANTE: LINK — Texto com underline
+   ========================================================================== */
+.btn-link {
+  padding: 0;
+  min-height: auto;
+  background: none;
+  color: var(--cor-primaria);
+  font-weight: var(--peso-semibold);
+  border-radius: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.btn-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform var(--dur-media) var(--ease-suave);
+}
+
+.btn-link:hover:not(:disabled) {
+  color: var(--cor-acento);
+  transform: none;
+}
+
+.btn-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.btn-link:active:not(:disabled) {
+  transform: none;
+}
+
+/* ==========================================================================
+   VARIANTE: ICON — Botão circular apenas com ícone
+   ========================================================================== */
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  min-height: auto;
+  border-radius: var(--raio-full);
+  color: var(--cor-texto-suave);
+  background-color: transparent;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-icon:hover:not(:disabled) {
+  background-color: var(--cor-primaria-tint);
+  color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+.btn-icon--outline {
+  border: 1.5px solid var(--cor-borda);
+}
+
+.btn-icon--outline:hover {
+  border-color: var(--cor-primaria);
+}
+
+/* Tamanhos de botão ícone */
+.btn-icon-sm {
+  width: 34px;
+  height: 34px;
+}
+
+.btn-icon-sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-icon-lg {
+  width: 56px;
+  height: 56px;
+}
+
+.btn-icon-lg svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ==========================================================================
+   TAMANHOS
+   ========================================================================== */
+.btn-xs {
+  padding: 0.5rem 1rem;
+  font-size: var(--fs-xs);
+  min-height: 32px;
+  gap: var(--esp-1);
+}
+
+.btn-xs svg {
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.btn-sm {
+  padding: 0.625rem 1.25rem;
+  font-size: var(--fs-sm);
+  min-height: 38px;
+}
+
+.btn-lg {
+  padding: 1.125rem 2.25rem;
+  font-size: var(--fs-md);
+  min-height: 56px;
+}
+
+.btn-xl {
+  padding: 1.375rem 2.75rem;
+  font-size: var(--fs-lg);
+  min-height: 64px;
+}
+
+/* ==========================================================================
+   BLOCK — Largura total
+   ========================================================================== */
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* ==========================================================================
+   RIPPLE — Efeito de onda ao clicar
+   ========================================================================== */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: btn-ripple 0.7s var(--ease-suave);
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes btn-ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   LOADING — Estado de carregamento
+   ========================================================================== */
+.btn.is-loading {
+  pointer-events: none;
+  position: relative;
+  color: transparent !important;
+}
+
+.btn.is-loading > * {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn.is-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  z-index: 4;
+}
+
+/* Spinner escuro para botões claros */
+.btn-outline.is-loading::after,
+.btn-ghost.is-loading::after,
+.btn-white.is-loading::after,
+.btn-link.is-loading::after {
+  border-color: rgba(30, 64, 175, 0.3);
+  border-top-color: var(--cor-primaria);
+}
+
+.btn-secondary.is-loading::after {
+  border-color: rgba(30, 64, 175, 0.3);
+  border-top-color: var(--cor-primaria);
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   MAGNETIC — Efeito ímã (JS move o botão ao hover)
+   ========================================================================== */
+.btn-magnetic {
+  will-change: transform;
+  transition: transform var(--dur-media) var(--ease-spring);
+}
+
+/* ==========================================================================
+   GRUPO DE BOTÕES
+   ========================================================================== */
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  align-items: center;
+}
+
+.btn-group--tight {
+  gap: var(--esp-2);
+}
+
+.btn-group--full {
+  display: flex;
+  width: 100%;
+}
+
+.btn-group--full .btn {
+  flex: 1;
+}
+
+/* ==========================================================================
+   BOTÃO COM ANEL CIRCULAR (para CTAs especiais)
+   ========================================================================== */
+.btn-ring {
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+.btn-ring::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.6;
+  transition:
+    opacity var(--dur-rapida) var(--ease-suave),
+    transform var(--dur-rapida) var(--ease-spring);
+  pointer-events: none;
+}
+
+.btn-ring:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Variante com ponto dourado dentro do anel */
+.btn-ring--gold::before {
+  border-color: var(--cor-acento);
+  background: radial-gradient(circle at center,
+    var(--cor-acento) 0%,
+    var(--cor-acento) 30%,
+    transparent 30%);
+}
+
+/* ==========================================================================
+   UTILITÁRIOS DE BOTÃO
+   ========================================================================== */
+.btn-full {
+  display: flex;
+  width: 100%;
+}
+
+.btn-round {
+  border-radius: var(--raio-full);
+  padding: 0.875rem;
+  min-height: auto;
+}
+
+/* Botão com brilho contínuo */
+.btn-glow {
+  position: relative;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: var(--grad-ouro);
+  opacity: 0;
+  z-index: -1;
+  filter: blur(14px);
+  transition: opacity var(--dur-media) var(--ease-suave);
+  pointer-events: none;
+}
+
+.btn-glow:hover::after {
+  opacity: 0.65;
+}
+
+/* Botão com fundo gradiente animado (para CTA especial) */
+.btn-shine {
+  background-size: 200% 200%;
+  animation: btn-gradient-shift 4s ease infinite;
+}
+
+@keyframes btn-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Botão com contador/badge integrado */
+.btn-badge {
+  position: relative;
+}
+
+.btn-badge__count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--erro);
+  color: var(--branco);
+  font-size: 10px;
+  font-weight: var(--peso-bold);
+  border-radius: var(--raio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-principal);
+  z-index: 5;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 767px) {
+  .btn-lg {
+    padding: 1rem 1.75rem;
+    font-size: var(--fs-sm);
+    min-height: 50px;
+  }
+
+  .btn-xl {
+    padding: 1.125rem 2rem;
+    font-size: var(--fs-md);
+    min-height: 54px;
+  }
+
+  .btn-group {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+
+  .btn-group--tight {
+    flex-direction: row;
+  }
+
+  .btn-group--tight .btn {
+    width: auto;
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+@media print {
+  .btn {
+    background: none !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    padding: 0.25rem 0.5rem;
+  }
+}

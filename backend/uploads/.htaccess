@@ -1,0 +1,20 @@
+# /diomar-cs/backend/uploads/.htaccess
+# NUNCA permita execução de scripts na pasta de uploads
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|pl|py|jsp|asp|htm|html|shtml|sh|cgi)$">
+    Require all denied
+</FilesMatch>
+
+# Impede que o Apache processe PHP aqui
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# Apenas imagens são acessíveis
+Options -Indexes

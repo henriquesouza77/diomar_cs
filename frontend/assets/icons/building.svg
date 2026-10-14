@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8 44V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v38"/>
+  <path d="M26 14h12a2 2 0 0 1 2 2v28"/>
+  <line x1="4" y1="44" x2="44" y2="44"/>
+  <line x1="14" y1="12" x2="14" y2="12.01"/>
+  <line x1="20" y1="12" x2="20" y2="12.01"/>
+  <line x1="14" y1="18" x2="14" y2="18.01"/>
+  <line x1="20" y1="18" x2="20" y2="18.01"/>
+  <line x1="14" y1="24" x2="14" y2="24.01"/>
+  <line x1="20" y1="24" x2="20" y2="24.01"/>
+  <line x1="14" y1="30" x2="14" y2="30.01"/>
+  <line x1="20" y1="30" x2="20" y2="30.01"/>
+  <line x1="32" y1="22" x2="32" y2="22.01"/>
+  <line x1="32" y1="28" x2="32" y2="28.01"/>
+  <line x1="32" y1="34" x2="32" y2="34.01"/>
+  <path d="M13 44v-6h6v6"/>
+</svg>

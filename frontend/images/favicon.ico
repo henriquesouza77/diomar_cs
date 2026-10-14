@@ -1,0 +1,4 @@
+<link rel="icon" type="image/svg+xml" href="<?= $base ?>/frontend/images/favicon.svg">
+<link rel="alternate icon" href="<?= $base ?>/frontend/images/favicon.ico">
+<link rel="mask-icon" href="<?= $base ?>/frontend/images/favicon.svg" color="#1E3A8A">
+<link rel="apple-touch-icon" href="<?= $base ?>/frontend/images/apple-touch-icon.png">

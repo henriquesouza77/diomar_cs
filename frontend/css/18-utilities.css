@@ -1,0 +1,383 @@
+/* ==========================================================================
+   UTILITIES — Helpers de última camada
+   Esta camada deve ser a ULTIMA a carregar.
+   ========================================================================== */
+
+/* ==========================================================================
+   ACESSIBILIDADE — Screen reader only
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Variante: volta a aparecer ao receber foco */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link — primeiro elemento do body */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--esp-4);
+  padding: var(--esp-3) var(--esp-5);
+  background-color: var(--cor-primaria);
+  color: var(--branco);
+  border-radius: var(--raio-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-semibold);
+  text-decoration: none;
+  z-index: var(--z-toast);
+  transition: top var(--dur-rapida) var(--ease-suave);
+}
+
+.skip-link:focus {
+  top: var(--esp-4);
+}
+
+/* ==========================================================================
+   VISIBILIDADE RESPONSIVA
+   Nota: usa `revert` para não forçar display (evita quebrar inline-flex, etc)
+   ========================================================================== */
+.desktop-only { display: none !important; }
+.mobile-only  { display: revert; }
+
+@media (min-width: 768px) {
+  .tablet-only { display: revert; }
+}
+
+@media (min-width: 1024px) {
+  .desktop-only { display: revert !important; }
+  .mobile-only  { display: none !important; }
+  .tablet-only  { display: none !important; }
+}
+
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-tablet { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* ==========================================================================
+   STACK — empilhamento vertical com gap real
+   ========================================================================== */
+.stack      { display: flex; flex-direction: column; gap: var(--esp-4); }
+.stack-1    { display: flex; flex-direction: column; gap: var(--esp-1); }
+.stack-2    { display: flex; flex-direction: column; gap: var(--esp-2); }
+.stack-3    { display: flex; flex-direction: column; gap: var(--esp-3); }
+.stack-4    { display: flex; flex-direction: column; gap: var(--esp-4); }
+.stack-6    { display: flex; flex-direction: column; gap: var(--esp-6); }
+.stack-8    { display: flex; flex-direction: column; gap: var(--esp-8); }
+.stack-12   { display: flex; flex-direction: column; gap: var(--esp-12); }
+
+/* Compat: se você ainda usa `> * + *`, funciona */
+.stack > * + *   { margin-top: 0; }
+
+/* ==========================================================================
+   CLUSTER — grupo horizontal com wrap
+   ========================================================================== */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  align-items: center;
+}
+
+.cluster-sm      { gap: var(--esp-2); }
+.cluster-lg      { gap: var(--esp-6); }
+.cluster-center  { justify-content: center; }
+.cluster-between { justify-content: space-between; }
+.cluster-start   { justify-content: flex-start; }
+.cluster-end     { justify-content: flex-end; }
+
+/* ==========================================================================
+   CENTER
+   ========================================================================== */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-x {
+  display: flex;
+  justify-content: center;
+}
+
+.center-y {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   DIVISOR
+   ========================================================================== */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+  margin: var(--esp-6) 0;
+  color: var(--cor-texto-muted);
+  font-size: var(--fs-xs);
+  font-weight: var(--peso-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--cor-borda);
+}
+
+.divider--plain {
+  height: 1px;
+  background-color: var(--cor-borda);
+  margin: var(--esp-6) 0;
+}
+
+.divider--vertical {
+  width: 1px;
+  height: 100%;
+  min-height: 20px;
+  background-color: var(--cor-borda);
+  margin-inline: var(--esp-4);
+  align-self: stretch;
+}
+
+/* ==========================================================================
+   ESCONDE QUANDO VAZIO (sem texto ou filhos)
+   ========================================================================== */
+:empty:not(img):not(svg):not(canvas):not(iframe):not(video):not(audio):not(embed):not(object):not(input):not(textarea):not(select):not(hr):not(br) {
+  display: none;
+}
+
+/* ==========================================================================
+   FOCUS
+   ========================================================================== */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 3px;
+  border-radius: var(--raio-xs);
+}
+
+/* Remove outline padrão (usar com cuidado) */
+.no-outline:focus {
+  outline: none;
+}
+
+/* ==========================================================================
+   CURSOR
+   ========================================================================== */
+.cursor-pointer   { cursor: pointer; }
+.cursor-default   { cursor: default; }
+.cursor-not-allowed { cursor: not-allowed; }
+.cursor-move      { cursor: move; }
+.cursor-grab      { cursor: grab; }
+.cursor-grabbing  { cursor: grabbing; }
+.cursor-text      { cursor: text; }
+.cursor-wait      { cursor: wait; }
+.cursor-help      { cursor: help; }
+
+/* ==========================================================================
+   POINTER EVENTS
+   ========================================================================== */
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+
+/* ==========================================================================
+   SELEÇÃO
+   ========================================================================== */
+.select-none { user-select: none; -webkit-user-select: none; }
+.select-auto { user-select: auto; -webkit-user-select: auto; }
+.select-all  { user-select: all; -webkit-user-select: all; }
+.select-text { user-select: text; -webkit-user-select: text; }
+
+/* ==========================================================================
+   TRANSFORMS UTILITÁRIOS
+   ========================================================================== */
+.translate-y-1 { transform: translateY(4px); }
+.translate-y-2 { transform: translateY(8px); }
+.translate-y-3 { transform: translateY(12px); }
+.translate-x-1 { transform: translateX(4px); }
+.translate-x-2 { transform: translateX(8px); }
+.translate-x-3 { transform: translateX(12px); }
+.rotate-90     { transform: rotate(90deg); }
+.rotate-180    { transform: rotate(180deg); }
+.rotate-270    { transform: rotate(270deg); }
+.scale-0       { transform: scale(0); }
+.scale-50      { transform: scale(0.5); }
+.scale-90      { transform: scale(0.9); }
+.scale-95      { transform: scale(0.95); }
+.scale-100     { transform: scale(1); }
+.scale-105     { transform: scale(1.05); }
+.scale-110     { transform: scale(1.1); }
+
+/* ==========================================================================
+   ISOLATE / STACKING
+   ========================================================================== */
+.isolate          { isolation: isolate; }
+.isolate-none     { isolation: auto; }
+
+/* ==========================================================================
+   BACKDROP
+   ========================================================================== */
+.backdrop-blur-sm { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.backdrop-blur-lg { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+
+/* ==========================================================================
+   FILTROS
+   ========================================================================== */
+.grayscale       { filter: grayscale(100%); }
+.grayscale-0     { filter: grayscale(0); }
+.blur-sm         { filter: blur(4px); }
+.blur-md         { filter: blur(8px); }
+.blur-none       { filter: none; }
+
+/* ==========================================================================
+   TRUNCATE HELPERS
+   ========================================================================== */
+.truncate        { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-break      { overflow-wrap: break-word; word-break: break-word; }
+.text-break-all  { word-break: break-all; }
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3,
+.line-clamp-4,
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-1 { -webkit-line-clamp: 1; line-clamp: 1; }
+.line-clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.line-clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+.line-clamp-4 { -webkit-line-clamp: 4; line-clamp: 4; }
+.line-clamp-5 { -webkit-line-clamp: 5; line-clamp: 5; }
+
+/* ==========================================================================
+   ASPECT RATIOS (fallback — principais estão em 04-layout)
+   ========================================================================== */
+.aspect-square   { aspect-ratio: 1 / 1; }
+.aspect-video    { aspect-ratio: 16 / 9; }
+.aspect-photo    { aspect-ratio: 4 / 3; }
+.aspect-portrait { aspect-ratio: 3 / 4; }
+.aspect-cover    { aspect-ratio: 4 / 5; }
+
+/* ==========================================================================
+   OPACITY
+   ========================================================================== */
+.opacity-0    { opacity: 0; }
+.opacity-25   { opacity: 0.25; }
+.opacity-50   { opacity: 0.5; }
+.opacity-60   { opacity: 0.6; }
+.opacity-75   { opacity: 0.75; }
+.opacity-100  { opacity: 1; }
+
+/* ==========================================================================
+   VISIBILITY
+   ========================================================================== */
+.invisible { visibility: hidden; }
+.visible   { visibility: visible; }
+
+/* ==========================================================================
+   Z-INDEX HELPERS
+   ========================================================================== */
+.z-0        { z-index: 0; }
+.z-10       { z-index: 10; }
+.z-20       { z-index: 20; }
+.z-30       { z-index: 30; }
+.z-40       { z-index: 40; }
+.z-50       { z-index: 50; }
+.z-sticky   { z-index: var(--z-sticky); }
+.z-dropdown { z-index: var(--z-dropdown); }
+.z-navbar   { z-index: var(--z-navbar); }
+.z-modal    { z-index: var(--z-modal); }
+.z-toast    { z-index: var(--z-toast); }
+.z-cursor   { z-index: var(--z-cursor); }
+
+/* ==========================================================================
+   TEXT HELPERS (complementares)
+   ========================================================================== */
+.text-wrap       { white-space: normal; }
+.text-nowrap     { white-space: nowrap; }
+.text-pre        { white-space: pre; }
+.text-pre-line   { white-space: pre-line; }
+.text-pre-wrap   { white-space: pre-wrap; }
+
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+
+/* ==========================================================================
+   ANIMATION UTILITY (fora do 17-animations)
+   ========================================================================== */
+.animate-none { animation: none !important; }
+
+/* ==========================================================================
+   DEBUG — adicione `.debug` no `<body>` para visualizar contornos
+   ========================================================================== */
+.debug *,
+.debug *::before,
+.debug *::after {
+  outline: 1px solid rgba(255, 0, 0, 0.25);
+}
+
+.debug .container {
+  outline: 2px solid rgba(0, 0, 255, 0.4);
+  outline-offset: -2px;
+}
+
+.debug .grid,
+.debug .flex {
+  background-color: rgba(30, 64, 175, 0.03);
+}
+
+/* ==========================================================================
+   REDUCED MOTION — desabilita utilitários de animação
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .animate-none,
+  [class*="animate-"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT — utilidades de impressão
+   ========================================================================== */
+@media print {
+  .no-print  { display: none !important; }
+  .print-only { display: block !important; }
+}
+
+.print-only { display: none; }

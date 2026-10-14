@@ -1,0 +1,13 @@
+# Bloqueia acesso direto a arquivos sensíveis
+<FilesMatch "^(?!index\.php$).*\.(php|env|log|sql|md)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(config|core|models|services|controllers|middleware|routes|helpers)/">
+    Require all denied
+</FilesMatch>
+
+# Permite apenas uploads de imagens
+<FilesMatch "\.(jpg|jpeg|png|webp)$">
+    Require all granted
+</FilesMatch>

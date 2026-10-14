@@ -1,0 +1,95 @@
+# ================================================================
+# DIOMAR_CS IMÓVEIS — Configuração raiz Apache
+# ================================================================
+
+# ----------------------------------------------------------------
+# Segurança: desabilita listagem de diretórios
+# ----------------------------------------------------------------
+Options -Indexes
+
+# ----------------------------------------------------------------
+# Charset padrão
+# ----------------------------------------------------------------
+AddDefaultCharset UTF-8
+
+# ----------------------------------------------------------------
+# Redirecionamentos amigáveis
+# ----------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /diomar-cs/
+
+    # Bloqueia acesso direto a arquivos sensíveis
+    RewriteRule ^backend/config/ - [F,L]
+    RewriteRule ^backend/core/ - [F,L]
+    RewriteRule ^backend/models/ - [F,L]
+    RewriteRule ^backend/services/ - [F,L]
+    RewriteRule ^backend/controllers/ - [F,L]
+    RewriteRule ^backend/middleware/ - [F,L]
+    RewriteRule ^backend/routes/ - [F,L]
+    RewriteRule ^backend/helpers/ - [F,L]
+
+    # Bloqueia arquivos de sistema
+    RewriteRule \.(sql|log|md|env|ini|conf)$ - [F,L]
+
+    # Rota amigável: /api/rota → /backend/api/index.php?route=rota
+    RewriteRule ^api/(.*)$ backend/api/index.php?route=$1 [QSA,L]
+</IfModule>
+
+# ----------------------------------------------------------------
+# Headers de segurança
+# ----------------------------------------------------------------
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # Remove assinatura do servidor
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+</IfModule>
+
+# ----------------------------------------------------------------
+# Compressão GZIP
+# ----------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/xml application/rss+xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ----------------------------------------------------------------
+# Cache do navegador para assets estáticos
+# ----------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg       "access plus 1 month"
+    ExpiresByType image/png        "access plus 1 month"
+    ExpiresByType image/webp       "access plus 1 month"
+    ExpiresByType image/svg+xml    "access plus 1 month"
+    ExpiresByType image/x-icon     "access plus 1 year"
+    ExpiresByType text/css         "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType font/woff2       "access plus 1 year"
+</IfModule>
+
+# ----------------------------------------------------------------
+# Proteção do arquivo .htaccess e arquivos ocultos
+# ----------------------------------------------------------------
+<FilesMatch "^\.ht">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(sql|log|md|env|ini|conf|json|lock)$">
+    <If "%{REQUEST_URI} !~ m#^/diomar-cs/frontend/#">
+        Require all denied
+    </If>
+</FilesMatch>
+
+# ----------------------------------------------------------------
+# Página de erro personalizada (opcional)
+# ----------------------------------------------------------------
+# ErrorDocument 404 /diomar-cs/frontend/pages/404.php
+# ErrorDocument 500 /diomar-cs/frontend/pages/500.php

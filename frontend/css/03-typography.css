@@ -1,0 +1,763 @@
+/* ==========================================================================
+   TIPOGRAFIA — Escala, hierarquia e estilos de texto
+   ========================================================================== */
+
+/* ==========================================================================
+   BODY BASE
+   ========================================================================== */
+body {
+  font-family: var(--fonte-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--peso-regular);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-normal);
+  color: var(--cor-texto);
+  background-color: var(--bg-principal);
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  font-variant-numeric: proportional-nums;
+  font-optical-sizing: auto;
+}
+
+/* ==========================================================================
+   HEADINGS — escala fluida com clamp()
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--fonte-display);
+  font-weight: var(--peso-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--cor-texto);
+  font-variation-settings: 'opsz' 144;
+  text-wrap: balance;
+}
+
+h1, .h1 {
+  font-size: clamp(2.25rem, 5vw + 1rem, var(--fs-7xl));
+  font-weight: var(--peso-bold);
+  letter-spacing: var(--ls-tighter);
+  line-height: 1.05;
+}
+
+h2, .h2 {
+  font-size: clamp(1.875rem, 3.5vw + 1rem, var(--fs-5xl));
+  font-weight: var(--peso-semibold);
+  line-height: 1.1;
+}
+
+h3, .h3 {
+  font-size: clamp(1.5rem, 2.5vw + 1rem, var(--fs-4xl));
+  font-weight: var(--peso-semibold);
+  line-height: 1.15;
+}
+
+h4, .h4 {
+  font-size: clamp(1.25rem, 1.5vw + 1rem, var(--fs-3xl));
+  font-weight: var(--peso-semibold);
+  line-height: 1.2;
+}
+
+h5, .h5 {
+  font-size: var(--fs-2xl);
+  font-weight: var(--peso-semibold);
+  line-height: 1.25;
+}
+
+h6, .h6 {
+  font-size: var(--fs-xl);
+  font-weight: var(--peso-semibold);
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   PARÁGRAFOS
+   ========================================================================== */
+p {
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  color: var(--cor-texto-suave);
+  text-wrap: pretty;
+}
+
+p + p {
+  margin-top: var(--esp-4);
+}
+
+/* Parágrafo destaque (lead) */
+.lead,
+p.lead {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--cor-texto-suave);
+  font-weight: var(--peso-regular);
+}
+
+/* Largura de leitura confortável — usar como classe */
+.text-readable {
+  max-width: 72ch;
+}
+
+.text-readable-sm {
+  max-width: 55ch;
+}
+
+/* Capitular (primeira letra grande) */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--fonte-display);
+  font-size: 4em;
+  line-height: 0.9;
+  font-weight: var(--peso-bold);
+  color: var(--cor-acento);
+  margin-right: 0.1em;
+  margin-top: 0.1em;
+}
+
+/* ==========================================================================
+   LINKS
+   ========================================================================== */
+/* Nota: a estilização base de links fica nos componentes.
+   Aqui apenas o estado padrão para conteúdo rico (ex: artigos). */
+.prose a {
+  color: var(--cor-primaria);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-rapida) var(--ease-suave);
+}
+
+.prose a:hover {
+  color: var(--cor-acento);
+  text-decoration-thickness: 2px;
+}
+
+/* ==========================================================================
+   ENFÂSE
+   ========================================================================== */
+strong, b {
+  font-weight: var(--peso-semibold);
+  color: var(--cor-texto);
+}
+
+em, i {
+  font-style: italic;
+}
+
+small {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+mark {
+  background: var(--cor-acento-soft);
+  color: var(--cor-texto);
+  padding: 0.1em 0.35em;
+  border-radius: var(--raio-xs);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+del, s {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+ins {
+  text-decoration: none;
+  background: var(--sucesso-soft);
+  color: var(--sucesso-text);
+  padding: 0.1em 0.3em;
+  border-radius: var(--raio-xs);
+}
+
+/* ==========================================================================
+   SUB/SUP
+   ========================================================================== */
+sub, sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+/* ==========================================================================
+   CÓDIGO
+   ========================================================================== */
+code, kbd, samp, pre {
+  font-family: var(--fonte-mono);
+  font-feature-settings: 'liga' 0;
+  font-variant-ligatures: none;
+}
+
+code {
+  font-size: 0.875em;
+  background: var(--cinza-100);
+  color: var(--cor-primaria);
+  padding: 0.15em 0.4em;
+  border-radius: var(--raio-xs);
+  font-weight: var(--peso-medium);
+  word-break: break-word;
+}
+
+pre {
+  background: var(--azul-950);
+  color: var(--cinza-100);
+  padding: var(--esp-6);
+  border-radius: var(--raio-lg);
+  overflow-x: auto;
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-sm);
+  tab-size: 2;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+kbd {
+  display: inline-block;
+  background: var(--cinza-200);
+  color: var(--cor-texto);
+  padding: 0.15em 0.45em;
+  border-radius: var(--raio-xs);
+  font-size: 0.85em;
+  font-weight: var(--peso-medium);
+  border: 1px solid var(--cinza-300);
+  box-shadow: 0 1px 0 var(--cinza-300);
+  line-height: 1;
+}
+
+/* ==========================================================================
+   BLOCKQUOTE
+   ========================================================================== */
+blockquote {
+  font-family: var(--fonte-serif);
+  font-style: italic;
+  font-size: var(--fs-xl);
+  line-height: var(--lh-relaxed);
+  color: var(--cor-texto-suave);
+  padding-left: var(--esp-6);
+  border-left: 3px solid var(--cor-acento);
+  margin: var(--esp-8) 0;
+  quotes: "«" "»" "‹" "›";
+}
+
+blockquote p {
+  font-size: inherit;
+  font-family: inherit;
+  font-style: inherit;
+  color: inherit;
+}
+
+blockquote cite {
+  display: block;
+  font-family: var(--fonte-sans);
+  font-style: normal;
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto-muted);
+  margin-top: var(--esp-3);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+
+blockquote cite::before {
+  content: "— ";
+}
+
+/* ==========================================================================
+   LISTAS (apenas em conteúdo rico)
+   ========================================================================== */
+.prose ul,
+.prose ol,
+ul.list-bullet,
+ol.list-number {
+  padding-left: var(--esp-6);
+  margin: var(--esp-4) 0;
+}
+
+.prose ul,
+ul.list-bullet {
+  list-style: none;
+}
+
+.prose ul > li,
+ul.list-bullet > li {
+  position: relative;
+  padding-left: var(--esp-5);
+  margin-bottom: var(--esp-2);
+  color: var(--cor-texto-suave);
+}
+
+.prose ul > li::before,
+ul.list-bullet > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  background: var(--cor-acento);
+  border-radius: var(--raio-full);
+}
+
+.prose ol,
+ol.list-number {
+  list-style: decimal;
+}
+
+.prose ol > li,
+ol.list-number > li {
+  margin-bottom: var(--esp-2);
+  color: var(--cor-texto-suave);
+  padding-left: var(--esp-2);
+}
+
+/* ==========================================================================
+   HR
+   ========================================================================== */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--cor-borda);
+  margin: var(--esp-8) 0;
+}
+
+hr.fancy {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--cor-borda) 20%,
+    var(--cor-acento) 50%,
+    var(--cor-borda) 80%,
+    transparent 100%);
+  margin: var(--esp-12) auto;
+  max-width: 400px;
+  border: none;
+}
+
+hr.fancy::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--cor-acento);
+  box-shadow: 0 0 0 4px var(--bg-principal);
+}
+
+/* ==========================================================================
+   UTILITÁRIOS TIPOGRÁFICOS
+   ========================================================================== */
+
+/* Fontes */
+.text-display {
+  font-family: var(--fonte-display);
+  font-variation-settings: 'opsz' 144;
+}
+
+.text-serif {
+  font-family: var(--fonte-serif);
+}
+
+.text-sans {
+  font-family: var(--fonte-sans);
+}
+
+.text-mono {
+  font-family: var(--fonte-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tamanhos */
+.text-3xs { font-size: var(--fs-3xs); }
+.text-2xs { font-size: var(--fs-2xs); }
+.text-xs  { font-size: var(--fs-xs); }
+.text-sm  { font-size: var(--fs-sm); }
+.text-md  { font-size: var(--fs-md); }
+.text-base { font-size: var(--fs-md); }
+.text-lg  { font-size: var(--fs-lg); }
+.text-xl  { font-size: var(--fs-xl); }
+.text-2xl { font-size: var(--fs-2xl); }
+.text-3xl { font-size: var(--fs-3xl); }
+.text-4xl { font-size: var(--fs-4xl); }
+.text-5xl { font-size: var(--fs-5xl); }
+.text-6xl { font-size: var(--fs-6xl); }
+.text-7xl { font-size: var(--fs-7xl); }
+.text-8xl { font-size: var(--fs-8xl); }
+
+/* Pesos (português) */
+.peso-light    { font-weight: var(--peso-light); }
+.peso-regular  { font-weight: var(--peso-regular); }
+.peso-medium   { font-weight: var(--peso-medium); }
+.peso-semibold { font-weight: var(--peso-semibold); }
+.peso-bold     { font-weight: var(--peso-bold); }
+.peso-black    { font-weight: var(--peso-black); }
+
+/* Pesos (inglês — aliases) */
+.fw-light    { font-weight: var(--peso-light); }
+.fw-regular  { font-weight: var(--peso-regular); }
+.fw-medium   { font-weight: var(--peso-medium); }
+.fw-semibold { font-weight: var(--peso-semibold); }
+.fw-bold     { font-weight: var(--peso-bold); }
+.fw-black    { font-weight: var(--peso-black); }
+
+/* Line-height */
+.lh-tight   { line-height: var(--lh-tight); }
+.lh-snug    { line-height: var(--lh-snug); }
+.lh-normal  { line-height: var(--lh-normal); }
+.lh-relaxed { line-height: var(--lh-relaxed); }
+.lh-loose   { line-height: var(--lh-loose); }
+
+/* Letter-spacing */
+.ls-tighter { letter-spacing: var(--ls-tighter); }
+.ls-tight   { letter-spacing: var(--ls-tight); }
+.ls-normal  { letter-spacing: var(--ls-normal); }
+.ls-wide    { letter-spacing: var(--ls-wide); }
+.ls-wider   { letter-spacing: var(--ls-wider); }
+.ls-widest  { letter-spacing: var(--ls-widest); }
+
+/* Text-transform */
+.uppercase  { text-transform: uppercase; }
+.lowercase  { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+/* Alinhamento */
+.text-left    { text-align: left; }
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Cores de texto */
+.text-primaria   { color: var(--cor-primaria); }
+.text-acento     { color: var(--cor-acento); }
+.text-suave      { color: var(--cor-texto-suave); }
+.text-muted      { color: var(--cor-texto-muted); }
+.text-invertido  { color: var(--cor-texto-invertido); }
+.text-branco     { color: var(--branco); }
+.text-sucesso    { color: var(--sucesso); }
+.text-alerta     { color: var(--alerta); }
+.text-erro       { color: var(--erro); }
+
+/* Quebra e overflow */
+.break-all   { word-break: break-all; }
+.break-word  { overflow-wrap: break-word; }
+.whitespace-nowrap { white-space: nowrap; }
+
+/* ==========================================================================
+   ELEMENTO "EYEBROW" — legenda acima do título
+   ========================================================================== */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--peso-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color: var(--cor-acento);
+  margin-bottom: var(--esp-4);
+  line-height: 1;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.eyebrow.text-center {
+  justify-content: center;
+}
+
+.eyebrow.text-center::before {
+  display: none;
+}
+
+/* ==========================================================================
+   TÍTULO COM DESTAQUE ITÁLICO DOURADO
+   ========================================================================== */
+.title-accent em,
+.title-accent .accent,
+h1 em.accent,
+h2 em.accent,
+h3 em.accent {
+  font-style: italic;
+  font-family: var(--fonte-serif);
+  font-weight: var(--peso-medium);
+  color: var(--cor-acento);
+}
+
+/* ==========================================================================
+   TÍTULO COM UNDERLINE DECORATIVO
+   ========================================================================== */
+.title-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--esp-3);
+}
+
+.title-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--cor-acento);
+  border-radius: var(--raio-full);
+}
+
+.title-underline.text-center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ==========================================================================
+   LINK COM UNDERLINE ANIMADO
+   ========================================================================== */
+.link-underline {
+  position: relative;
+  display: inline-block;
+  font-weight: var(--peso-medium);
+  color: inherit;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform var(--dur-media) var(--ease-suave);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.link-underline--anim::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.link-underline--anim:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ==========================================================================
+   TEXTO COM GRADIENTE
+   ========================================================================== */
+.text-gradient,
+.text-gradient-azul,
+.text-gradient-ouro {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Fallback para browsers antigos */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.text-gradient      { background: var(--grad-luxo); background-image: var(--grad-luxo); }
+.text-gradient-azul { background-image: var(--grad-azul); }
+.text-gradient-ouro { background-image: var(--grad-ouro); }
+
+/* Fallback para browsers que não suportam */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .text-gradient { color: var(--azul-700); }
+  .text-gradient-azul { color: var(--azul-700); }
+  .text-gradient-ouro { color: var(--ouro-500); }
+}
+
+/* ==========================================================================
+   TRUNCATE / LINE CLAMP
+   ========================================================================== */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-3,
+.line-clamp-4,
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-1 { -webkit-line-clamp: 1; line-clamp: 1; }
+.line-clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.line-clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+.line-clamp-4 { -webkit-line-clamp: 4; line-clamp: 4; }
+.line-clamp-5 { -webkit-line-clamp: 5; line-clamp: 5; }
+
+/* ==========================================================================
+   TEXT-WRAP MODERNO
+   ========================================================================== */
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+.text-nowrap  { text-wrap: nowrap; }
+
+/* ==========================================================================
+   NÚMEROS MONOESPAÇADOS
+   ========================================================================== */
+.text-num,
+.text-tabular {
+  font-family: var(--fonte-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ==========================================================================
+   PROSE — container de conteúdo rico (artigos, descrições longas)
+   Aplica estilos tipográficos corretos em elementos HTML
+   ========================================================================== */
+.prose {
+  color: var(--cor-texto-suave);
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  max-width: 72ch;
+}
+
+.prose > * + * {
+  margin-top: var(--esp-4);
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--cor-texto);
+  margin-top: var(--esp-8);
+  margin-bottom: var(--esp-4);
+}
+
+.prose h2 { font-size: clamp(1.5rem, 2vw + 1rem, 2rem); }
+.prose h3 { font-size: var(--fs-2xl); }
+.prose h4 { font-size: var(--fs-xl); }
+
+.prose p {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.prose strong {
+  color: var(--cor-texto);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--esp-6);
+}
+
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+
+.prose li {
+  margin-bottom: var(--esp-2);
+}
+
+.prose img {
+  border-radius: var(--raio-lg);
+  margin: var(--esp-6) 0;
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--cor-acento);
+  padding-left: var(--esp-6);
+  font-style: italic;
+  color: var(--cor-texto-suave);
+  margin: var(--esp-8) 0;
+}
+
+/* ==========================================================================
+   SELEÇÃO — cores customizadas para texto claro/escuro
+   ========================================================================== */
+.bg-escuro ::selection,
+.bg-grad-azul ::selection {
+  background: var(--ouro-400);
+  color: var(--azul-950);
+}
+
+.bg-escuro ::-moz-selection,
+.bg-grad-azul ::-moz-selection {
+  background: var(--ouro-400);
+  color: var(--azul-950);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 767px) {
+  p, .lead {
+    font-size: var(--fs-md);
+  }
+
+  .text-6xl, .text-7xl, .text-8xl {
+    font-size: var(--fs-5xl);
+  }
+
+  blockquote {
+    font-size: var(--fs-lg);
+    padding-left: var(--esp-4);
+  }
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  blockquote {
+    border-left-color: #999;
+    color: #333;
+  }
+}
