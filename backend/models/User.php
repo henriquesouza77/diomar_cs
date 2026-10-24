@@ -33,15 +33,27 @@ class User
 
     public static function create(array $data): int
     {
-        return Database::insert(self::TABLE, [
-            'role_id'       => $data['role_id'] ?? ROLE_CLIENT,
-            'name'          => $data['name'],
-            'email'         => $data['email'],
-            'password_hash' => password_hash($data['password'], PASSWORD_BCRYPT),
-            'phone'         => $data['phone'] ?? null,
-            'whatsapp'      => $data['whatsapp'] ?? $data['phone'] ?? null,
-            'status'        => 'active',
-        ]);
+        $row = [
+            'role_id'  => $data['role_id'] ?? ROLE_CLIENT,
+            'role'     => $data['role']    ?? 'client',
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'status'   => $data['status']  ?? 'active',
+            'phone'    => $data['phone']    ?? null,
+            'whatsapp' => $data['whatsapp'] ?? $data['phone'] ?? null,
+        ];
+
+        if (!empty($data['password'])) {
+            $row['password_hash'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        }
+        if (!empty($data['google_id'])) {
+            $row['google_id'] = $data['google_id'];
+        }
+        if (!empty($data['avatar'])) {
+            $row['avatar'] = $data['avatar'];
+        }
+
+        return Database::insert(self::TABLE, $row);
     }
 
     public static function update(int $id, array $data): int
@@ -62,10 +74,33 @@ class User
         return Database::delete(self::TABLE, 'id = ?', [$id]);
     }
 
-    public static function verifyPassword(string $plain, string $hash): bool
-    {
-        return password_verify($plain, $hash);
+    public static function verifyPassword(string $plain, ?string $hash): bool{
+    if ($hash === null || $hash === '') {
+            return false;
+        }
+             return password_verify($plain, $hash);
     }
+
+    public static function findByGoogleId(string $googleId): ?array
+    {
+        return Database::fetch(
+            "SELECT u.*, r.name AS role_name
+            FROM users u
+            LEFT JOIN roles r ON r.id = u.role_id
+            WHERE u.google_id = ? LIMIT 1",
+                [$googleId]
+        );
+    }
+
+    public static function linkGoogleAccount(int $userId, string $googleId, ?string $avatar = null): void
+    {
+        $data = ['google_id' => $googleId];
+            if ($avatar) {
+            $data['avatar'] = $avatar;
+        }
+        Database::update(self::TABLE, $data, 'id = :id', ['id' => $userId]);
+    }
+
 
     public static function touchLogin(int $id): void
     {

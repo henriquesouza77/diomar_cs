@@ -86,6 +86,8 @@ $stylesheets = [
   ?>
     <link rel="stylesheet" href="<?= $base ?>/frontend/css/<?= $stylesheet ?>?v=<?= filemtime($stylesheetPath) ?>">
   <?php endforeach; ?>
+
+  <script>window.APP_VERSION = '1.1';</script>
 </head>
 <body class="<?= htmlspecialchars(trim($bodyClass . ' has-bottom-nav')) ?>">
 

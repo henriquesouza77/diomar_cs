@@ -60,6 +60,17 @@
   });
 
   // ========================================================================
+  // LOGIN COM GOOGLE
+  // ========================================================================
+    document.querySelectorAll('[data-google-login]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Usa a rota amigável reescrita pelo .htaccess raiz
+        window.location.href = `${API.BASE_URL}/api/auth/google`;
+      });
+    });
+
+  // ========================================================================
   // FORÇA DA SENHA
   // ========================================================================
   const $password = document.getElementById('regPassword');

@@ -1,15 +1,9 @@
 <?php
-require_once dirname(__DIR__, 2) . '/backend/config.php';
-require_once dirname(__DIR__, 2) . '/backend/helpers.php';
+declare(strict_types=1);
 
-$_SESSION = [];
+require_once dirname(__DIR__, 2) . '/backend/config/bootstrap.php';
 
-if (ini_get('session.use_cookies')) {
-    $p = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000, $p['path'], $p['domain'], $p['secure'], $p['httponly']);
-}
+\Core\Session::destroy();
 
-session_destroy();
-
-header('Location: /diomar-cs/frontend/pages/index.php');
+header('Location: /diomar-cs/frontend/pages/index.php?logout=ok');
 exit;

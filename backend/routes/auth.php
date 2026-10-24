@@ -8,5 +8,7 @@ return [
     ],
     'GET' => [
         'auth/me' => [\Controllers\AuthController::class, 'me'],
+        'auth/google'          => [\Controllers\AuthController::class, 'googleRedirect'],
+        'auth/google/callback' => [\Controllers\AuthController::class, 'googleCallback'],
     ],
 ];

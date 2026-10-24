@@ -32,4 +32,13 @@ return [
 
     // Timezone
     'timezone'      => 'America/Sao_Paulo',
+
+
+        // Google OAuth 2.0
+    'google' => [
+        'client_id'     => getenv('GOOGLE_CLIENT_ID') ?: '',
+        'client_secret' => getenv('GOOGLE_CLIENT_SECRET') ?: '',
+        'redirect_uri'  => 'http://localhost/diomar-cs/api/auth/google/callback',
+    ],
+
 ];

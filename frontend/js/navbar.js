@@ -1,10 +1,3 @@
-/**
- * navbar.js — Comportamento da navbar
- * - Aplica .is-scrolled ao rolar
- * - Controla o drawer mobile
- * - Controla o dropdown de usuário
- * - Busca contador de favoritos
- */
 'use strict';
 
 (() => {
@@ -75,48 +68,23 @@
   });
 
   // ============================================================
-  // USER DROPDOWN
+  // USER DROPDOWN (Delegação de eventos - sempre funciona)
   // ============================================================
-  const userBtn = document.querySelector('.navbar__user-btn');
-  const userDropdown = document.querySelector('.navbar__user');
-
-  if (userBtn && userDropdown) {
-    userBtn.addEventListener('click', (e) => {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.navbar__user-btn');
+    
+    if (btn) {
+      e.preventDefault();
       e.stopPropagation();
-      userDropdown.classList.toggle('is-open');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!userDropdown.contains(e.target)) {
-        userDropdown.classList.remove('is-open');
+      const dropdown = btn.closest('.navbar__user');
+      if (dropdown) {
+        dropdown.classList.toggle('is-open');
       }
-    });
+      return;
+    }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        userDropdown.classList.remove('is-open');
-      }
-    });
-  }
-
-  // ============================================================
-  // SUBMENUS
-  // ============================================================
-  document.querySelectorAll('.navbar__item').forEach(item => {
-    const link = item.querySelector('.navbar__link');
-    const submenu = item.querySelector('.navbar__submenu');
-    if (!submenu || !link) return;
-
-    link.addEventListener('click', (e) => {
-      if (window.innerWidth < 1024) {
-        e.preventDefault();
-        item.classList.toggle('is-open');
-      }
-    });
-
-    if (window.matchMedia('(hover: hover)').matches) {
-      item.addEventListener('mouseenter', () => item.classList.add('is-open'));
-      item.addEventListener('mouseleave', () => item.classList.remove('is-open'));
+    if (!e.target.closest('.navbar__user')) {
+      document.querySelectorAll('.navbar__user').forEach(d => d.classList.remove('is-open'));
     }
   });
 
@@ -135,10 +103,8 @@
     }
   }
 
-  // Só busca favoritos se o usuário estiver logado
-  // (evita erro 401/403 no console para visitantes)
   if (window.API && API.BASE_URL) {
-    fetch(`${API.BASE_URL}/backend/api.php?route=auth/me`, {
+    fetch(`${API.BASE_URL}/backend/api/index.php?route=auth/me`, {
       credentials: 'same-origin',
       headers: { 'Accept': 'application/json' }
     })
