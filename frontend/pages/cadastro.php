@@ -9,6 +9,8 @@ require_once __DIR__ . '/../components/header.php';
 $base = '/diomar-cs';
 ?>
 
+<?php require __DIR__ . '/../components/splash.php'; ?>
+
 <main class="auth">
 
   <!-- ==================== LADO VISUAL ==================== -->

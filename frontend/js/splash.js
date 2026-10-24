@@ -134,17 +134,18 @@
     const sin = easeOut(prog(t, T.symbolStart, T.symbolDur));
     const cen = easeInOut(prog(t, T.centerStart, T.centerDur));
     const zp = easeIn(prog(t, T.zoomStart, T.zoomEnd - T.zoomStart));
-    const scale = lerp(0.55, 1, sin) * Math.pow(L.maxScale, zp);
-    const rot = lerp(-70, 0, sin) + ZOOM_ROTATE_DEG * zp;
-    symbolEl.style.opacity = clamp(sin * 1.6);
+    const scale = lerp(0.7, 1, sin) * Math.pow(L.maxScale, zp);
+    const rot = lerp(-18, 0, sin) + ZOOM_ROTATE_DEG * zp;   // giro leve na entrada
+    // Entrada gira em torno do centro; só no zoom a origem vai para a parede branca
+    // (neste ponto rotação=0 e escala=1, então a troca não dá salto)
+    symbolEl.style.transformOrigin = t < T.zoomStart ? '50% 50%' : `${ORIGIN.x}% ${ORIGIN.y}%`;
+    symbolEl.style.opacity = clamp(sin * 2.2);
     symbolEl.style.transform =
       `translateX(${(L.vw / 2 - L.symCx) * cen}px) rotate(${rot}deg) scale(${scale})`;
 
     // Dissolve final: a tela branca some e revela o login
     root.style.opacity = 1 - easeInOut(prog(t, T.revealStart, T.revealEnd - T.revealStart));
   }
-
-  symbolEl.style.transformOrigin = `${ORIGIN.x}% ${ORIGIN.y}%`;
 
   /* ---------- Controle ---------- */
   let rafId = null, startedAt = null, done = false, released = false;
