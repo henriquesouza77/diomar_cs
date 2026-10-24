@@ -5,6 +5,7 @@ namespace Services;
 
 use Core\Response;
 use Models\Favorite;
+use Models\Property;
 use Middleware\AuthMiddleware;
 
 class FavoriteService
@@ -22,6 +23,11 @@ class FavoriteService
 
         if ($propertyId <= 0) {
             Response::error('Imóvel inválido.', 422);
+        }
+
+        $property = Property::find($propertyId);
+        if (!$property || !(bool)$property['published']) {
+            Response::error('Imóvel não encontrado.', 404);
         }
 
         $favorited = Favorite::toggle($userId, $propertyId);

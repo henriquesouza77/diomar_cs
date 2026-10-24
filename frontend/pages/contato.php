@@ -28,8 +28,8 @@ $base = '/diomar-cs';
           </div>
           <div class="contact-card__body">
             <h4>Telefone / WhatsApp</h4>
-            <a href="tel:+5511999999999">(11) 99999-9999</a>
-            <a href="https://wa.me/5511999999999" target="_blank" rel="noopener">Enviar mensagem no WhatsApp</a>
+            <a href="tel:+5511939565958">(11) 93956-5958</a>
+            <a href="https://wa.me/5511939565958" target="_blank" rel="noopener">Enviar mensagem no WhatsApp</a>
           </div>
         </div>
 

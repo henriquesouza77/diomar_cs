@@ -35,7 +35,7 @@ require __DIR__ . '/_layout-top.php';
         </div>
         <div class="form-group">
           <label class="form-label">WhatsApp</label>
-          <input type="text" name="site_whatsapp" class="form-input" value="5511999999999">
+          <input type="text" name="site_whatsapp" class="form-input" value="5511939565958">
         </div>
         <div class="form-group form-grid__full">
           <label class="form-label">Endereço</label>

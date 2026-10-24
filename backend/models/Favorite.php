@@ -10,7 +10,7 @@ class Favorite
     public static function forUser(int $userId): array
     {
         return Database::fetchAll(
-            "SELECT f.property_id, f.created_at,
+            "SELECT p.id, f.property_id, f.created_at,
                     p.title, p.code, p.price, p.purpose, p.status,
                     p.bedrooms, p.bathrooms, p.parking_spaces, p.area_built,
                     a.city, a.neighborhood,

@@ -5,6 +5,7 @@ namespace Services;
 
 use Core\Response;
 use Models\Lead;
+use Models\Property;
 use Middleware\AuthMiddleware;
 
 class LeadService
@@ -21,9 +22,18 @@ class LeadService
         if (!$email) $errors['email'] = 'E-mail inválido.';
         if ($errors) Response::error('Erro de validação.', 422, ['fields' => $errors]);
 
+        $propertyId = !empty($data['property_id']) ? (int)$data['property_id'] : null;
+        $property = null;
+        if ($propertyId !== null) {
+            $property = Property::find($propertyId);
+            if (!$property || !(bool)$property['published']) {
+                Response::error('Imóvel não encontrado.', 404);
+            }
+        }
+
         $leadId = Lead::create([
-            'property_id' => !empty($data['property_id']) ? (int)$data['property_id'] : null,
-            'agent_id'    => !empty($data['agent_id']) ? (int)$data['agent_id'] : null,
+            'property_id' => $propertyId,
+            'agent_id'    => $property['agent_id'] ?? null,
             'name'        => $name,
             'email'       => $email,
             'phone'       => $phone,

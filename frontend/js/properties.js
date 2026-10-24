@@ -10,6 +10,11 @@
 'use strict';
 
 (() => {
+  if (window.__HOME__) {
+    initFeaturedProperties();
+    return;
+  }
+
   if (window.__PAGE__ !== 'imoveis') return;
 
   const $grid      = document.getElementById('propertiesGrid');
@@ -367,6 +372,35 @@
         }
       });
     });
+  }
+
+  async function initFeaturedProperties() {
+    const grid = document.getElementById('featuredGrid');
+    const skeleton = document.getElementById('featuredSkeleton');
+    if (!grid || !skeleton) return;
+
+    skeleton.hidden = false;
+    grid.hidden = true;
+
+    try {
+      const result = await API.properties.list({ featured: 1, page: 1 });
+      const items = Array.isArray(result?.items) ? result.items.slice(0, 3) : [];
+
+      if (!items.length) {
+        grid.innerHTML = '<p class="empty-state__text">Não há imóveis em destaque no momento.</p>';
+      } else {
+        grid.innerHTML = items.map(renderCard).join('');
+        bindFavoriteButtons();
+        requestAnimationFrame(() => Animations.refresh());
+      }
+      grid.hidden = false;
+    } catch (error) {
+      console.error('[featured-properties]', error);
+      grid.innerHTML = '<p class="empty-state__text">Não foi possível carregar os imóveis em destaque.</p>';
+      grid.hidden = false;
+    } finally {
+      skeleton.hidden = true;
+    }
   }
 
   // ============ LIMPAR ============
