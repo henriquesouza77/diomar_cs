@@ -154,12 +154,14 @@ const App = (() => {
 
   // ============ ACTIVE NAV LINK ============
   function markActiveNav() {
-    const current = window.location.pathname;
-    document.querySelectorAll('.navbar__link, .navbar__drawer-link').forEach(link => {
-      const href = link.getAttribute('href');
-      if (!href) return;
-      const clean = href.split('?')[0];
-      if (current.includes(clean) && clean !== '/') {
+    // Dock desktop: o ativo vem do servidor ($navKey). Aqui só o drawer mobile,
+    // comparando caminho E finalidade (Comprar x Alugar usam a mesma página).
+    const here = new URL(window.location.href);
+    document.querySelectorAll('.navbar__drawer-link').forEach(link => {
+      const u = new URL(link.href, here);
+      const purpose = u.searchParams.get('purpose');
+      const samePath = u.pathname === here.pathname;
+      if (samePath && (!purpose || purpose === here.searchParams.get('purpose'))) {
         link.classList.add('is-active');
       }
     });

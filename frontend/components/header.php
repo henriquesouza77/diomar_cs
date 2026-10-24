@@ -18,6 +18,12 @@ $bodyClass       = $bodyClass       ?? '';
 $skipNavbar      = $skipNavbar      ?? false;
 
 $base = '/diomar-cs';
+// Item ativo do menu: listagem e detalhe de imóvel viram Comprar/Alugar conforme a finalidade
+$navKey = $currentPage;
+if ($navKey === 'imoveis') {
+  $navKey = (($_GET['purpose'] ?? '') === 'aluguel') ? 'alugar' : 'comprar';
+}
+
 
 // ============================================================
 // VERIFICAÇÃO DE USUÁRIO LOGADO
@@ -36,6 +42,7 @@ $stylesheets = [
   '14-properties.css', '15-property-details.css',
   '16-admin.css',
   '17-animations.css', '18-utilities.css', '19-mobile.css',
+  '20-polish.css', '21-motion.css', '22-dock-nav.css', '23-auth-glass.css',
 ];
 ?>
 <!DOCTYPE html>
@@ -53,13 +60,11 @@ $stylesheets = [
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="DIOMAR_CS">
-  <link rel="apple-touch-icon" href="<?= $base ?>/frontend/icons/icon-192.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="<?= $base ?>/frontend/icons/icon-152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="<?= $base ?>/frontend/icons/icon-180.png">
+  <link rel="apple-touch-icon" href="<?= $base ?>/frontend/assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?= $base ?>/frontend/assets/icons/icon-180.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="DIOMAR_CS">
   <meta name="msapplication-TileColor" content="#0B1F4D">
-  <meta name="msapplication-TileImage" content="<?= $base ?>/frontend/icons/icon-144.png">
 
   <link rel="icon" type="image/svg+xml" href="<?= $base ?>/frontend/images/favicon.svg">
 
@@ -69,6 +74,10 @@ $stylesheets = [
   <meta property="og:description" content="<?= htmlspecialchars($pageDescription) ?>">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;800&display=swap">
 
   <?php
   foreach ($stylesheets as $stylesheet):
@@ -101,30 +110,56 @@ $stylesheets = [
 
     <nav class="navbar__menu" role="navigation" aria-label="Menu principal">
       <div class="navbar__item">
+        <a href="<?= $base ?>/frontend/pages/index.php"
+           class="navbar__link<?= $navKey === 'home' ? ' is-active' : '' ?>"
+           data-label="Início"<?= $navKey === 'home' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6.5h5V21"/></svg>
+          <span class="navbar__link-label">Início</span>
+        </a>
+      </div>
+
+      <div class="navbar__item">
         <a href="<?= $base ?>/frontend/pages/imoveis.php?purpose=venda"
-           class="navbar__link<?= $currentPage === 'comprar' ? ' is-active' : '' ?>">
-          Comprar
+           class="navbar__link<?= $navKey === 'comprar' ? ' is-active' : '' ?>"
+           data-label="Comprar"<?= $navKey === 'comprar' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01"/><path d="M10 21v-4h4v4"/></svg>
+          <span class="navbar__link-label">Comprar</span>
         </a>
       </div>
 
       <div class="navbar__item">
         <a href="<?= $base ?>/frontend/pages/imoveis.php?purpose=aluguel"
-           class="navbar__link<?= $currentPage === 'alugar' ? ' is-active' : '' ?>">
-          Alugar
+           class="navbar__link<?= $navKey === 'alugar' ? ' is-active' : '' ?>"
+           data-label="Alugar"<?= $navKey === 'alugar' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 10-10M16 7l3 3M14 9l2 2"/></svg>
+          <span class="navbar__link-label">Alugar</span>
         </a>
       </div>
 
       <div class="navbar__item">
         <a href="<?= $base ?>/frontend/pages/anunciar.php"
-           class="navbar__link<?= $currentPage === 'anunciar' ? ' is-active' : '' ?>">
-          Anunciar imóvel
+           class="navbar__link<?= $navKey === 'anunciar' ? ' is-active' : '' ?>"
+           data-label="Anunciar"<?= $navKey === 'anunciar' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>
+          <span class="navbar__link-label">Anunciar</span>
         </a>
       </div>
 
       <div class="navbar__item">
         <a href="<?= $base ?>/frontend/pages/sobre.php"
-           class="navbar__link<?= $currentPage === 'sobre' ? ' is-active' : '' ?>">
-          Sobre
+           class="navbar__link<?= $navKey === 'sobre' ? ' is-active' : '' ?>"
+           data-label="Sobre"<?= $navKey === 'sobre' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+          <span class="navbar__link-label">Sobre</span>
+        </a>
+      </div>
+
+      <div class="navbar__item">
+        <a href="<?= $base ?>/frontend/pages/contato.php"
+           class="navbar__link<?= $navKey === 'contato' ? ' is-active' : '' ?>"
+           data-label="Contato"<?= $navKey === 'contato' ? ' aria-current="page"' : '' ?>>
+          <svg class="navbar__link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="navbar__link-label">Contato</span>
         </a>
       </div>
     </nav>
@@ -133,7 +168,7 @@ $stylesheets = [
 
       <!-- Favoritos (sempre visível) -->
       <a href="<?= $base ?>/frontend/pages/favoritos.php"
-         class="navbar__icon-btn tooltip"
+         class="navbar__icon-btn tooltip<?= $currentPage === 'favoritos' ? ' is-active' : '' ?>"
          data-tooltip="Favoritos"
          aria-label="Ver favoritos">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

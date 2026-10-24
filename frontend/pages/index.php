@@ -201,55 +201,63 @@ $base = '/diomar-cs';
         <div class="categories__grid" data-stagger>
 
       <a href="<?= $base ?>/frontend/pages/imoveis.php?type=apartamento" class="category-card">
+        <span class="category-card__index" aria-hidden="true">01</span>
         <span class="category-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="3" width="16" height="18" rx="1"/>
-            <line x1="9" y1="7" x2="9" y2="7.01"/>
-            <line x1="15" y1="7" x2="15" y2="7.01"/>
-            <line x1="9" y1="11" x2="9" y2="11.01"/>
-            <line x1="15" y1="11" x2="15" y2="11.01"/>
-            <line x1="9" y1="15" x2="9" y2="15.01"/>
-            <line x1="15" y1="15" x2="15" y2="15.01"/>
-            <path d="M10 21v-3h4v3"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01"/><path d="M10 21v-3h4v3"/></svg>
         </span>
         <h3 class="category-card__name">Apartamentos</h3>
-        <span class="category-card__count">— imóveis</span>
+        <p class="category-card__desc">Praticidade, segurança e localização privilegiada no coração da cidade.</p>
+        <span class="category-card__cta">
+          Ver imóveis
+          <span class="category-card__cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
       </a>
 
       <a href="<?= $base ?>/frontend/pages/imoveis.php?type=casa" class="category-card">
+        <span class="category-card__index" aria-hidden="true">02</span>
         <span class="category-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
-            <path d="M9 21v-7h6v7"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9.5 21v-6.5h5V21"/></svg>
         </span>
         <h3 class="category-card__name">Casas</h3>
-        <span class="category-card__count">— imóveis</span>
+        <p class="category-card__desc">Espaço, privacidade e liberdade para viver cada ambiente do seu jeito.</p>
+        <span class="category-card__cta">
+          Ver imóveis
+          <span class="category-card__cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
       </a>
 
       <a href="<?= $base ?>/frontend/pages/imoveis.php?type=cobertura" class="category-card">
+        <span class="category-card__index" aria-hidden="true">03</span>
         <span class="category-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9.5L12 3l9 6.5"/>
-            <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/>
-            <line x1="9" y1="21" x2="9" y2="15"/>
-            <line x1="15" y1="21" x2="15" y2="15"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V9h14v12"/><path d="M3 21h18"/><path d="M8 9V5h8v4"/><path d="M10 2.5h4"/><path d="M9 13h6M9 17h6"/></svg>
         </span>
         <h3 class="category-card__name">Coberturas</h3>
-        <span class="category-card__count">— imóveis</span>
+        <p class="category-card__desc">Vista panorâmica, terraços amplos e o máximo em exclusividade.</p>
+        <span class="category-card__cta">
+          Ver imóveis
+          <span class="category-card__cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
       </a>
 
       <a href="<?= $base ?>/frontend/pages/imoveis.php?type=terreno" class="category-card">
+        <span class="category-card__index" aria-hidden="true">04</span>
         <span class="category-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="3 9 12 3 21 9 12 15 3 9"/>
-            <polyline points="3 15 12 21 21 15"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3z"/><path d="M9 4v13M15 7v13"/></svg>
         </span>
         <h3 class="category-card__name">Terrenos</h3>
-        <span class="category-card__count">— imóveis</span>
+        <p class="category-card__desc">Oportunidades para construir o projeto do zero, no lugar certo.</p>
+        <span class="category-card__cta">
+          Ver imóveis
+          <span class="category-card__cta-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
       </a>
     </div>
   </div>

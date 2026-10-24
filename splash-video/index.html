@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>DIOMAR — Splash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Montserrat:wght@500;600;800&display=swap">
+<style>
+  /* Cores e fontes: ajuste também em CONFIG (JS) se mudar algo estrutural */
+  :root {
+    --bg: #0B1F4D;
+    --bg-dark: #050D24;
+    --accent: #D4A72C;
+    --white: #FFFFFF;
+    --font-logo: 'Montserrat', 'Poppins', sans-serif;
+    --font-title: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+  .abs { position: absolute; }
+
+  /* ---------- Cena 1/2: logo ---------- */
+  #wordmark { left: 0; top: 0; width: 1080px; height: 1920px; }
+  #letters { position: absolute; display: flex; font-family: var(--font-logo); font-weight: 800;
+             font-size: 172px; line-height: 1; letter-spacing: -0.02em; color: var(--white); white-space: nowrap; }
+  #letters span { display: inline-block; will-change: transform, opacity; }
+  #tagline { position: absolute; font-family: var(--font-logo); font-weight: 600; font-size: 46px;
+             letter-spacing: 0.62em; color: var(--white); white-space: nowrap; text-indent: 0.62em; }
+  #symbol { position: absolute; width: 200px; height: 200px; will-change: transform; }
+  #symbol svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  /* ---------- Cena 3: tela inicial do app ---------- */
+  #welcome { inset: 0; opacity: 0; background: linear-gradient(155deg, var(--bg) 0%, #0A1A42 45%, var(--bg-dark) 100%); }
+  #facade { inset: 0; opacity: .5; }
+  #facade-overlay { inset: 0; background: linear-gradient(180deg, rgba(11,31,77,.55) 0%, rgba(11,31,77,.85) 55%, rgba(5,13,36,.96) 100%); }
+
+  #topLogo { left: 72px; top: 150px; display: flex; align-items: center; gap: 16px; color: var(--white);
+             font-family: var(--font-logo); font-weight: 800; font-size: 54px; letter-spacing: -0.02em; }
+  #topLogo svg { width: 64px; height: 64px; }
+
+  #title { left: 72px; top: 360px; font-family: var(--font-title); font-weight: 700; font-size: 196px;
+           line-height: .92; color: var(--white); letter-spacing: -0.01em; text-transform: none; }
+  #title .line { display: block; overflow: visible; will-change: transform, opacity; }
+
+  #card { left: 0; right: 0; bottom: 0; height: 600px; background: var(--white);
+          border-radius: 56px 56px 0 0; padding: 72px 72px 0; will-change: transform, opacity; }
+  .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 132px;
+         border-radius: 999px; font-family: var(--font-logo); font-weight: 600; font-size: 44px;
+         will-change: transform, opacity; }
+  #btnPrimary { background: var(--accent); color: var(--bg); box-shadow: 0 18px 40px rgba(212,167,44,.35); }
+  #btnSecondary { border: 4px solid var(--bg); color: var(--bg); background: transparent; }
+  #divider { display: flex; align-items: center; gap: 28px; margin: 40px 0; color: #7A859E;
+             font-family: var(--font-logo); font-weight: 500; font-size: 34px; will-change: opacity; }
+  #divider i { flex: 1; height: 2px; background: #DDE2EE; }
+
+  /* ---------- Overlay branco (zoom do símbolo → tela) ---------- */
+  #flash { inset: 0; background: var(--white); opacity: 0; pointer-events: none; }
+
+  /* ---------- Barra de status / barra de navegação do celular ---------- */
+  #statusbar { left: 0; right: 0; top: 0; height: 110px; padding: 44px 64px 0; display: flex;
+               justify-content: space-between; align-items: flex-start; font-family: var(--font-logo);
+               font-weight: 600; font-size: 40px; }
+  #statusbar .right { display: flex; gap: 18px; align-items: center; }
+  #homebar { left: 50%; bottom: 26px; width: 360px; height: 14px; margin-left: -180px; border-radius: 999px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="wordmark" class="abs">
+    <div id="letters"></div>
+    <div id="tagline">IMÓVEIS</div>
+    <div id="symbol">
+      <!-- Casinha geométrica: telhado + corpo arredondados, porta vazada -->
+      <svg id="symbolSvg" viewBox="0 0 100 100">
+        <path fill="#fff" fill-rule="evenodd"
+              d="M50 6 C52.6 6 55 7 57 8.8 L90 38 C92 39.8 93 42 93 44.5 L93 78 C93 86 86.600 92 79 92 L21 92 C13.400 92 7 86 7 78 L7 44.5 C7 42 8 39.800 10 38 L43 8.800 C45 7 47.400 6 50 6 Z
+                 M41 92 L41 66 C41 61.600 44.600 58 49 58 L51 58 C55.400 58 59 61.600 59 66 L59 92 Z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div id="welcome" class="abs">
+    <svg id="facade" class="abs" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+      <g fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round">
+        <path d="M-20 1500 L140 1500 L140 1180 L300 1180 L300 1500"/>
+        <path d="M320 1500 L320 1040 L560 1040 L560 1500"/>
+        <path d="M580 1500 L580 1260 L690 1170 L800 1260 L800 1500"/>
+        <path d="M820 1500 L820 980 L1000 980 L1000 1500 L1100 1500"/>
+        <g opacity=".7">
+          <path d="M360 1090 H520 M360 1150 H520 M360 1210 H520 M360 1270 H520 M360 1330 H520 M360 1390 H520"/>
+          <path d="M860 1030 H960 M860 1090 H960 M860 1150 H960 M860 1210 H960 M860 1270 H960"/>
+          <path d="M170 1230 H270 M170 1290 H270 M170 1350 H270"/>
+          <path d="M650 1330 V1500 M730 1330 V1500"/>
+        </g>
+      </g>
+    </svg>
+    <div id="facade-overlay" class="abs"></div>
+
+    <div id="topLogo" class="abs">
+      <svg viewBox="0 0 100 100"><use href="#symbolDef"/></svg>
+      <span>diomar</span>
+    </div>
+
+    <div id="title" class="abs">
+      <span class="line">Seu novo lar</span>
+      <span class="line">está te</span>
+      <span class="line">esperando</span>
+    </div>
+
+    <div id="card" class="abs">
+      <div id="btnPrimary" class="btn">Ver imóveis disponíveis</div>
+      <div id="divider"><i></i><span>ou</span><i></i></div>
+      <div id="btnSecondary" class="btn">Falar com um corretor</div>
+    </div>
+  </div>
+
+  <div id="flash" class="abs"></div>
+
+  <div id="statusbar" class="abs">
+    <span id="clock">9:41</span>
+    <span class="right">
+      <svg width="46" height="30" viewBox="0 0 46 30" fill="currentColor"><rect x="0" y="20" width="7" height="10" rx="2"/><rect x="12" y="14" width="7" height="16" rx="2"/><rect x="24" y="7" width="7" height="23" rx="2"/><rect x="36" y="0" width="7" height="30" rx="2"/></svg>
+      <svg width="44" height="32" viewBox="0 0 44 32" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M3 11 C14 1 30 1 41 11"/><path d="M9 18 C16 11 28 11 35 18"/><circle cx="22" cy="26" r="3" fill="currentColor" stroke="none"/></svg>
+      <svg width="68" height="32" viewBox="0 0 68 32" fill="none" stroke="currentColor"><rect x="2" y="2" width="56" height="28" rx="9" stroke-width="3" opacity=".5"/><rect x="7" y="7" width="40" height="18" rx="5" fill="currentColor" stroke="none"/><rect x="61" y="11" width="5" height="10" rx="2.500" fill="currentColor" stroke="none" opacity=".6"/></svg>
+    </span>
+  </div>
+  <div id="homebar" class="abs"></div>
+</div>
+
+<!-- Símbolo reutilizável (logo pequeno do topo) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <path id="symbolDef" fill="#fff" fill-rule="evenodd"
+          d="M50 6 C52.600 6 55 7 57 8.800 L90 38 C92 39.800 93 42 93 44.500 L93 78 C93 86 86.600 92 79 92 L21 92 C13.400 92 7 86 7 78 L7 44.500 C7 42 8 39.800 10 38 L43 8.800 C45 7 47.400 6 50 6 Z M41 92 L41 66 C41 61.600 44.600 58 49 58 L51 58 C55.400 58 59 61.600 59 66 L59 92 Z"/>
+  </defs>
+</svg>
+
+<script>
+/* ==========================================================================
+   CONFIG — ajuste aqui cores, textos e tempos (segundos)
+   ========================================================================== */
+const CONFIG = {
+  fps: 30,
+  duration: 5,
+
+  colors: { bg: '#0B1F4D', bgDark: '#050D24', accent: '#D4A72C', white: '#FFFFFF' },
+
+  text: {
+    brand: 'diomar',
+    tagline: 'IMÓVEIS',
+    topLogo: 'diomar',
+    clock: '9:41',
+  },
+
+  time: {
+    // Cena 1 — logo se formando
+    letterStart: 0.15, letterStagger: 0.06, letterDur: 0.5,
+    symbolStart: 0.30, symbolDur: 0.85,
+    taglineStart: 0.80, taglineDur: 0.50,
+    // Cena 2 — recolhimento + zoom
+    collapseStart: 1.30, collapseStagger: 0.055, collapseDur: 0.40,
+    taglineOut: 1.30, taglineOutDur: 0.30,
+    centerStart: 1.60, centerDur: 0.40,
+    zoomStart: 1.80, zoomEnd: 2.60,
+    // Cena 3 — boas-vindas
+    flashFadeStart: 2.60, flashFadeEnd: 3.10,
+    topLogoIn: 3.00, titleIn: 3.15, titleLineStagger: 0.09,
+    cardIn: 3.40, btn1In: 3.55, dividerIn: 3.70, btn2In: 3.80, itemDur: 0.50,
+  },
+
+  zoom: { maxScale: 40, rotateDeg: -10, originX: 50, originY: 38 },  // origem em % do símbolo (parte branca)
+};
+
+/* ==========================================================================
+   Easing e helpers
+   ========================================================================== */
+function bezier(x1, y1, x2, y2) {
+  const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+  const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+  const sx = t => ((ax * t + bx) * t + cx) * t;
+  const sy = t => ((ay * t + by) * t + cy) * t;
+  const dx = t => (3 * ax * t + 2 * bx) * t + cx;
+  return x => {
+    if (x <= 0) return 0; if (x >= 1) return 1;
+    let t = x;
+    for (let i = 0; i < 8; i++) { const e = sx(t) - x; if (Math.abs(e) < 1e-6) break; const d = dx(t); if (Math.abs(d) < 1e-6) break; t -= e / d; }
+    return sy(t);
+  };
+}
+const easeOut  = bezier(0.16, 1, 0.3, 1);      // saída suave (expo)
+const easeInOut = bezier(0.65, 0, 0.35, 1);
+const easeIn   = bezier(0.7, 0, 0.95, 0.45);   // começa devagar e acelera
+const easeBack = bezier(0.34, 1.4, 0.64, 1);
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, start, dur) => clamp((t - start) / dur);
+const lerp = (a, b, p) => a + (b - a) * p;
+const $ = id => document.getElementById(id);
+
+/* ==========================================================================
+   Montagem
+   ========================================================================== */
+const T = CONFIG.time;
+const letters = [...CONFIG.text.brand].map(ch => {
+  const s = document.createElement('span'); s.textContent = ch; $('letters').appendChild(s); return s;
+});
+$('tagline').textContent = CONFIG.text.tagline;
+$('clock').textContent = CONFIG.text.clock;
+document.querySelector('#topLogo span').textContent = CONFIG.text.topLogo;
+
+const lines = [...document.querySelectorAll('#title .line')];
+const SW = 1080, SH = 1920, CY = 930;    // centro vertical do logo
+let layout = null;
+
+function measure() {
+  const lw = $('letters').offsetWidth, lh = $('letters').offsetHeight;
+  const symW = 200, gap = 30;
+  const groupW = lw + gap + symW;
+  const left = (SW - groupW) / 2;
+  layout = {
+    lettersLeft: left, lettersTop: CY - lh / 2 - 20,
+    symX: left + lw + gap, symY: CY - symW / 2 - 20,
+    symCx: left + lw + gap + symW / 2,
+    letterCenters: letters.map(s => left + s.offsetLeft + s.offsetWidth / 2),
+    lh, lw, symW,
+  };
+  $('letters').style.left = layout.lettersLeft + 'px';
+  $('letters').style.top = layout.lettersTop + 'px';
+  $('symbol').style.left = layout.symX + 'px';
+  $('symbol').style.top = layout.symY + 'px';
+  const tg = $('tagline');
+  tg.style.left = (SW - tg.offsetWidth) / 2 + 'px';
+  tg.style.top = layout.lettersTop + lh + 28 + 'px';
+}
+
+/* ==========================================================================
+   render(t): estado da animação em um instante t (determinístico)
+   ========================================================================== */
+function render(t) {
+  if (!layout) measure();
+  const N = letters.length;
+
+  /* ---- Cena 1: letras entram, símbolo gira, tagline ---- */
+  letters.forEach((el, i) => {
+    const pin = easeOut(prog(t, T.letterStart + i * T.letterStagger, T.letterDur));
+    // Cena 2: saem da última para a primeira, puxando para o símbolo
+    const outIdx = N - 1 - i;
+    const pout = easeInOut(prog(t, T.collapseStart + outIdx * T.collapseStagger, T.collapseDur));
+    const pull = (layout.symCx - layout.letterCenters[i]) * 0.55 * pout;
+    const y = lerp(46, 0, pin);
+    el.style.opacity = pin * (1 - pout);
+    el.style.transform = `translate(${pull}px, ${y}px) scale(${lerp(1, 0.6, pout)})`;
+  });
+
+  const tin = easeOut(prog(t, T.taglineStart, T.taglineDur));
+  const tout = easeInOut(prog(t, T.taglineOut, T.taglineOutDur));
+  $('tagline').style.opacity = tin * (1 - tout);
+  $('tagline').style.transform = `translateY(${lerp(18, 0, tin)}px)`;
+
+  // Símbolo: entra girando (cena 1), centraliza (cena 2), zoom por dentro (cena 2)
+  const sin = easeOut(prog(t, T.symbolStart, T.symbolDur));
+  const cen = easeInOut(prog(t, T.centerStart, T.centerDur));
+  const zp = prog(t, T.zoomStart, T.zoomEnd - T.zoomStart);
+  const zoom = Math.pow(CONFIG.zoom.maxScale, easeIn(zp));        // 1 → 40x, exponencial
+  const dx = (SW / 2 - layout.symCx) * cen;
+  const rot = lerp(-70, 0, sin) + CONFIG.zoom.rotateDeg * easeIn(zp);
+  const sc = lerp(0.55, 1, sin) * zoom;
+  const sym = $('symbol');
+  sym.style.transformOrigin = `${CONFIG.zoom.originX}% ${CONFIG.zoom.originY}%`;
+  sym.style.opacity = t >= T.flashFadeStart ? 0 : clamp(sin * 1.6);
+  sym.style.transform = `translateX(${dx}px) rotate(${rot}deg) scale(${sc})`;
+
+  /* ---- Fundo: toda a cena 1/2 é a cor sólida; a cena 3 aparece sob o branco ---- */
+  const showWelcome = t >= T.flashFadeStart;
+  $('welcome').style.opacity = showWelcome ? 1 : 0;
+  const flash = t < T.flashFadeStart ? 0 : 1 - easeInOut(prog(t, T.flashFadeStart, T.flashFadeEnd - T.flashFadeStart));
+  $('flash').style.opacity = flash;
+
+  /* ---- Cena 3: entrada em sequência ---- */
+  const enter = (el, start, dist = 40) => {
+    const p = easeOut(prog(t, start, T.itemDur));
+    el.style.opacity = p;
+    el.style.transform = `translateY(${lerp(dist, 0, p)}px)`;
+  };
+  enter($('topLogo'), T.topLogoIn, 24);
+  lines.forEach((l, i) => enter(l, T.titleIn + i * T.titleLineStagger, 50));
+  enter($('card'), T.cardIn, 120);
+  enter($('btnPrimary'), T.btn1In, 30);
+  enter($('divider'), T.dividerIn, 20);
+  enter($('btnSecondary'), T.btn2In, 30);
+
+  /* ---- Barra de status: branca sobre azul, azul sobre branco ---- */
+  const zoomWhite = clamp((zoom - 6) / 10);                    // símbolo já cobre a tela
+  const whiteCover = t < T.flashFadeStart ? zoomWhite : flash;
+  const c = Math.round(lerp(255, 11, whiteCover)), c2 = Math.round(lerp(255, 31, whiteCover)), c3 = Math.round(lerp(255, 77, whiteCover));
+  const col = `rgb(${c},${c2},${c3})`;
+  $('statusbar').style.color = col;
+  const cardP = easeOut(prog(t, T.cardIn, T.itemDur));
+  $('homebar').style.background = cardP > 0.5 ? CONFIG.colors.bg : col;   // barra escura sobre o card branco
+  $('statusbar').style.opacity = clamp(t / 0.3);
+  $('homebar').style.opacity = clamp(t / 0.3) * 0.9;
+}
+
+window.CONFIG = CONFIG;
+window.render = render;
+window.ready = document.fonts.ready.then(() => { measure(); render(0); return true; });
+render(0);
+</script>
+</body>
+</html>

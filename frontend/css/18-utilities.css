@@ -172,9 +172,14 @@
 }
 
 /* ==========================================================================
-   ESCONDE QUANDO VAZIO (sem texto ou filhos)
+   ESCONDE QUANDO VAZIO
+   Só para mensagens/containers de feedback. A regra global :empty antiga escondia
+   <path>/<circle> dos ícones SVG, spinners e elementos decorativos.
    ========================================================================== */
-:empty:not(img):not(svg):not(canvas):not(iframe):not(video):not(audio):not(embed):not(object):not(input):not(textarea):not(select):not(hr):not(br) {
+.form-error:empty,
+.form-hint:empty,
+.alert:empty,
+[role="alert"]:empty {
   display: none;
 }
 

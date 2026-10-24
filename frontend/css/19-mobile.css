@@ -387,20 +387,6 @@
 }
 
 /* ==========================================================================
-   CATEGORY CARD — força SVG a aparecer
-   ========================================================================== */
-.category-card__icon svg,
-.category-card__icon svg * {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: 100% !important;
-  height: 100% !important;
-  stroke: currentColor !important;
-  fill: none !important;
-}
-
-/* ==========================================================================
    AUTH MOBILE
    ========================================================================== */
 @media (max-width: 767px) {

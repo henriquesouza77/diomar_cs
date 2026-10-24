@@ -466,99 +466,181 @@
    CARD DE CATEGORIA
    ========================================================================== */
 .category-card {
+  --cc-ease: var(--ease-suave);
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: var(--esp-10) var(--esp-6);
+  align-items: flex-start;
+  min-height: 280px;
+  padding: var(--esp-8);
   background-color: var(--bg-principal);
-  border: 1px solid var(--cor-borda-suave);
+  border: 1px solid var(--cor-borda);
   border-radius: var(--raio-2xl);
   overflow: hidden;
-  cursor: pointer;
-  transition:
-    transform var(--dur-media) var(--ease-suave),
-    border-color var(--dur-media) var(--ease-suave),
-    box-shadow var(--dur-media) var(--ease-suave);
+  isolation: isolate;
   text-decoration: none;
   color: inherit;
+  transition:
+    transform var(--dur-media) var(--cc-ease),
+    border-color var(--dur-media) var(--cc-ease),
+    box-shadow var(--dur-media) var(--cc-ease);
 }
 
+/* Fundo azul que sobe no hover */
 .category-card::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: -1;
   background: var(--grad-azul);
-  opacity: 0;
-  transition: opacity var(--dur-media) var(--ease-suave);
-  z-index: 0;
+  transform: translateY(101%);
+  transition: transform var(--dur-lenta) var(--ease-expo);
 }
 
-.category-card:hover {
-  transform: translateY(-8px);
+/* Filete dourado no topo */
+.category-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--esp-8);
+  width: 40px;
+  height: 3px;
+  background: var(--grad-ouro);
+  border-radius: 0 0 var(--raio-full) var(--raio-full);
+  transition: width var(--dur-lenta) var(--ease-expo);
+}
+
+.category-card:hover,
+.category-card:focus-visible {
+  transform: translateY(-6px);
   border-color: transparent;
-  box-shadow: var(--sombra-2xl);
+  box-shadow: var(--sombra-xl);
 }
 
-.category-card:hover::before {
-  opacity: 1;
+.category-card:hover::before,
+.category-card:focus-visible::before {
+  transform: translateY(0);
 }
 
-.category-card > * {
-  position: relative;
-  z-index: 1;
+.category-card:hover::after,
+.category-card:focus-visible::after {
+  width: calc(100% - var(--esp-16));
+}
+
+.category-card__index {
+  position: absolute;
+  top: var(--esp-6);
+  right: var(--esp-8);
+  font-family: var(--fonte-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wider);
+  color: var(--cor-texto-muted);
+  transition: color var(--dur-media) var(--cc-ease);
 }
 
 .category-card__icon {
-  width: 72px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--cor-primaria-tint);
-  color: var(--cor-primaria);
-  border-radius: var(--raio-xl);
-  margin-bottom: var(--esp-5);
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin: var(--esp-4) 0 var(--esp-6);
+  color: var(--azul-700);
+  background-color: var(--azul-50);
+  border-radius: var(--raio-lg);
   transition:
-    background-color var(--dur-media) var(--ease-suave),
-    color var(--dur-media) var(--ease-suave),
+    background-color var(--dur-media) var(--cc-ease),
+    color var(--dur-media) var(--cc-ease),
     transform var(--dur-media) var(--ease-spring);
 }
 
 .category-card__icon svg {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   stroke: currentColor;
   fill: none;
 }
 
-.category-card:hover .category-card__icon {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: var(--branco);
-  transform: scale(1.1) rotate(-5deg);
-}
-
 .category-card__name {
+  margin: 0 0 var(--esp-2);
   font-family: var(--fonte-display);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-2xl);
   font-weight: var(--peso-semibold);
-  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-snug);
   color: var(--cor-texto);
-  margin-bottom: var(--esp-2);
-  transition: color var(--dur-media) var(--ease-suave);
+  transition: color var(--dur-media) var(--cc-ease);
 }
 
+.category-card__desc,
 .category-card__count {
-  font-family: var(--fonte-mono);
+  margin: 0;
   font-size: var(--fs-sm);
-  color: var(--cor-texto-muted);
-  transition: color var(--dur-media) var(--ease-suave);
+  line-height: var(--lh-relaxed);
+  color: var(--cor-texto-suave);
+  transition: color var(--dur-media) var(--cc-ease);
+}
+
+.category-card__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  margin-top: auto;
+  padding-top: var(--esp-6);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-semibold);
+  color: var(--azul-700);
+  transition: color var(--dur-media) var(--cc-ease);
+}
+
+.category-card__cta-arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-full);
+  transition:
+    background-color var(--dur-media) var(--cc-ease),
+    border-color var(--dur-media) var(--cc-ease),
+    color var(--dur-media) var(--cc-ease),
+    transform var(--dur-media) var(--ease-expo);
+}
+
+.category-card__cta-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.category-card:hover .category-card__icon,
+.category-card:focus-visible .category-card__icon {
+  color: var(--azul-950);
+  background: var(--grad-ouro-claro);
+  transform: scale(1.06) rotate(-4deg);
 }
 
 .category-card:hover .category-card__name,
-.category-card:hover .category-card__count {
+.category-card:focus-visible .category-card__name,
+.category-card:hover .category-card__cta,
+.category-card:focus-visible .category-card__cta {
   color: var(--branco);
+}
+
+.category-card:hover .category-card__desc,
+.category-card:hover .category-card__count,
+.category-card:focus-visible .category-card__desc {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.category-card:hover .category-card__index,
+.category-card:focus-visible .category-card__index {
+  color: var(--ouro-300);
+}
+
+.category-card:hover .category-card__cta-arrow,
+.category-card:focus-visible .category-card__cta-arrow {
+  color: var(--azul-950);
+  background-color: var(--ouro-400);
+  border-color: var(--ouro-400);
+  transform: translateX(4px);
 }
 
 /* ==========================================================================

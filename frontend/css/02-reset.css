@@ -71,6 +71,10 @@ svg {
 
 svg {
   overflow: visible;
+}
+
+/* só herda a cor quando o SVG não declara fill (fill="none" nos ícones de traço deve valer) */
+svg:not([fill]) {
   fill: currentColor;
 }
 

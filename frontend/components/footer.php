@@ -159,8 +159,10 @@ $base = $base ?? '/diomar-cs';
 <script>window.__BASE_URL__ = '<?= $base ?>';</script>
 
 <script src="<?= $base ?>/frontend/js/api.js" defer></script>
+<script src="<?= $base ?>/frontend/js/motion.js" defer></script>
 <script src="<?= $base ?>/frontend/js/animations.js" defer></script>
 <script src="<?= $base ?>/frontend/js/navbar.js" defer></script>
+<script src="<?= $base ?>/frontend/js/dock-nav.js" defer></script>
 <script src="<?= $base ?>/frontend/js/hero-search.js" defer></script>
 <script src="<?= $base ?>/frontend/js/properties.js" defer></script>
 <script src="<?= $base ?>/frontend/js/favorites.js" defer></script>

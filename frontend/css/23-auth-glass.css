@@ -1,0 +1,588 @@
+/* ==========================================================================
+   DIOMAR_CS IMÓVEIS — AUTH GLASS
+   Login / cadastro / recuperar senha: cena noturna em tela cheia, painel de
+   vidro fosco à direita, campos com linha inferior e botão com seta.
+   Sobrescreve 13-auth.css e 06-inputs.css (carregado por último).
+   ========================================================================== */
+
+.auth {
+  --au-glass: rgba(6, 12, 32, 0.52);
+  --au-line: rgba(255, 255, 255, 0.28);
+  --au-text: rgba(255, 255, 255, 0.92);
+  --au-muted: rgba(255, 255, 255, 0.62);
+  color: var(--au-text);
+  background-color: #040A1F;
+  isolation: isolate;
+}
+
+/* Cena de fundo (com leve movimento) */
+.auth::before {
+  content: '';
+  position: absolute;
+  inset: -2%;
+  z-index: -1;
+  background: url('../images/auth-house-3.jpg') 50% center / cover no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .auth::before {
+    animation: auth-scene-drift 36s ease-in-out infinite alternate;
+  }
+
+  @keyframes auth-scene-drift {
+    from { transform: scale(1) translate3d(0, 0, 0); }
+    to   { transform: scale(1.07) translate3d(-1.2%, -0.8%, 0); }
+  }
+}
+
+/* ---------- Lado visual: só texto sobre a cena ---------- */
+.auth__visual {
+  background: transparent;
+}
+
+.auth__visual-media,
+.auth__visual-overlay,
+.auth__visual-grid,
+.auth__visual-blob {
+  display: none;
+}
+
+.auth__visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(4, 10, 31, 0.55) 0%, rgba(4, 10, 31, 0) 32%, rgba(4, 10, 31, 0) 55%, rgba(4, 10, 31, 0.7) 100%),
+    linear-gradient(90deg, rgba(4, 10, 31, 0.35) 0%, rgba(4, 10, 31, 0) 70%);
+}
+
+.auth__visual-title {
+  text-shadow: 0 2px 30px rgba(4, 10, 31, 0.55);
+}
+
+.auth__visual-subtitle,
+.auth__visual-feature {
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 18px rgba(4, 10, 31, 0.6);
+}
+
+/* ---------- Painel de vidro (direita) ---------- */
+.auth__form {
+  background: var(--au-glass);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(34px) saturate(135%);
+  -webkit-backdrop-filter: blur(34px) saturate(135%);
+}
+
+@media (max-width: 1023px) {
+  .auth__form {
+    border-left: 0;
+    background: rgba(6, 12, 32, 0.6);
+  }
+}
+
+.auth__form-inner {
+  max-width: 420px;
+}
+
+.auth__form-logo-name,
+.auth__form-title,
+.auth__form-subtitle {
+  color: var(--branco);
+}
+
+.auth__form-title {
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  line-height: var(--lh-tight);
+}
+
+.auth__form-title em {
+  color: var(--ouro-300);
+}
+
+.auth__form-subtitle {
+  color: var(--au-muted);
+}
+
+/* ---------- Social (estilo cartão de vidro) ---------- */
+.auth__social-btn {
+  width: 100%;
+  min-height: 58px;
+  color: var(--au-text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--raio-lg);
+  transition: background-color var(--dur-rapida) var(--ease-suave), border-color var(--dur-rapida) var(--ease-suave), transform var(--dur-rapida) var(--ease-suave);
+}
+
+.auth__social-btn:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.auth__social-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth__divider {
+  color: var(--au-muted);
+}
+
+.auth__divider::before,
+.auth__divider::after {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ---------- Campos com linha inferior ---------- */
+.auth .field + .field {
+  margin-top: var(--esp-6);
+}
+
+.auth .field__input {
+  min-height: 60px;
+  padding: 1.5rem 2.75rem 0.5rem 2.25rem;
+  color: var(--branco);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--au-line);
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color var(--dur-media) var(--ease-suave), box-shadow var(--dur-media) var(--ease-suave);
+}
+
+.auth .field__input:hover {
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.auth .field__input:focus {
+  border-bottom-color: var(--ouro-400);
+  box-shadow: 0 1px 0 var(--ouro-400);
+  outline: none;
+}
+
+/* Autofill do navegador sem fundo branco */
+.auth .field__input:-webkit-autofill {
+  -webkit-text-fill-color: var(--branco);
+  transition: background-color 9999s ease-out 0s;
+  box-shadow: inset 0 0 0 1000px transparent;
+}
+
+.auth .field__label {
+  left: 2.25rem;
+  padding: 0;
+  color: var(--au-muted);
+  background: transparent;
+  transform-origin: left center;
+}
+
+.auth .field--filled .field__label,
+.auth .field--focus .field__label,
+.auth .field__input:not(:placeholder-shown) ~ .field__label {
+  top: 0.55rem;
+  transform: translateY(0) scale(0.82);
+  color: var(--ouro-300);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.auth .field--icon .field__icon {
+  left: 0;
+  color: var(--au-muted);
+}
+
+.auth .field--icon.field--focus .field__icon {
+  color: var(--ouro-300);
+}
+
+.auth .field__icon-right {
+  right: 0;
+  color: var(--au-muted);
+}
+
+.auth .field__icon-right:hover {
+  color: var(--branco);
+  background: transparent;
+}
+
+.auth .field--error .field__input {
+  border-bottom-color: #FCA5A5;
+}
+
+.auth .field__error {
+  color: #FCA5A5;
+}
+
+/* ---------- Linha lembrar-me / esqueci ---------- */
+.auth .check__label {
+  color: var(--au-muted);
+}
+
+.auth .check__input {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.auth__link,
+.auth__footer a,
+.auth__terms a {
+  color: var(--branco);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--dur-rapida) var(--ease-suave), color var(--dur-rapida) var(--ease-suave);
+}
+
+.auth__link:hover,
+.auth__footer a:hover,
+.auth__terms a:hover {
+  color: var(--ouro-300);
+  text-decoration-color: var(--ouro-300);
+}
+
+.auth__footer,
+.auth__terms {
+  color: var(--au-muted);
+}
+
+/* ---------- Botão principal: barra de vidro + seta dourada ---------- */
+.auth .auth__submit {
+  position: relative;
+  min-height: 64px;
+  margin-top: var(--esp-4);
+  padding: 0 4.5rem 0 var(--esp-8);
+  font-size: var(--fs-md);
+  font-weight: var(--peso-semibold);
+  color: var(--branco);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--raio-full);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: box-shadow var(--dur-media) var(--ease-suave), border-color var(--dur-media) var(--ease-suave), transform var(--dur-rapida) var(--ease-suave);
+}
+
+.auth .auth__submit svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  color: var(--azul-950);
+  background: var(--grad-ouro-claro);
+  border-radius: var(--raio-full);
+  transform: translateY(-50%);
+  transition: transform var(--dur-media) var(--ease-expo);
+}
+
+.auth .auth__submit:hover {
+  border-color: rgba(255, 255, 255, 0.38);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34), 0 0 0 4px rgba(212, 167, 44, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.auth .auth__submit:hover svg {
+  transform: translateY(-50%) translateX(-4px) scale(1.06);
+}
+
+.auth .auth__submit:active {
+  transform: scale(0.985);
+}
+
+/* ---------- Cadastro: força da senha ---------- */
+.auth__strength-label {
+  color: var(--au-muted);
+}
+
+/* ---------- Entrada escalonada do formulário ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .auth__form-inner > * {
+    animation: auth-glass-in var(--dur-cinema) var(--ease-expo) both;
+  }
+
+  .auth__form-inner > *:nth-child(1) { animation-delay: 0.15s; }
+  .auth__form-inner > *:nth-child(2) { animation-delay: 0.22s; }
+  .auth__form-inner > *:nth-child(3) { animation-delay: 0.29s; }
+  .auth__form-inner > *:nth-child(4) { animation-delay: 0.36s; }
+  .auth__form-inner > *:nth-child(5) { animation-delay: 0.43s; }
+  .auth__form-inner > *:nth-child(6) { animation-delay: 0.50s; }
+  .auth__form-inner > *:nth-child(n+7) { animation-delay: 0.57s; }
+
+  @keyframes auth-glass-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ---------- Ajustes finos ---------- */
+.auth__visual-title,
+.auth__form-title {
+  letter-spacing: 0;
+  word-spacing: 0.06em;
+}
+
+.auth__visual-feature {
+  padding-inline: 0;
+  background: transparent;
+  border: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.auth__visual-eyebrow {
+  color: var(--ouro-300);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.auth .field__input {
+  min-height: 56px;
+}
+
+.auth .field + .field {
+  margin-top: var(--esp-5);
+}
+
+.auth__footer {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Páginas de auth: sem rodapé nem barra inferior ---------- */
+body:has(.auth) .footer,
+body:has(.auth) .bottom-nav {
+  display: none;
+}
+
+body:has(.auth).has-bottom-nav {
+  padding-bottom: 0;
+}
+
+/* Espaço entre campos vem só do gap do container */
+.auth .field + .field {
+  margin-top: 0;
+}
+
+/* Mais contraste para o texto da esquerda sobre os prédios iluminados */
+.auth__visual::after {
+  background:
+    linear-gradient(90deg, rgba(4, 10, 31, 0.72) 0%, rgba(4, 10, 31, 0.35) 55%, rgba(4, 10, 31, 0) 100%),
+    linear-gradient(180deg, rgba(4, 10, 31, 0.5) 0%, rgba(4, 10, 31, 0) 30%, rgba(4, 10, 31, 0) 60%, rgba(4, 10, 31, 0.7) 100%);
+}
+
+body:has(.auth) {
+  background: #040A1F;
+}
+
+/* ---------- Foto real: escurece o lado do texto para manter contraste ---------- */
+.auth__visual::after {
+  top: 0;
+  height: auto;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5, 13, 36, 0.86) 0%, rgba(5, 13, 36, 0.6) 55%, rgba(5, 13, 36, 0.18) 100%),
+    linear-gradient(180deg, rgba(5, 13, 36, 0.55) 0%, rgba(5, 13, 36, 0) 28%, rgba(5, 13, 36, 0) 62%, rgba(5, 13, 36, 0.78) 100%);
+}
+
+.auth__form {
+  background: rgba(5, 13, 36, 0.68);
+}
+
+/* ==========================================================================
+   Cartão de login compacto e translúcido (em vez do painel de meia tela)
+   ========================================================================== */
+.auth__form {
+  background: transparent;
+  border-left: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.auth__form-inner {
+  position: relative;
+  max-width: 440px;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  background: linear-gradient(160deg, rgba(10, 20, 48, 0.34), rgba(5, 12, 32, 0.46));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+
+/* Brilho fino no topo do cartão */
+.auth__form-inner::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  pointer-events: none;
+}
+
+.auth__form-title {
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+}
+
+.auth .field__input {
+  min-height: 52px;
+}
+
+.auth .auth__submit {
+  min-height: 58px;
+}
+
+/* Com o painel menor, a foto aparece nos dois lados: escurece levemente a direita */
+.auth::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(270deg, rgba(5, 13, 36, 0.45) 0%, rgba(5, 13, 36, 0.1) 60%, rgba(5, 13, 36, 0) 100%);
+}
+
+@media (max-width: 1023px) {
+  .auth__form {
+    padding: var(--esp-6) var(--esp-4);
+  }
+
+  .auth__form-inner {
+    background: linear-gradient(160deg, rgba(10, 20, 48, 0.5), rgba(5, 12, 32, 0.62));
+  }
+}
+
+/* Escurecimento contínuo na tela toda (sem emenda no meio) */
+.auth__visual::after {
+  background: linear-gradient(180deg, rgba(5, 13, 36, 0.5) 0%, rgba(5, 13, 36, 0) 28%, rgba(5, 13, 36, 0) 62%, rgba(5, 13, 36, 0.7) 100%);
+}
+
+.auth::after {
+  background: linear-gradient(90deg, rgba(5, 13, 36, 0.84) 0%, rgba(5, 13, 36, 0.58) 38%, rgba(5, 13, 36, 0.3) 62%, rgba(5, 13, 36, 0.38) 100%);
+}
+
+.auth__visual::after {
+  background: none;
+}
+
+.auth::after {
+  background:
+    linear-gradient(180deg, rgba(5, 13, 36, 0.5) 0%, rgba(5, 13, 36, 0) 26%, rgba(5, 13, 36, 0) 62%, rgba(5, 13, 36, 0.68) 100%),
+    linear-gradient(90deg, rgba(5, 13, 36, 0.84) 0%, rgba(5, 13, 36, 0.58) 38%, rgba(5, 13, 36, 0.3) 62%, rgba(5, 13, 36, 0.38) 100%);
+}
+
+/* ---------- Rótulo flutuante sem sobrepor o ícone ---------- */
+.auth .field--icon .field__label,
+.auth .field--icon.field--filled .field__label,
+.auth .field--icon.field--focus .field__label {
+  left: 2.25rem;
+}
+
+.auth .field--icon .field__input {
+  padding-left: 2.25rem;
+}
+
+/* Com o rótulo no topo, o ícone acompanha a linha do texto digitado */
+.auth .field--icon .field__icon {
+  transition: color var(--dur-rapida) var(--ease-suave), top var(--dur-media) var(--ease-suave);
+}
+
+.auth .field--icon.field--filled .field__icon,
+.auth .field--icon.field--focus .field__icon,
+.auth .field--icon:has(.field__input:not(:placeholder-shown)) .field__icon {
+  top: 62%;
+}
+
+/* ==========================================================================
+   Abertura animada (login) — js/splash.js
+   ========================================================================== */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #0E2760 0%, #0B1F4D 45%, #07142F 100%);
+  transition: opacity var(--dur-media) var(--ease-suave);
+}
+
+.splash.is-leaving {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.splash__letters,
+.splash__tagline,
+.splash__symbol {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.splash__letters {
+  display: flex;
+  font-family: 'Montserrat', 'Poppins', var(--fonte-sans);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--branco);
+  white-space: nowrap;
+}
+
+.splash__letters span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.splash__tagline {
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Montserrat', 'Poppins', var(--fonte-sans);
+  font-weight: 600;
+  letter-spacing: 0.62em;
+  text-indent: 0.62em;
+  color: var(--branco);
+  white-space: nowrap;
+}
+
+.splash__symbol svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.splash__skip {
+  position: absolute;
+  right: var(--esp-6);
+  bottom: calc(var(--esp-6) + env(safe-area-inset-bottom, 0px));
+  min-height: 44px;
+  padding: 0 var(--esp-6);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-semibold);
+  color: var(--branco);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--raio-full);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background-color var(--dur-rapida) var(--ease-suave);
+}
+
+.splash__skip:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* O formulário só começa a entrar quando a abertura se dissolve */
+html.splash-on .auth__form-inner > * {
+  animation-play-state: paused;
+}

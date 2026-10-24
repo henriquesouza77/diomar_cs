@@ -1,0 +1,521 @@
+/* ==========================================================================
+   DIOMAR_CS IMÓVEIS — DOCK NAV
+   Navegação flutuante em "pílulas" de vidro escuro:
+   - desktop: logo | dock de ícones (item ativo expande com rótulo) | ações
+   - mobile: barra inferior flutuante com o mesmo comportamento
+   Carregado depois de 09-navbar e 19-mobile; usa #navbar para vencer
+   os estados .is-transparent / .is-scrolled antigos.
+   ========================================================================== */
+
+:root {
+  --dock-bg: rgba(10, 18, 43, 0.74);
+  --dock-border: rgba(255, 255, 255, 0.12);
+  --dock-shadow:
+    0 12px 32px rgba(5, 13, 36, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --dock-item: 44px;
+  --dock-fg: rgba(255, 255, 255, 0.72);
+}
+
+/* ---------- Barra superior: container transparente, só as pílulas aparecem ---------- */
+#navbar {
+  top: 14px;
+  height: auto;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+#navbar.is-scrolled {
+  height: auto;
+  background: none;
+  box-shadow: none;
+}
+
+#navbar .navbar__inner {
+  position: relative;
+  height: auto;
+}
+
+#navbar .navbar__logo,
+#navbar .navbar__menu,
+#navbar .navbar__actions,
+#navbar .navbar__drawer,
+#navbar .navbar__overlay {
+  pointer-events: auto;
+}
+
+/* Vidro compartilhado */
+#navbar .navbar__logo,
+#navbar .navbar__menu,
+#navbar .navbar__actions {
+  padding: 6px;
+  background: var(--dock-bg);
+  border: 1px solid var(--dock-border);
+  border-radius: var(--raio-full);
+  box-shadow: var(--dock-shadow);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  transition: box-shadow var(--dur-media) var(--ease-suave), background-color var(--dur-media) var(--ease-suave);
+}
+
+#navbar.is-scrolled .navbar__logo,
+#navbar.is-scrolled .navbar__menu,
+#navbar.is-scrolled .navbar__actions {
+  background: rgba(8, 14, 34, 0.86);
+  box-shadow: 0 16px 40px rgba(5, 13, 36, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Logo ---------- */
+#navbar .navbar__logo {
+  gap: var(--esp-3);
+  padding-right: var(--esp-5);
+}
+
+#navbar .navbar__logo-icon {
+  width: var(--dock-item);
+  height: var(--dock-item);
+  border-radius: var(--raio-full);
+  font-size: var(--fs-lg);
+}
+
+#navbar .navbar__logo-name {
+  color: var(--branco);
+}
+
+#navbar .navbar__logo-tagline {
+  color: var(--ouro-300);
+}
+
+/* ---------- Ações (favoritos, conta) ---------- */
+#navbar .navbar__actions {
+  gap: 4px;
+}
+
+#navbar .navbar__icon-btn,
+#navbar .navbar__user-icon-mobile,
+#navbar .navbar__toggle {
+  width: var(--dock-item);
+  height: var(--dock-item);
+  color: var(--dock-fg);
+  border-radius: var(--raio-full);
+}
+
+#navbar .navbar__icon-btn:hover,
+#navbar .navbar__user-icon-mobile:hover,
+#navbar .navbar__toggle:hover {
+  color: var(--branco);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#navbar .navbar__icon-btn svg {
+  stroke: currentColor;
+}
+
+#navbar .navbar__toggle {
+  color: var(--branco);
+}
+
+#navbar .navbar__desktop-only.btn {
+  height: var(--dock-item);
+  padding-inline: var(--esp-5);
+  border-radius: var(--raio-full);
+}
+
+#navbar .navbar__desktop-only.btn-ghost {
+  color: var(--dock-fg);
+  background: transparent;
+  border-color: transparent;
+}
+
+#navbar .navbar__desktop-only.btn-ghost:hover {
+  color: var(--branco);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#navbar .navbar__desktop-only.btn-primary {
+  color: var(--azul-950);
+  background: var(--grad-ouro-claro);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+#navbar .navbar__user-btn {
+  height: var(--dock-item);
+  color: var(--branco);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--raio-full);
+}
+
+/* ---------- Dock de ícones (desktop) ---------- */
+@media (min-width: 1024px) {
+  #navbar .navbar__menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    flex: none;
+    gap: 4px;
+    transform: translate(-50%, -50%);
+  }
+
+  #navbar .navbar__link {
+    height: var(--dock-item);
+    min-width: var(--dock-item);
+    padding: 0 13px;
+    justify-content: center;
+    gap: 0;
+    color: var(--dock-fg);
+    background: transparent;
+    border-radius: var(--raio-full);
+    transition:
+      color var(--dur-rapida) var(--ease-suave),
+      background-color var(--dur-rapida) var(--ease-suave);
+  }
+
+  #navbar .navbar__link-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Rótulo colapsado; só o item ativo expande */
+  #navbar .navbar__link-label {
+    max-width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    font-size: var(--fs-sm);
+    font-weight: var(--peso-medium);
+    transition:
+      max-width var(--dur-lenta) var(--ease-expo),
+      margin var(--dur-lenta) var(--ease-expo),
+      opacity var(--dur-media) var(--ease-suave);
+  }
+
+  #navbar .navbar__link:hover {
+    color: var(--branco);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  #navbar .navbar__link.is-active {
+    color: var(--branco);
+    background-color: rgba(255, 255, 255, 0.16);
+  }
+
+  #navbar .navbar__link.is-active .navbar__link-label {
+    max-width: 120px;
+    margin-left: 8px;
+    opacity: 1;
+  }
+
+  /* Dica com o nome nos itens colapsados */
+  #navbar .navbar__link::after {
+    content: attr(data-label);
+    left: 50%;
+    top: calc(100% + 14px);
+    bottom: auto;
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
+    font-size: var(--fs-xs);
+    font-weight: var(--peso-medium);
+    color: var(--branco);
+    white-space: nowrap;
+    background: var(--dock-bg);
+    border: 1px solid var(--dock-border);
+    border-radius: var(--raio-sm);
+    opacity: 0;
+    transform: translate(-50%, 4px);
+    pointer-events: none;
+    transition: opacity var(--dur-rapida) var(--ease-suave), transform var(--dur-rapida) var(--ease-suave);
+  }
+
+  #navbar .navbar__link:not(.is-active):hover::after {
+    width: auto;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  #navbar .navbar__link.is-active::after {
+    display: none;
+  }
+}
+
+/* Em telas médias o logo vira só o ícone, para a dock caber */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  #navbar .navbar__logo-text,
+  #navbar .navbar__desktop-only.btn-ghost {
+    display: none;
+  }
+
+  #navbar .navbar__logo {
+    padding-right: 6px;
+  }
+}
+
+/* ---------- Barra inferior (mobile) ---------- */
+@media (max-width: 767px) {
+  .bottom-nav {
+    left: var(--esp-4);
+    right: var(--esp-4);
+    bottom: calc(var(--esp-3) + var(--safe-bottom, 0px));
+    height: 64px;
+    padding: 0;
+    background: var(--dock-bg);
+    border: 1px solid var(--dock-border);
+    border-radius: var(--raio-full);
+    box-shadow: var(--dock-shadow);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+
+  .bottom-nav__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 10px;
+  }
+
+  .bottom-nav__item {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0;
+    height: var(--dock-item);
+    min-width: var(--dock-item);
+    padding: 0 12px;
+    color: var(--dock-fg);
+    border-radius: var(--raio-full);
+    transition:
+      color var(--dur-rapida) var(--ease-suave),
+      background-color var(--dur-rapida) var(--ease-suave);
+  }
+
+  .bottom-nav__item svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .bottom-nav__item > span:not(.bottom-nav__badge) {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    font-size: var(--fs-sm);
+    font-weight: var(--peso-medium);
+    transition:
+      max-width var(--dur-lenta) var(--ease-expo),
+      margin var(--dur-lenta) var(--ease-expo),
+      opacity var(--dur-media) var(--ease-suave);
+  }
+
+  .bottom-nav__item.is-active {
+    color: var(--branco);
+    background-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .bottom-nav__item.is-active > span:not(.bottom-nav__badge) {
+    max-width: 90px;
+    margin-left: 8px;
+    opacity: 1;
+  }
+
+  .bottom-nav__item.is-active::after {
+    display: none;
+  }
+
+  .bottom-nav__badge {
+    top: 2px;
+    left: auto;
+    right: 2px;
+    transform: none;
+    border-color: var(--azul-950);
+  }
+
+  body.has-bottom-nav {
+    padding-bottom: calc(64px + var(--esp-3) + var(--safe-bottom, 0px) + 16px);
+  }
+}
+
+/* ==========================================================================
+   FLUIDEZ — indicador deslizante + transição entre páginas
+   ========================================================================== */
+
+/* Indicador único que desliza até o item ativo (posicionado por dock-nav.js) */
+#navbar .navbar__indicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 0;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--raio-full);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, width;
+}
+
+/* Com o indicador, o fundo do item ativo sai de cena */
+@media (min-width: 1024px) {
+  #navbar .navbar__menu.has-indicator .navbar__link.is-active {
+    background-color: transparent;
+  }
+
+  #navbar .navbar__menu.has-indicator .navbar__link {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Ícone dá um pequeno "pulo" quando o item é selecionado */
+  #navbar .navbar__link.is-active .navbar__link-icon {
+    animation: dock-icon-pop var(--dur-lenta) var(--ease-spring);
+  }
+
+  #navbar .navbar__link:active .navbar__link-icon {
+    transform: scale(0.88);
+  }
+
+  #navbar .navbar__link-icon {
+    transition: transform var(--dur-rapida) var(--ease-suave);
+  }
+}
+
+@keyframes dock-icon-pop {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Barra inferior: feedback de toque */
+@media (max-width: 767px) {
+  .bottom-nav__item:active svg {
+    transform: scale(0.88);
+  }
+
+  .bottom-nav__item svg {
+    transition: transform var(--dur-rapida) var(--ease-suave);
+  }
+
+  .bottom-nav__item.is-active svg {
+    animation: dock-icon-pop var(--dur-lenta) var(--ease-spring);
+  }
+}
+
+/* Troca de página: o conteúdo faz crossfade e a navegação fica no lugar */
+@view-transition {
+  navigation: auto;
+}
+
+#navbar {
+  view-transition-name: site-nav;
+}
+
+.bottom-nav {
+  view-transition-name: site-bottom-nav;
+}
+
+::view-transition-old(root) {
+  animation: vt-out 0.28s var(--ease-suave) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-in 0.4s var(--ease-expo) both;
+}
+
+@keyframes vt-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes vt-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* ==========================================================================
+   CORREÇÕES
+   ========================================================================== */
+
+/* Contador de favoritos: o display:flex do badge anulava o atributo hidden (aparecia "0") */
+.badge-count[hidden],
+.bottom-nav__badge[hidden] {
+  display: none !important;
+}
+
+/* Menu mobile aberto: a pílula com o botão (X) fica acima do drawer, para dar para fechar */
+#navbar.is-menu-open .navbar__actions {
+  position: relative;
+  z-index: calc(var(--z-navbar) + 3);
+}
+
+/* Favoritos como página atual */
+#navbar .navbar__icon-btn.is-active {
+  color: var(--branco);
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Menu aberto: pílula sólida e ícones claros sobre o drawer branco */
+#navbar.is-menu-open .navbar__actions {
+  background: #0A122B;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#navbar.is-menu-open .navbar__toggle,
+#navbar.is-menu-open .navbar__icon-btn,
+#navbar.is-menu-open .navbar__user-icon-mobile {
+  color: var(--branco);
+}
+
+/* Telas muito estreitas: só o ícone do logo, para a barra não estourar */
+@media (max-width: 380px) {
+  #navbar .navbar__logo-text {
+    display: none;
+  }
+
+  #navbar .navbar__logo {
+    padding-right: 6px;
+  }
+}
+
+/* Ícones e hambúrguer sempre claros: 19-mobile.css pintava de cinza-escuro (!important)
+   e sumia no vidro escuro. O id vence esses estados. */
+#navbar .navbar__icon-btn,
+#navbar .navbar__user-icon-mobile,
+#navbar .navbar__toggle {
+  color: var(--dock-fg) !important;
+}
+
+#navbar .navbar__icon-btn:hover,
+#navbar .navbar__user-icon-mobile:hover,
+#navbar .navbar__toggle:hover,
+#navbar .navbar__icon-btn.is-active,
+#navbar.is-menu-open .navbar__icon-btn,
+#navbar.is-menu-open .navbar__user-icon-mobile,
+#navbar.is-menu-open .navbar__toggle {
+  color: var(--branco) !important;
+}
+
+#navbar .navbar__icon-btn svg,
+#navbar .navbar__user-icon-mobile svg {
+  stroke: currentColor !important;
+}
+
+#navbar .navbar__toggle-bar,
+#navbar .navbar__toggle-bar::before,
+#navbar .navbar__toggle-bar::after {
+  background-color: currentColor !important;
+}
+
+#navbar.is-menu-open .navbar__toggle-bar {
+  background-color: transparent !important;
+}

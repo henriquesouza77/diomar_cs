@@ -1,0 +1,100 @@
+/* ==========================================================================
+   DIOMAR_CS IMÓVEIS — MOTION
+   Complementa 17-animations.css (reveal/stagger via IntersectionObserver).
+   Animações aqui respeitam prefers-reduced-motion.
+   ========================================================================== */
+
+/* ---------- Barra de progresso de scroll ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-navbar) + 1);
+  height: 3px;
+  background: var(--grad-ouro);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---------- Cards renderizados por JS: cascata a cada render ---------- */
+  .properties-grid > *,
+  .featured__grid > * {
+    animation: motion-card-in var(--dur-lenta) var(--ease-expo) both;
+  }
+
+  .properties-grid > *:nth-child(1),  .featured__grid > *:nth-child(1)  { animation-delay: 0.04s; }
+  .properties-grid > *:nth-child(2),  .featured__grid > *:nth-child(2)  { animation-delay: 0.10s; }
+  .properties-grid > *:nth-child(3),  .featured__grid > *:nth-child(3)  { animation-delay: 0.16s; }
+  .properties-grid > *:nth-child(4),  .featured__grid > *:nth-child(4)  { animation-delay: 0.22s; }
+  .properties-grid > *:nth-child(5),  .featured__grid > *:nth-child(5)  { animation-delay: 0.28s; }
+  .properties-grid > *:nth-child(6),  .featured__grid > *:nth-child(6)  { animation-delay: 0.34s; }
+  .properties-grid > *:nth-child(n+7), .featured__grid > *:nth-child(n+7) { animation-delay: 0.40s; }
+
+  @keyframes motion-card-in {
+    from { opacity: 0; transform: translateY(28px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Micro-interações ---------- */
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn svg,
+  .featured__link svg {
+    transition: transform var(--dur-rapida) var(--ease-suave);
+  }
+
+  .btn:hover svg:last-child,
+  .featured__link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Sublinhado que "desenha" nos links do rodapé */
+  .footer__list a {
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer__list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--ouro-300);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-media) var(--ease-expo);
+  }
+
+  .footer__list a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .contact-card {
+    transition: transform var(--dur-media) var(--ease-suave), box-shadow var(--dur-media) var(--ease-suave);
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-lg);
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    transition: border-color var(--dur-rapida) var(--ease-suave), box-shadow var(--dur-rapida) var(--ease-suave);
+  }
+
+  /* Scroll suave com ancoragem sob a navbar */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--navbar-height) + 1rem);
+  }
+}
