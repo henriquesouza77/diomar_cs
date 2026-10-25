@@ -88,30 +88,6 @@ $base = BASE_PATH;
   </div>
 </section>
 
-<!-- ==================== NÚMEROS ==================== -->
-<section class="numbers-section">
-  <div class="container">
-    <div class="numbers-section__grid" data-stagger>
-      <div class="numbers-section__item">
-        <div class="numbers-section__value" data-counter="15">0</div>
-        <div class="numbers-section__label">Anos de mercado</div>
-      </div>
-      <div class="numbers-section__item">
-        <div class="numbers-section__value" data-counter="1200">0</div>
-        <div class="numbers-section__label">Imóveis negociados</div>
-      </div>
-      <div class="numbers-section__item">
-        <div class="numbers-section__value" data-counter="980">0</div>
-        <div class="numbers-section__label">Clientes satisfeitos</div>
-      </div>
-      <div class="numbers-section__item">
-        <div class="numbers-section__value" data-counter="98">0<small>%</small></div>
-        <div class="numbers-section__label">Índice de recomendação</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ==================== VALORES / DIFERENCIAIS ==================== -->
 <section class="categories">
   <div class="container">

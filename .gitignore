@@ -10,3 +10,4 @@ backend/uploads/properties/*
 # Dependências e saídas de teste
 node_modules/
 splash-video/frames/
+tests/api-security.test.mjs
