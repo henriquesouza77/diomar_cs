@@ -4,12 +4,27 @@ declare(strict_types=1);
 namespace Services;
 
 use Core\Response;
+use Middleware\AuthMiddleware;
+use Models\Property;
 use Models\PropertyImage;
 
 class ImageService
 {
+    /** Só corretor/admin dono do imóvel mexe nas fotos dele. */
+    private static function authorize(int $propertyId): void
+    {
+        AuthMiddleware::requireAgent();
+
+        $property = Property::find($propertyId);
+        if (!$property) Response::error('Imóvel não encontrado.', 404);
+
+        PropertyService::assertCanManage($property);
+    }
+
     public static function upload(int $propertyId, array $files): array
     {
+        self::authorize($propertyId);
+
         $uploaded = [];
         $config = require BACKEND_PATH . '/config/app.php';
         $dir = $config['upload_path'] . 'properties/';
@@ -50,7 +65,7 @@ class ImageService
     public static function deleteFile(string $filename): void
     {
         $config = require BACKEND_PATH . '/config/app.php';
-        $path = $config['upload_path'] . 'properties/' . $filename;
+        $path = $config['upload_path'] . 'properties/' . basename($filename);
         if (file_exists($path)) {
             @unlink($path);
         }
@@ -58,19 +73,48 @@ class ImageService
 
     public static function remove(int $imageId): void
     {
-        $image = PropertyImage::delete($imageId);
-        if ($image) {
-            self::deleteFile($image['filename']);
-        }
+        AuthMiddleware::requireAgent();   // antes de qualquer consulta: visitante não descobre quais ids existem
+
+        $image = PropertyImage::find($imageId);
+        if (!$image) Response::error('Imagem não encontrada.', 404);
+
+        self::authorize((int) $image['property_id']);
+
+        PropertyImage::delete($imageId);
+        self::deleteFile($image['filename']);
     }
 
     public static function setPrimary(int $propertyId, int $imageId): void
     {
+        self::authorize($propertyId);
+
+        $image = PropertyImage::find($imageId);
+        if (!$image || (int) $image['property_id'] !== $propertyId) {
+            Response::error('Imagem não pertence a este imóvel.', 422);
+        }
+
         PropertyImage::setPrimary($propertyId, $imageId);
     }
 
     public static function reorder(array $imageIds): void
     {
-        PropertyImage::reorder($imageIds);
+        AuthMiddleware::requireAgent();
+
+        // Todas as imagens precisam existir e ser de imóveis que o usuário pode gerenciar
+        $valid = [];
+        $checked = [];
+        foreach ($imageIds as $id) {
+            $image = PropertyImage::find((int) $id);
+            if (!$image) Response::error('Imagem não encontrada.', 404);
+
+            $propertyId = (int) $image['property_id'];
+            if (!isset($checked[$propertyId])) {
+                self::authorize($propertyId);
+                $checked[$propertyId] = true;
+            }
+            $valid[] = (int) $id;
+        }
+
+        PropertyImage::reorder($valid);
     }
 }

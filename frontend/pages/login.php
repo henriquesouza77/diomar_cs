@@ -6,7 +6,7 @@ $skipNavbar      = true;
 
 require_once __DIR__ . '/../components/header.php';
 
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <?php require __DIR__ . '/../components/splash.php'; ?>
@@ -153,12 +153,7 @@ $base = '/diomar-cs';
           </button>
         </div>
 
-        <div class="auth__row">
-          <label class="check">
-            <input type="checkbox" name="remember" class="check__input">
-            <span class="check__label">Lembrar-me</span>
-          </label>
-
+        <div class="auth__row auth__row--end">
           <a href="<?= $base ?>/frontend/pages/recuperar-senha.php" class="auth__link">
             Esqueceu a senha?
           </a>

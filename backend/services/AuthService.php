@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Services;
 
 use Core\Database;
+use Core\RateLimit;
+use Core\Request;
 use Core\Session;
 use Core\Response;
 use Models\User;
@@ -11,17 +13,28 @@ use Middleware\AuthMiddleware;
 
 class AuthService
 {
-    public static function login(string $email, string $password, bool $remember = false): array
+    public static function login(string $email, string $password): array
     {
         $email = clean_email($email);
         if (!$email || !$password) {
             Response::error('E-mail e senha são obrigatórios.', 422);
         }
 
+        // Anti força bruta: por conta (várias origens) e por IP (várias contas)
+        $max    = (int) config('login_max_attempts', 5);
+        $window = (int) config('login_lockout_time', 900);
+        $email  = strtolower($email);
+        $ip     = Request::ip();
+        RateLimit::enforce('login_email', $email, $max, $window);
+        RateLimit::enforce('login_ip', $ip, $max * 4, $window);
+
         $user = User::findByEmail($email);
         if (!$user || !User::verifyPassword($password, $user['password_hash'])) {
+            RateLimit::hit('login_email', $email);
+            RateLimit::hit('login_ip', $ip);
             Response::error('E-mail ou senha incorretos.', 401);
         }
+        RateLimit::clear('login_email', $email);
 
         if ($user['status'] !== 'active') {
             Response::error('Sua conta está inativa. Entre em contato com o suporte.', 403);
@@ -49,6 +62,9 @@ class AuthService
         $password = (string)($data['password'] ?? '');
         $passwordConfirm = (string)($data['password_confirm'] ?? '');
         $phone    = clean_phone($data['phone'] ?? null);
+
+        RateLimit::enforce('register_ip', Request::ip(), 10, 3600);
+        RateLimit::hit('register_ip', Request::ip());
 
         $errors = [];
         if (!$name)                                   $errors['name'] = 'Nome é obrigatório.';

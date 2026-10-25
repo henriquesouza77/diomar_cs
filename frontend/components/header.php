@@ -17,7 +17,7 @@ $transparentNav  = $transparentNav  ?? false;
 $bodyClass       = $bodyClass       ?? '';
 $skipNavbar      = $skipNavbar      ?? false;
 
-$base = '/diomar-cs';
+$base = BASE_PATH;
 // Item ativo do menu: listagem e detalhe de imóvel viram Comprar/Alugar conforme a finalidade
 $navKey = $currentPage;
 if ($navKey === 'imoveis') {

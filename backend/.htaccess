@@ -7,12 +7,12 @@ Options -Indexes
 # Permite TUDO por padrão
 Require all granted
 
-# Bloqueia arquivos sensíveis (mas NÃO o api.php)
+# Bloqueia arquivos sensíveis
 <FilesMatch "\.(env|log|sql|md|ini|conf|lock|bak)$">
     Require all denied
 </FilesMatch>
 
-# Bloqueia config.php e helpers.php (mas NÃO api.php)
+# Bloqueia config.php e helpers.php (a API é api/index.php)
 <FilesMatch "^(config|helpers)\.php$">
     Require all denied
 </FilesMatch>

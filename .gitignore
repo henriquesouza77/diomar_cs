@@ -1,1 +1,12 @@
 .env
+
+# Segredos e configuração local
+backend/.env
+
+# Fotos enviadas pelo painel (ficam no servidor, não no Git). As já versionadas continuam rastreadas.
+backend/uploads/properties/*
+!backend/uploads/properties/.gitkeep
+
+# Dependências e saídas de teste
+node_modules/
+splash-video/frames/

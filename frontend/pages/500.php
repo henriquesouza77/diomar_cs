@@ -2,7 +2,7 @@
 $pageTitle   = 'Erro interno';
 $currentPage = '500';
 require __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <section class="section" style="padding-top:calc(var(--navbar-height) + var(--space-24));min-height:80vh;">

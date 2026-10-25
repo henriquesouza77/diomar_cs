@@ -2,7 +2,7 @@
 $pageTitle   = 'Recuperar senha';
 $currentPage = 'recuperar';
 require __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <main class="auth-page">

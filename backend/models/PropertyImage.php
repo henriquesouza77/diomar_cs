@@ -17,6 +17,11 @@ class PropertyImage
         );
     }
 
+    public static function find(int $id): ?array
+    {
+        return Database::fetch("SELECT * FROM property_images WHERE id = ? LIMIT 1", [$id]);
+    }
+
     public static function create(int $propertyId, array $data): int
     {
         return Database::insert('property_images', [

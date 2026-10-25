@@ -43,10 +43,13 @@ class PropertyService
             self::assertCanManage($property);
         }
 
-        // Incrementa visualizações
-        try {
-            Database::query("UPDATE properties SET views = views + 1 WHERE id = ?", [$id]);
-        } catch (\Throwable $e) {}
+        // Conta 1 visualização por sessão e imóvel (recarregar a página não infla o número)
+        if (empty($_SESSION['viewed_properties'][$id])) {
+            $_SESSION['viewed_properties'][$id] = true;
+            try {
+                Database::query("UPDATE properties SET views = views + 1 WHERE id = ?", [$id]);
+            } catch (\Throwable $e) {}
+        }
 
         // Estrutura o corretor
         if ($property['agent_id']) {
@@ -231,7 +234,7 @@ class PropertyService
         return ['items' => Property::similar($id, 3)];
     }
 
-    private static function assertCanManage(array $property): void
+    public static function assertCanManage(array $property): void
     {
         if (AuthMiddleware::userRole() === ROLE_AGENT && (int)$property['agent_id'] !== AuthMiddleware::userId()) {
             Response::error('Você não pode gerenciar este imóvel.', 403);

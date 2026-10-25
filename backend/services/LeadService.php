@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Services;
 
+use Core\RateLimit;
+use Core\Request;
 use Core\Response;
 use Models\Lead;
 use Models\Property;
@@ -12,6 +14,15 @@ class LeadService
 {
     public static function create(array $data): array
     {
+        // Campo-isca: invisível para pessoas, preenchido por robôs. Finge sucesso e descarta.
+        if (!empty($data['website'])) {
+            return ['id' => 0];
+        }
+
+        $ip = Request::ip();
+        RateLimit::enforce('lead_ip', $ip, 5, 600);
+        RateLimit::hit('lead_ip', $ip);
+
         $name     = clean_str($data['name'] ?? '', 150);
         $email    = clean_email($data['email'] ?? '');
         $phone    = clean_phone($data['phone'] ?? null);
@@ -39,7 +50,7 @@ class LeadService
             'phone'       => $phone,
             'whatsapp'    => $phone,
             'message'     => $message,
-            'origin'      => $data['origin'] ?? 'site',
+            'origin'      => in_array($data['origin'] ?? '', ['site', 'whatsapp', 'anunciar'], true) ? $data['origin'] : 'site',
         ]);
 
         ActivityLogService::log('lead.create', 'lead', $leadId, ['name' => $name]);
@@ -50,6 +61,11 @@ class LeadService
     {
         AuthMiddleware::requireAgent();
         $page = max(1, (int)($filters['page'] ?? 1));
+
+        // Corretor vê só os leads dele e os ainda sem dono; admin vê todos
+        if (AuthMiddleware::userRole() === ROLE_AGENT) {
+            $filters['agent_scope'] = AuthMiddleware::userId();
+        }
         return Lead::listAll($filters, $page, 20);
     }
 
@@ -59,6 +75,15 @@ class LeadService
         if (!in_array($statusId, [1, 2, 3, 4, 5], true)) {
             Response::error('Status inválido.', 422);
         }
+
+        $lead = Lead::find($id);
+        if (!$lead) Response::error('Lead não encontrado.', 404);
+        if (AuthMiddleware::userRole() === ROLE_AGENT
+            && $lead['agent_id'] !== null
+            && (int) $lead['agent_id'] !== AuthMiddleware::userId()) {
+            Response::error('Este lead é de outro corretor.', 403);
+        }
+
         Lead::updateStatus($id, $statusId);
         ActivityLogService::log('lead.update_status', 'lead', $id, ['status_id' => $statusId]);
     }

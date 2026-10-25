@@ -21,7 +21,9 @@ class SettingsController
         CsrfMiddleware::handle();
         AuthMiddleware::requireAdmin();
 
-        $data = Request::body();
+        // Só as chaves conhecidas (nada de gravar csrf_token ou campos soltos)
+        $allowed = ['site_name', 'site_email', 'site_phone', 'site_whatsapp', 'site_address', 'items_per_page'];
+        $data = array_intersect_key(Request::body(), array_flip($allowed));
         Setting::setMany($data);
         Response::success(null, 'Configurações salvas.');
     }

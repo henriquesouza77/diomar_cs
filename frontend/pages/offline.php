@@ -5,7 +5,7 @@ $currentPage     = 'offline';
 $skipNavbar      = true;
 
 require_once __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 <main class="offline-page">
   <div class="container">

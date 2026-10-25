@@ -1,5 +1,5 @@
 <?php
-$base = $base ?? '/diomar-cs';
+$base = $base ?? BASE_PATH;
 ?>
 <!-- ==================== FOOTER ==================== -->
 <footer class="footer" role="contentinfo">
@@ -158,29 +158,28 @@ $base = $base ?? '/diomar-cs';
 <!-- ==================== SCRIPTS ==================== -->
 <script>window.__BASE_URL__ = '<?= $base ?>';</script>
 
-<script src="<?= $base ?>/frontend/js/navbar.js?v=2"></script>
-<script src="<?= $base ?>/frontend/js/api.js" defer></script>
-<script src="<?= $base ?>/frontend/js/motion.js" defer></script>
-<script src="<?= $base ?>/frontend/js/animations.js" defer></script>
-<script src="<?= $base ?>/frontend/js/navbar.js" defer></script>
-<script src="<?= $base ?>/frontend/js/dock-nav.js" defer></script>
-<script src="<?= $base ?>/frontend/js/hero-search.js" defer></script>
-<script src="<?= $base ?>/frontend/js/properties.js" defer></script>
-<script src="<?= $base ?>/frontend/js/favorites.js" defer></script>
-<script src="<?= $base ?>/frontend/js/lottie-loader.js" defer></script>
-<script src="<?= $base ?>/frontend/js/pwa.js" defer></script>
-<script src="<?= $base ?>/frontend/js/main.js" defer></script>
+<script src="<?= $base ?>/frontend/js/api.js?v=<?= filemtime(__DIR__ . '/../js/api.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/motion.js?v=<?= filemtime(__DIR__ . '/../js/motion.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/animations.js?v=<?= filemtime(__DIR__ . '/../js/animations.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/navbar.js?v=<?= filemtime(__DIR__ . '/../js/navbar.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/dock-nav.js?v=<?= filemtime(__DIR__ . '/../js/dock-nav.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/hero-search.js?v=<?= filemtime(__DIR__ . '/../js/hero-search.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/properties.js?v=<?= filemtime(__DIR__ . '/../js/properties.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/favorites.js?v=<?= filemtime(__DIR__ . '/../js/favorites.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/lottie-loader.js?v=<?= filemtime(__DIR__ . '/../js/lottie-loader.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/pwa.js?v=<?= filemtime(__DIR__ . '/../js/pwa.js') ?>" defer></script>
+<script src="<?= $base ?>/frontend/js/main.js?v=<?= filemtime(__DIR__ . '/../js/main.js') ?>" defer></script>
 
 <?php if (!empty($loadPropertyDetails)): ?>
-  <script src="<?= $base ?>/frontend/js/property-details.js" defer></script>
+  <script src="<?= $base ?>/frontend/js/property-details.js?v=<?= filemtime(__DIR__ . '/../js/property-details.js') ?>" defer></script>
 <?php endif; ?>
 
 <?php if (in_array($currentPage ?? '', ['login', 'cadastro'], true)): ?>
-  <script src="<?= $base ?>/frontend/js/auth.js" defer></script>
+  <script src="<?= $base ?>/frontend/js/auth.js?v=<?= filemtime(__DIR__ . '/../js/auth.js') ?>" defer></script>
 <?php endif; ?>
 
 <?php if (strpos($currentPage ?? '', 'admin') === 0 || ($currentPage ?? '') === 'admin'): ?>
-  <script src="<?= $base ?>/frontend/js/admin.js" defer></script>
+  <script src="<?= $base ?>/frontend/js/admin.js?v=<?= filemtime(__DIR__ . '/../js/admin.js') ?>" defer></script>
 <?php endif; ?>
 
 </body>

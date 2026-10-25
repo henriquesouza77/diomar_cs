@@ -354,7 +354,8 @@
 
 /* ---------- Páginas de auth: sem rodapé nem barra inferior ---------- */
 body:has(.auth) .footer,
-body:has(.auth) .bottom-nav {
+body:has(.auth) .bottom-nav,
+body:has(.auth) .pwa-banner {
   display: none;
 }
 
@@ -585,4 +586,9 @@ body:has(.auth) {
 /* O formulário só começa a entrar quando a abertura se dissolve */
 html.splash-on .auth__form-inner > * {
   animation-play-state: paused;
+}
+
+/* Só o link "Esqueceu a senha?" na linha: alinhado à direita */
+.auth__row--end {
+  justify-content: flex-end;
 }

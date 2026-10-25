@@ -108,7 +108,7 @@
       credentials: 'same-origin',
       headers: { 'Accept': 'application/json' }
     })
-      .then(r => r.ok ? r.json() : null)
+      .then(r => r.json().catch(() => null))   // sempre lê o corpo (inclusive no 401): corpo não lido deixa a requisição pendurada
       .then(res => {
         if (res && res.data) {
           return API.favorites.list()

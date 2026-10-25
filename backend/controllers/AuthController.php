@@ -17,8 +17,7 @@ class AuthController
 
         $result = AuthService::login(
             $data['email'] ?? '',
-            $data['password'] ?? '',
-            !empty($data['remember'])
+            $data['password'] ?? ''
         );
 
         Response::success($result, 'Login efetuado com sucesso.');
@@ -39,7 +38,7 @@ class AuthController
         if (strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false) {
             Response::success(null, 'Logout efetuado.');
         }
-        Response::redirect('/diomar-cs/frontend/pages/login.php');
+        Response::redirect(BASE_PATH . '/frontend/pages/login.php');
     }
 
     public function me(): void

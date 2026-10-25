@@ -11,17 +11,17 @@ require_once __DIR__ . '/../../../backend/config/bootstrap.php';
 
 $currentUser = \Middleware\AuthMiddleware::user();
 if (!$currentUser) {
-  \Core\Response::redirect('/diomar-cs/frontend/pages/login.php?redirect=' . rawurlencode($_SERVER['REQUEST_URI'] ?? '/diomar-cs/frontend/pages/admin/dashboard.php'));
+  \Core\Response::redirect(BASE_PATH . '/frontend/pages/login.php?redirect=' . rawurlencode($_SERVER['REQUEST_URI'] ?? BASE_PATH . '/frontend/pages/admin/dashboard.php'));
 }
 if (!\Middleware\AuthMiddleware::isAgent()) {
-  \Core\Response::redirect('/diomar-cs/frontend/pages/index.php');
+  \Core\Response::redirect(BASE_PATH . '/frontend/pages/index.php');
 }
 if (in_array($adminActive ?? '', ['usuarios', 'corretores', 'configuracoes'], true)
     && !\Middleware\AuthMiddleware::isAdmin()) {
-  \Core\Response::redirect('/diomar-cs/frontend/pages/admin/dashboard.php');
+  \Core\Response::redirect(BASE_PATH . '/frontend/pages/admin/dashboard.php');
 }
 
-$base        = '/diomar-cs';
+$base        = BASE_PATH;
 $adminTitle  = $adminTitle  ?? 'Dashboard';
 $adminActive = $adminActive ?? 'dashboard';
 $adminSubtitle = $adminSubtitle ?? '';

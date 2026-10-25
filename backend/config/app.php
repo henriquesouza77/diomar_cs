@@ -2,19 +2,21 @@
 /**
  * Configurações globais da aplicação.
  */
+require_once __DIR__ . '/env.php';
+
 $root = dirname(__DIR__, 2);
 
 return [
     'name'          => 'DIOMAR_CS IMÓVEIS',
-    'env'           => 'development',    // development | production
-    'debug'         => true,
-    'url'           => 'http://localhost/diomar-cs',
+    'env'           => env('APP_DEBUG', 'false') === 'true' ? 'development' : 'production',
+    'debug'         => filter_var(env('APP_DEBUG', 'false'), FILTER_VALIDATE_BOOLEAN),
+    'url'           => env('APP_URL', 'http://localhost/diomar-cs'),
     'session_name'  => 'diomar_session',
     'session_lifetime' => 0,
 
     // Uploads
     'upload_path'   => $root . '/backend/uploads/',
-    'upload_url'    => '/diomar-cs/backend/uploads/',
+    'upload_url'    => BASE_PATH . '/backend/uploads/',
     'max_upload'    => 5 * 1024 * 1024, // 5MB
     'allowed_mimes' => [
         'image/jpeg' => 'jpg',

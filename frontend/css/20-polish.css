@@ -645,3 +645,12 @@ h4, h5, h6,
   font-family: var(--fonte-sans);
   font-weight: var(--peso-semibold);
 }
+
+/* Campo-isca anti-robô (formulário de interesse): fora da tela, sem display:none */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

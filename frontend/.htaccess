@@ -12,3 +12,9 @@ Options -Indexes
         Require all denied
     </If>
 </FilesMatch>
+# O service worker fica em /frontend/ mas controla o site todo
+<Files "sw.js">
+    <IfModule mod_headers.c>
+        Header set Service-Worker-Allowed "/"
+    </IfModule>
+</Files>

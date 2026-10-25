@@ -6,7 +6,7 @@
 --   1. Abra http://localhost/phpmyadmin
 --   2. Aba "Importar" → escolha este arquivo → Executar
 --   3. O banco iniciará VAZIO (sem imóveis, sem leads fictícios)
---   4. Login inicial: admin@diomarcsimoveis.com.br / admin123
+--   4. Crie o administrador: php backend/tools/create-admin.php seu@email.com "senha"
 -- ================================================================
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -457,10 +457,9 @@ CREATE TABLE `activity_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ================================================================
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `password_hash`, `phone`, `status`) VALUES
-  (1, 1, 'Administrador', 'admin@diomarcsimoveis.com.br',
-  '$2y$10$s5OKQ1mPFtrcg5vbXOM2e.Ijgp2B3PWRngf9VHcaVcHkYoFRrDYhm',
-   '(11) 99999-9999', 'active');
+-- O administrador NÃO vem no banco (sem senha padrão pública).
+-- Crie-o depois de importar:
+--   php backend/tools/create-admin.php seu@email.com "senha-com-8-ou-mais"
 
 -- ================================================================
 -- FINALIZAÇÃO

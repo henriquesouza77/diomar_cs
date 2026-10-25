@@ -5,7 +5,7 @@ $currentPage     = 'imoveis';
 $loadPropertyDetails = true;
 
 require_once __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 
 // Validação do parâmetro id
 $propertyId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -163,6 +163,11 @@ $propertyId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             <p class="interest-form__subtitle">Envie seus dados e retornaremos em breve.</p>
 
             <input type="hidden" name="property_id" id="interestPropertyId" value="<?= $propertyId ?>">
+
+            <!-- Campo-isca anti-robô: pessoas não veem; se vier preenchido, o servidor descarta -->
+            <div class="hp-field" aria-hidden="true">
+              <label>Não preencha <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
 
             <div class="form-group">

@@ -139,32 +139,22 @@ return [
 ];
 Se você alterou a senha do MySQL, atualize aqui.
 
-Passo 5 — Acessar com o administrador inicial
-O database.sql cria a conta inicial com hash bcrypt válido.
-
-E-mail: admin@diomarcsimoveis.com.br
-Senha: admin123 (troque imediatamente após o primeiro login)
-
-Se o banco foi importado antes desta correção, confira no phpMyAdmin o e-mail e o ID do administrador. Para redefinir a senha dessa conta, gere um hash:
+Passo 5 — Criar o administrador
+O banco não traz usuário nem senha padrão. Crie o administrador pela linha de comando (a senha precisa ter 8 ou mais caracteres). No XAMPP, use o php.exe de C:/xampp/php:
 
 bash
-php -r "echo password_hash('sua_nova_senha', PASSWORD_BCRYPT);"
+php backend/tools/create-admin.php seu@email.com "sua-senha-forte"
 
-Depois atualize somente o registro do administrador pelo ID correspondente:
+Rodar o mesmo comando de novo com o mesmo e-mail redefine a senha.
 
-sql
-UPDATE users SET password_hash = 'COLE_O_HASH_AQUI' WHERE id = ID_DO_ADMINISTRADOR;
+Configuração (opcional): copie backend/.env.example para backend/.env para trocar usuário/senha do MySQL, a pasta do site (APP_BASE_PATH) e ligar APP_DEBUG=true só no desenvolvimento. Sem o arquivo valem os padrões do XAMPP e o debug fica desligado.
 
 Passo 6 — Acessar o sistema
 URL	O que é
 http://localhost/diomar-cs/	Home pública
 http://localhost/diomar-cs/frontend/pages/login.php	Login
 http://localhost/diomar-cs/frontend/pages/admin/dashboard.php	Painel admin
-Credenciais iniciais:
-
-E-mail: admin@diomarcsimoveis.com.br
-
-Senha: admin123 (troque imediatamente)
+Entre com o administrador criado no passo 5.
 
 Passo 7 — Permissões de escrita (Linux/macOS apenas)
 bash

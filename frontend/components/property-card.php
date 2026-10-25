@@ -5,7 +5,7 @@
  *                                 bedrooms, bathrooms, parking_spaces, area_built,
  *                                 neighborhood, city, main_image, featured, created_at
  */
-$base       = '/diomar-cs';
+$base       = BASE_PATH;
 $isNew      = isset($property['created_at']) && strtotime($property['created_at']) > strtotime('-15 days');
 $imageUrl   = !empty($property['main_image'])
   ? $base . '/backend/uploads/properties/' . htmlspecialchars($property['main_image'])

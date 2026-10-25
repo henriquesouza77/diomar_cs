@@ -4,7 +4,7 @@ $pageDescription = 'Entre em contato com a DIOMAR_CS IMÓVEIS. Atendimento perso
 $currentPage     = 'contato';
 
 require_once __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <section class="contact-page">

@@ -4,12 +4,14 @@
  */
 declare(strict_types=1);
 
+require_once __DIR__ . '/config/env.php';
+
 // ============================================================
 // CONSTANTES
 // ============================================================
 define('APP_NAME',    'DIOMAR_CS IMÓVEIS');
-define('APP_URL',     'http://localhost/diomar-cs');
-define('APP_DEBUG',   true);
+define('APP_URL',     env('APP_URL', 'http://localhost/diomar-cs'));
+define('APP_DEBUG',   filter_var(env('APP_DEBUG', 'false'), FILTER_VALIDATE_BOOLEAN));
 define('APP_TIMEZONE','America/Sao_Paulo');
 
 // Caminhos
@@ -24,11 +26,11 @@ define('UPLOAD_MAX_SIZE', 5 * 1024 * 1024);
 define('UPLOAD_ALLOWED',  ['image/jpeg', 'image/png', 'image/webp']);
 
 // Banco
-define('DB_HOST',    '127.0.0.1');
-define('DB_PORT',    '3306');
-define('DB_NAME',    'diomar_cs_imoveis');
-define('DB_USER',    'root');
-define('DB_PASS',    '');
+define('DB_HOST',    env('DB_HOST', '127.0.0.1'));
+define('DB_PORT',    env('DB_PORT', '3306'));
+define('DB_NAME',    env('DB_NAME', 'diomar_cs_imoveis'));
+define('DB_USER',    env('DB_USER', 'root'));
+define('DB_PASS',    env('DB_PASS', ''));
 define('DB_CHARSET', 'utf8mb4');
 
 // ============================================================

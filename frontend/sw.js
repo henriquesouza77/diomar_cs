@@ -8,19 +8,21 @@
  */
 'use strict';
 
-const CACHE_VERSION = 'diomar-v1';
+// Pasta do site deduzida da URL do próprio sw.js (…/frontend/sw.js). Suba a versão a cada entrega.
+const BASE = self.location.pathname.replace(/\/frontend\/sw\.js$/, '');
+const CACHE_VERSION = 'diomar-v2';
 const CACHE_STATIC  = `${CACHE_VERSION}-static`;
 const CACHE_PAGES   = `${CACHE_VERSION}-pages`;
 const CACHE_IMAGES  = `${CACHE_VERSION}-images`;
 
 const PRECACHE_URLS = [
-  '/diomar-cs/',
-  '/diomar-cs/frontend/pages/index.php',
-  '/diomar-cs/frontend/pages/imoveis.php',
-  '/diomar-cs/frontend/pages/offline.php',
-  '/diomar-cs/frontend/images/placeholder.svg',
-  '/diomar-cs/frontend/images/favicon.svg',
-  '/diomar-cs/frontend/manifest.json',
+  `${BASE}/`,
+  `${BASE}/frontend/pages/index.php`,
+  `${BASE}/frontend/pages/imoveis.php`,
+  `${BASE}/frontend/pages/offline.php`,
+  `${BASE}/frontend/images/placeholder.svg`,
+  `${BASE}/frontend/images/favicon.svg`,
+  `${BASE}/frontend/manifest.json`,
 ];
 
 // ============================================================
@@ -68,7 +70,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Estratégia para API — sempre network
-  if (url.pathname.includes('/backend/api.php')) {
+  if (url.pathname.includes('/backend/api')) {
     return event.respondWith(
       fetch(request).catch(() => new Response(
         JSON.stringify({ success: false, error: 'Você está offline.' }),
@@ -125,7 +127,7 @@ async function networkFirst(request, cacheName) {
     if (cached) return cached;
 
     // Fallback para página offline
-    const offline = await caches.match('/diomar-cs/frontend/pages/offline.php');
+    const offline = await caches.match(`${BASE}/frontend/pages/offline.php`);
     return offline || new Response('Offline', { status: 503 });
   }
 }

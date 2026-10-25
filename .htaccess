@@ -13,28 +13,12 @@ Options -Indexes
 AddDefaultCharset UTF-8
 
 # ----------------------------------------------------------------
-# Redirecionamentos amigáveis
+# Arquivos sensíveis: sem RewriteBase, funciona em qualquer pasta/domínio.
+# As pastas internas do backend têm o próprio .htaccess (Require all denied).
 # ----------------------------------------------------------------
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /diomar-cs/
-
-    # Bloqueia acesso direto a arquivos sensíveis
-    RewriteRule ^backend/config/ - [F,L]
-    RewriteRule ^backend/core/ - [F,L]
-    RewriteRule ^backend/models/ - [F,L]
-    RewriteRule ^backend/services/ - [F,L]
-    RewriteRule ^backend/controllers/ - [F,L]
-    RewriteRule ^backend/middleware/ - [F,L]
-    RewriteRule ^backend/routes/ - [F,L]
-    RewriteRule ^backend/helpers/ - [F,L]
-
-    # Bloqueia arquivos de sistema
-    RewriteRule \.(sql|log|md|env|ini|conf)$ - [F,L]
-
-    # Rota amigável: /api/rota → /backend/api/index.php?route=rota
-    RewriteRule ^api/(.*)$ backend/api/index.php?route=$1 [QSA,L]
-</IfModule>
+<FilesMatch "\.(sql|log|md|env|ini|conf|bak)$">
+    Require all denied
+</FilesMatch>
 
 # ----------------------------------------------------------------
 # Headers de segurança
@@ -82,8 +66,8 @@ AddDefaultCharset UTF-8
     Require all denied
 </FilesMatch>
 
-<FilesMatch "\.(sql|log|md|env|ini|conf|json|lock)$">
-    <If "%{REQUEST_URI} !~ m#^/diomar-cs/frontend/#">
+<FilesMatch "\.(json|lock)$">
+    <If "%{REQUEST_URI} !~ m#/frontend/#">
         Require all denied
     </If>
 </FilesMatch>

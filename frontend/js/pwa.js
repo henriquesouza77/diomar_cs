@@ -9,8 +9,8 @@
   // ============================================================
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/diomar-cs/frontend/sw.js', {
-        scope: '/diomar-cs/',
+      navigator.serviceWorker.register(`${window.__BASE_URL__ || ''}/frontend/sw.js`, {
+        scope: `${window.__BASE_URL__ || ''}/`,
       })
         .then((reg) => {
           console.log('[PWA] Service Worker registrado:', reg.scope);

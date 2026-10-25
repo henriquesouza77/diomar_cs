@@ -3,7 +3,7 @@
  * Abertura animada (logo + zoom na casinha). Usada nas telas de login e cadastro.
  * Lógica e tempos em js/splash.js; estilos em css/23-auth-glass.css.
  */
-$base = $base ?? '/diomar-cs';
+$base = $base ?? BASE_PATH;
 ?>
 <!-- ==================== ABERTURA ANIMADA ==================== -->
 <div class="splash" id="splash" role="dialog" aria-label="Abertura DIOMAR_CS IMÓVEIS">
@@ -17,4 +17,4 @@ $base = $base ?? '/diomar-cs';
   </div>
   <button type="button" class="splash__skip" data-splash-skip>Pular</button>
 </div>
-<script src="<?= $base ?>/frontend/js/splash.js"></script>
+<script src="<?= $base ?>/frontend/js/splash.js?v=<?= filemtime(__DIR__ . '/../js/splash.js') ?>"></script>

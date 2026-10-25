@@ -19,45 +19,55 @@ const Animations = (() => {
   // =========================================================================
   // SCROLL REVEAL
   // =========================================================================
+  // Fade-in ao entrar e fade-out ao sair: o observador usa uma "faixa de leitura"
+  // (a viewport encolhida em cima e embaixo), então o bloco some e volta enquanto
+  // ainda está parcialmente visível. Reaplicável: Animations.refresh() observa só o que é novo.
+  const revealSeen = new WeakSet();
+  let revealObserver = null;
+  let revealBottomBound = false;
+
   function initReveal() {
-    const elements = document.querySelectorAll(
+    const elements = [...document.querySelectorAll(
       '[data-reveal], [data-stagger], .img-reveal, .text-reveal'
-    );
+    )].filter(el => !revealSeen.has(el));
     if (!elements.length) return;
+    elements.forEach(el => revealSeen.add(el));
 
     if (prefersReduced || !('IntersectionObserver' in window)) {
       elements.forEach(el => el.classList.add('is-visible'));
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    revealObserver = revealObserver || new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const el = entry.target;
+        // Cortina da imagem e texto por linha só abrem uma vez: fechar de novo piscaria nos cards
+        const oneShot = el.matches('.img-reveal, .text-reveal');
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          el.classList.add('is-visible');
+          if (oneShot) revealObserver.unobserve(el);
+        } else if (!oneShot) {
+          el.classList.remove('is-visible');
         }
       });
-    }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -80px 0px',
-    });
+    }, { threshold: 0, rootMargin: '-12% 0px -60px 0px' });
 
-    elements.forEach(el => {
-      // Marca elementos já visíveis imediatamente
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add('is-visible');
-      } else {
-        observer.observe(el);
-      }
-    });
+    elements.forEach(el => revealObserver.observe(el));
 
-    // Fallback de segurança
-    setTimeout(() => {
-      document
-        .querySelectorAll('[data-reveal]:not(.is-visible), [data-stagger]:not(.is-visible)')
-        .forEach(el => el.classList.add('is-visible'));
-    }, 2500);
+    // Fim da página (ou página curta, sem rolagem): o rodapé nunca chega na faixa de leitura,
+    // então revela o que está na tela
+    if (!revealBottomBound) {
+      revealBottomBound = true;
+      const revealAtBottom = () => {
+        if (window.scrollY + window.innerHeight < document.documentElement.scrollHeight - 4) return;
+        document.querySelectorAll('[data-reveal], [data-stagger]').forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-visible');
+        });
+      };
+      window.addEventListener('scroll', revealAtBottom, { passive: true });
+      requestAnimationFrame(revealAtBottom);
+    }
   }
 
   // =========================================================================

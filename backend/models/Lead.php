@@ -43,6 +43,11 @@ class Lead
             $params['q_code'] = $query;
         }
 
+        if (!empty($filters['agent_scope'])) {
+            $where[] = '(l.agent_id = :agent_scope OR l.agent_id IS NULL)';
+            $params['agent_scope'] = (int)$filters['agent_scope'];
+        }
+
         if (!empty($filters['status_id'])) {
             $where[] = 'l.status_id = :status_id';
             $params['status_id'] = (int)$filters['status_id'];

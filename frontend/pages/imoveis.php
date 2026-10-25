@@ -4,7 +4,7 @@ $pageDescription = 'Encontre apartamentos, casas, terrenos e muito mais em nossa
 $currentPage     = 'imoveis';
 
 require_once __DIR__ . '/../components/header.php';
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <!-- ==================== HERO DA PÁGINA ==================== -->

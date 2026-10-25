@@ -6,7 +6,7 @@ $skipNavbar      = true;
 
 require_once __DIR__ . '/../components/header.php';
 
-$base = '/diomar-cs';
+$base = BASE_PATH;
 ?>
 
 <?php require __DIR__ . '/../components/splash.php'; ?>
