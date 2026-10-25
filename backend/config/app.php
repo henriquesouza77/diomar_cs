@@ -38,9 +38,9 @@ return [
 
         // Google OAuth 2.0
     'google' => [
-        'client_id'     => getenv('GOOGLE_CLIENT_ID') ?: '',
-        'client_secret' => getenv('GOOGLE_CLIENT_SECRET') ?: '',
-        'redirect_uri'  => 'http://localhost/diomar-cs/api/auth/google/callback',
+        'client_id'     => env('GOOGLE_CLIENT_ID', ''),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', ''),
+        'redirect_uri'  => env('GOOGLE_REDIRECT_URI', rtrim((string) env('APP_URL', 'http://localhost/diomar-cs'), '/') . '/api/auth/google/callback'),
     ],
 
 ];

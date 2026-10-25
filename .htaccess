@@ -21,6 +21,15 @@ AddDefaultCharset UTF-8
 </FilesMatch>
 
 # ----------------------------------------------------------------
+# Rota amigável da API: /api/rota -> backend/api/index.php?route=rota
+# (usada pelo retorno do login com Google). Sem RewriteBase: vale em qualquer pasta.
+# ----------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^api/(.*)$ backend/api/index.php?route=$1 [QSA,L]
+</IfModule>
+
+# ----------------------------------------------------------------
 # Headers de segurança
 # ----------------------------------------------------------------
 <IfModule mod_headers.c>

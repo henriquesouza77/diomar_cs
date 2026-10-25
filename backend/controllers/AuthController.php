@@ -59,17 +59,17 @@ public function googleCallback(): void
 {
     // 1) erro vindo do Google (usuário cancelou, etc.)
     if (!empty($_GET['error'])) {
-        Response::redirect('/diomar-cs/frontend/pages/login.php?google=error');
+        Response::redirect(BASE_PATH . '/frontend/pages/login.php?google=error');
     }
 
     // 2) valida state (anti-CSRF)
    if (!\Services\GoogleOAuthService::validateState($_GET['state'] ?? null)) {
-        Response::redirect('/diomar-cs/frontend/pages/login.php?google=invalid_state');
+        Response::redirect(BASE_PATH . '/frontend/pages/login.php?google=invalid_state');
     }
 
     $code = $_GET['code'] ?? '';
     if (!$code) {
-        Response::redirect('/diomar-cs/frontend/pages/login.php?google=no_code');
+        Response::redirect(BASE_PATH . '/frontend/pages/login.php?google=no_code');
     }
 
     try {
@@ -79,13 +79,13 @@ public function googleCallback(): void
 
         $role = $result['user']['role'] ?? 'client';
         $target = in_array($role, ['admin', 'agent'], true)
-            ? '/diomar-cs/frontend/pages/admin/dashboard.php'
-            : '/diomar-cs/frontend/pages/index.php';
+            ? BASE_PATH . '/frontend/pages/admin/dashboard.php'
+            : BASE_PATH . '/frontend/pages/index.php';
 
         Response::redirect($target . '?google=ok');
     } catch (\Throwable $e) {
         error_log('[Google OAuth] ' . $e->getMessage());
-        Response::redirect('/diomar-cs/frontend/pages/login.php?google=fail');
+        Response::redirect(BASE_PATH . '/frontend/pages/login.php?google=fail');
     }
 }   
 }
