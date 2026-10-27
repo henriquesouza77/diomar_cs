@@ -1685,3 +1685,193 @@
     page-break-inside: avoid;
   }
 }
+/* ==========================================================================
+   FORMULÁRIO DE IMÓVEL — comodidades, opções (switch) e fotos
+   ========================================================================== */
+
+/* ---- Comodidades: cartões selecionáveis em grade ---- */
+#featuresList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--esp-3);
+}
+
+.filter-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  min-height: 48px;
+  padding: 0 var(--esp-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medium);
+  color: var(--cor-texto-suave);
+  background: var(--bg-principal);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    border-color var(--dur-rapida) var(--ease-suave),
+    background-color var(--dur-rapida) var(--ease-suave),
+    color var(--dur-rapida) var(--ease-suave);
+}
+
+/* O checkbox nativo cobre o cartão (clicável e focável por teclado), mas fica invisível */
+.filter-chip input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.filter-chip::before {
+  content: '';
+  flex: 0 0 20px;
+  height: 20px;
+  background: var(--branco) center / 12px no-repeat;
+  border: 1.5px solid var(--cor-borda-forte);
+  border-radius: 6px;
+  transition: background-color var(--dur-rapida) var(--ease-suave), border-color var(--dur-rapida) var(--ease-suave);
+}
+
+.filter-chip:hover {
+  border-color: var(--azul-400);
+  color: var(--cor-texto);
+}
+
+.filter-chip:focus-within {
+  outline: 2px solid var(--azul-500);
+  outline-offset: 2px;
+}
+
+.filter-chip.is-active,
+.filter-chip:has(input:checked) {
+  font-weight: var(--peso-semibold);
+  color: var(--azul-900);
+  background: var(--cor-primaria-tint);
+  border-color: var(--cor-primaria);
+}
+
+.filter-chip.is-active::before,
+.filter-chip:has(input:checked)::before {
+  background-color: var(--cor-primaria);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  border-color: var(--cor-primaria);
+}
+
+/* ---- Opções do anúncio: destaque / publicar (interruptores) ---- */
+.form-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-4);
+}
+
+.form-option {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+  padding: var(--esp-4) var(--esp-5);
+  background: var(--bg-principal);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  cursor: pointer;
+  transition: border-color var(--dur-rapida) var(--ease-suave), background-color var(--dur-rapida) var(--ease-suave);
+}
+
+.form-option:hover {
+  border-color: var(--cor-borda-forte);
+}
+
+.form-option:has(input:checked) {
+  background: var(--cor-primaria-tint);
+  border-color: var(--cor-primaria);
+}
+
+.form-option input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  background: var(--cinza-300);
+  border-radius: var(--raio-full);
+  cursor: pointer;
+  transition: background-color var(--dur-media) var(--ease-suave);
+}
+
+.form-option input::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: var(--branco);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(11, 31, 77, 0.3);
+  transition: transform var(--dur-media) var(--ease-spring);
+}
+
+.form-option input:checked {
+  background: var(--cor-primaria);
+}
+
+.form-option input:checked::after {
+  transform: translateX(18px);
+}
+
+.form-option input:focus-visible {
+  outline: 2px solid var(--azul-500);
+  outline-offset: 2px;
+}
+
+.form-option__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.form-option__text strong {
+  font-size: var(--fs-md);
+  color: var(--cor-texto);
+}
+
+.form-option__text small {
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--cor-texto-suave);
+}
+
+@media (max-width: 640px) {
+  .form-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Fotos: sem imagens ainda, a área de envio ocupa a largura toda ---- */
+.image-uploader:not(:has(.image-uploader__item)) > .image-uploader__drop {
+  grid-column: 1 / -1;
+  aspect-ratio: auto;
+  min-height: 170px;
+  background: transparent;
+  border-color: transparent;   /* a borda tracejada já é a do contêiner */
+}
+
+.image-uploader:not(:has(.image-uploader__item)) > .image-uploader__drop:hover {
+  transform: none;
+}
+
+.image-uploader__drop small {
+  font-size: var(--fs-xs);
+}
+
+/* Contadores com números alinhados (a fonte dos títulos usa algarismos "antigos": o 0 parecia um "o") */
+.image-counter {
+  font-family: var(--fonte-sans);
+  font-variant-numeric: lining-nums;
+  letter-spacing: 0;
+}

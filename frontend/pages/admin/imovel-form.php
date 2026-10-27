@@ -91,15 +91,23 @@ require __DIR__ . '/_layout-top.php';
           <input type="text" id="propPrice" name="price" class="form-input" inputmode="numeric" required>
         </div>
 
-        <label class="form-check form-grid__full">
-          <input type="checkbox" name="featured" value="1">
-          <span>Marcar como destaque</span>
-        </label>
+        <div class="form-options form-grid__full">
+          <label class="form-option">
+            <input type="checkbox" name="featured" value="1">
+            <span class="form-option__text">
+              <strong>Marcar como destaque</strong>
+              <small>Aparece em "Imóveis em destaque" na página inicial.</small>
+            </span>
+          </label>
 
-        <label class="form-check form-grid__full">
-          <input type="checkbox" name="published" value="1" checked>
-          <span>Publicar no site</span>
-        </label>
+          <label class="form-option">
+            <input type="checkbox" name="published" value="1" checked>
+            <span class="form-option__text">
+              <strong>Publicar no site</strong>
+              <small>Visível para os visitantes. Desmarque para manter como rascunho.</small>
+            </span>
+          </label>
+        </div>
       </div>
     </section>
 
@@ -217,7 +225,10 @@ require __DIR__ . '/_layout-top.php';
     <section class="form-section">
       <div class="form-section__header">
         <span class="form-section__number">4</span>
-        <h3 class="form-section__title">Comodidades e características extras</h3>
+        <h3 class="form-section__title">
+          Comodidades e características extras
+          <span class="image-counter" id="featuresCounter">0 selecionadas</span>
+        </h3>
       </div>
 
       <div class="filters__chips" id="featuresList" data-stagger>
@@ -242,8 +253,8 @@ require __DIR__ . '/_layout-top.php';
             <circle cx="8.5" cy="8.5" r="1.5"/>
             <polyline points="21 15 16 10 5 21"/>
           </svg>
-          <span>Toque para escolher fotos</span>
-          <small>JPG, PNG ou WebP · até 5MB cada</small>
+          <span>Arraste as fotos aqui ou clique para escolher</span>
+          <small>JPG, PNG ou WebP · até 5 MB cada · a primeira vira a capa</small>
         </label>
         <input type="file" id="imageInput" name="images[]" accept="image/*" multiple style="display: none;">
       </div>

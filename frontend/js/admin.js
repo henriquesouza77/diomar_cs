@@ -259,6 +259,7 @@
           cb.checked = ids.includes(cb.value);
           if (cb.checked) cb.closest('.filter-chip')?.classList.add('is-active');
         });
+        updateFeaturesCounter();
       }
 
       // Imagens existentes
@@ -307,10 +308,19 @@
         wrap.querySelectorAll('.filter-chip input').forEach(input => {
           input.addEventListener('change', () => {
             input.closest('.filter-chip').classList.toggle('is-active', input.checked);
+            updateFeaturesCounter();
           });
         });
+        updateFeaturesCounter();
       }
     } catch (e) { console.warn(e); }
+  }
+
+  function updateFeaturesCounter() {
+    const counter = document.getElementById('featuresCounter');
+    if (!counter) return;
+    const n = document.querySelectorAll('[name="features[]"]:checked').length;
+    counter.textContent = n === 1 ? '1 selecionada' : `${n} selecionadas`;
   }
 
   // ============================================================
