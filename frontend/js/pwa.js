@@ -4,22 +4,24 @@
 'use strict';
 
 (() => {
+  
   // ============================================================
   // 1. REGISTRA SERVICE WORKER
   // ============================================================
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register(`${window.__BASE_URL__ || ''}/frontend/sw.js`, {
-        scope: `${window.__BASE_URL__ || ''}/`,
+      // O escopo agora aponta para a raiz do projeto
+      navigator.serviceWorker.register('/diomar-cs/frontend/sw.js', {
+        scope: '/diomar-cs/',
       })
         .then((reg) => {
-          console.log('[PWA] Service Worker registrado:', reg.scope);
+          console.log('[PWA] Service Worker registrado com sucesso no escopo:', reg.scope);
 
-          // Verifica atualizações a cada 1 hora
-          setInterval(() => reg.update(), 60 * 60 * 1000);
+          // Força o navegador a checar atualizações
+          reg.update();
         })
         .catch((err) => {
-          console.warn('[PWA] Falha ao registrar SW:', err);
+          console.error('[PWA] Falha ao registrar SW:', err);
         });
     });
   }

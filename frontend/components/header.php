@@ -56,7 +56,7 @@ $stylesheets = [
   <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
   <!-- PWA -->
-  <link rel="manifest" href="<?= $base ?>/frontend/manifest.json">
+  <link rel="manifest" href="/diomar-cs/frontend/manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="DIOMAR_CS">

@@ -524,8 +524,10 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-.hero__tabs[data-active="aluguel"] .hero__tab-slider,
-.hero__tabs.is-aluguel .hero__tab-slider {
+.hero__tabs[data-active="aluguel"] 
+.hero__tab-slider,
+.hero__tabs.is-aluguel 
+.hero__tab-slider {
   transform: translateX(100%);
 }
 

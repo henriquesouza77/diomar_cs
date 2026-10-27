@@ -1,15 +1,13 @@
-/**
- * hero-search.js — Busca da home
- * Controla as abas Comprar/Alugar e envia para a página de imóveis.
- */
 'use strict';
 
 (() => {
   const form = document.getElementById('heroSearch');
   if (!form) return;
 
-  const tabs = form.querySelectorAll('.hero__search-tab');
+  // CORREÇÃO: A classe no HTML é .hero__tab
+  const tabs = form.querySelectorAll('.hero__tab');
   const purposeInput = document.getElementById('heroPurpose');
+  const slider = form.querySelector('.hero__tab-slider');
 
   // ============ TABS COM SLIDER ============
   function setActiveTab(activeTab) {
@@ -21,6 +19,12 @@
 
     const purpose = activeTab.dataset.purpose;
     if (purposeInput) purposeInput.value = purpose;
+
+    // Move o slider visualmente
+    if (slider) {
+      const index = Array.from(tabs).indexOf(activeTab);
+      slider.style.transform = `translateX(${index * 100}%)`;
+    }
   }
 
   tabs.forEach(tab => {
@@ -41,12 +45,10 @@
 
   // ============ SUBMIT ============
   form.addEventListener('submit', (e) => {
-    // Normaliza preço antes de enviar
     if (priceInput && priceInput.value) {
       priceInput.value = priceInput.value.replace(/\D/g, '');
     }
 
-    // Validação mínima
     const purpose = purposeInput?.value;
     if (!purpose) {
       e.preventDefault();
@@ -54,7 +56,6 @@
       return;
     }
 
-    // Salva estado para restaurar ao voltar
     sessionStorage.setItem('lastSearch', JSON.stringify({
       purpose,
       type: form.querySelector('#heroType')?.value || '',
@@ -95,7 +96,7 @@
         }
         ticking = false;
       });
-      ticking = true;
+      requestAnimationFrame(() => ticking = false);
     }, { passive: true });
   }
-})();
+})(); 
